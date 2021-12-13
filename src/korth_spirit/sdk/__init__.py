@@ -21,14 +21,16 @@
 from ctypes import CDLL, CFUNCTYPE, POINTER, byref, c_char_p, c_int, c_void_p
 from dataclasses import fields
 from os import path
-from typing import Union
+from typing import Union, Optional
 
+import pkg_resources
 from korth_spirit.data import AddressData, LoginData, StateChangeData
 
 from .attribute import AttributeEnum
 from .event import EventEnum
 
-SDK = CDLL(path.join(path.curdir, 'aw64.dll'))
+SDK_FILE = pkg_resources.resource_filename('data', 'aw64.dll')
+SDK = CDLL(SDK_FILE)
 AW_BUILD = 134 # AW 7.0
 AW_CALLBACK = CFUNCTYPE(None)
 
@@ -168,10 +170,10 @@ def aw_botgram_send(text: str, citizen: int) -> None:
 def aw_botmenu_send() -> None:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_callback(c: AW_CALLBACK, rc: int) -> None:
+def aw_callback(callback: c_void_p) -> None:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_callback_set(c: AW_CALLBACK, *callback: void, rc: int) -> int:
+def aw_callback_set(callback: c_void_p) -> None:
     raise NotImplementedError('This function is not implemented yet.')
 
 def aw_camera_set(session_id: int) -> int:
