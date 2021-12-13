@@ -190,16 +190,16 @@ def aw_cav_request(citizen: int, session: int) -> int:
 def aw_cell_next() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_check_right(citizen: int, *str: char) -> int:
+def aw_check_right(citizen: int, right: str) -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_check_right_all(*str: char) -> int:
+def aw_check_right_all(right: str) -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
 def aw_citizen_add() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_citizen_attributes_by_name(*name: char) -> int:
+def aw_citizen_attributes_by_name(name: str) -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
 def aw_citizen_attributes_by_number(citizen: int) -> int:
@@ -245,7 +245,7 @@ def aw_create(
 
     return instance
 
-def aw_create_resolved(long: unsigned, int: address, void: port) -> int:
+def aw_create_resolved(address: int, port: int) -> None:
     raise NotImplementedError('This function is not implemented yet.')
 
 def aw_data(attribute: AttributeEnum) -> bytes:
@@ -264,7 +264,7 @@ def aw_data(attribute: AttributeEnum) -> bytes:
     SDK.aw_data.restype = c_void_p
     return bytes(bytearray(c_char_p(SDK.aw_data(attribute.value)).value))
 
-def aw_data_set(a: AW_ATTRIBUTE, char: const, unsigned: *value, length: int) -> int:
+def aw_data_set(attribute: AttributeEnum, value: str, length: int) -> None:
     raise NotImplementedError('This function is not implemented yet.')
 
 def aw_delete_all_objects() -> int:
@@ -398,7 +398,7 @@ def aw_instance() -> None:
 def aw_instance_callback_set(c: AW_CALLBACK, callback: c_void_p, rc: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_instance_event_set(e: AW_EVENT_ATTRIBUTE, handler: c_void_p) -> int:
+def aw_instance_event_set(event: EventEnum, handler: c_void_p) -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
 def aw_instance_set(instance: c_void_p) -> None:
@@ -661,7 +661,7 @@ def aw_string_set(attribute: AttributeEnum, value: str) -> None:
 def aw_string_set_MBCS_codepage(codepage: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_string_to_unicode(the_string: str) -> _StructUnionMeta:
+def aw_string_to_unicode(the_string: str) -> None:
     raise NotImplementedError('This function is not implemented yet.')
 
 def aw_teleport(session_id: int) -> int:
@@ -718,16 +718,16 @@ def aw_universe_ejection_previous() -> int:
 def aw_unzip() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_url_click(char: const) -> int:
+def aw_url_click(url: str) -> None:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_url_send(session_id: int, char: const, const: *url, *target: char) -> int:
+def aw_url_send(session_id: int, url: str, target: str)-> None:
     raise NotImplementedError('This function is not implemented yet.')
 
 def aw_user_data() -> None:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_user_data_set(*data: void) -> int:
+def aw_user_data_set(data: bytes) -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
 def aw_user_list() -> int:
