@@ -24,8 +24,7 @@ from dataclasses import fields
 from os import path
 from typing import Union
 
-from data import AddressData, LoginData
-from korth_spirit.data import StateChangeData
+from data import AddressData, LoginData, StateChangeData
 
 from .attribute import AttributeEnum
 from .event import EventEnum
