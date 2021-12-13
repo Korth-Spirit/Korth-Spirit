@@ -20,7 +20,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from dataclasses import dataclass, field
 
-from data import LoginData, StateChangeData
+from korth_spirit.data import LoginData, StateChangeData
 
 from .coords import Coordinates
 from .events import EventBus

@@ -20,7 +20,7 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from typing import Dict, List, Tuple, Type
 
-from sdk import AttributeEnum, EventEnum
+from korth_spirit.sdk import AttributeEnum, EventEnum
 
 
 class Event:
@@ -43,7 +43,7 @@ class Event:
         Args:
             event_data (List[Tuple[Type, AttributeEnum]]): The data associated with the event.
         """
-        from sdk.write_data import write_data
+        from korth_spirit.sdk.write_data import write_data
 
         for data_type, attribute in event_data:
             name = (
