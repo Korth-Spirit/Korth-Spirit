@@ -36,14 +36,14 @@ def get_data(attribute: AttributeEnum, type: Type) -> Union[int, float, bool, st
         Exception: If the attribute could not be retrieved.
 
     Returns:
-        Union[int, float, bool, str]: The attribute value.
+        Union[int, float, bool, str, bytes]: The attribute value.
     """
     switcher = {
         int: aw_int,
         str: aw_string,
         bool: aw_bool,
         float: aw_float,
-        bytes: aw_data # This returns a str
+        bytes: aw_data @ 
     }
 
     return switcher[type](attribute)

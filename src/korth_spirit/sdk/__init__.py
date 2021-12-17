@@ -247,7 +247,7 @@ def aw_create(
 def aw_create_resolved(address: int, port: int) -> None:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_data(attribute: AttributeEnum) -> str:
+def aw_data(attribute: AttributeEnum) -> bytes:
     """
     Gets a data attribute.
 
@@ -264,7 +264,7 @@ def aw_data(attribute: AttributeEnum) -> str:
     SDK.aw_data.restype = c_char_p
     SDK.aw_data.argtypes = [c_int, POINTER(c_uint)]
 
-    return SDK.aw_data(attribute.value, None).decode('utf-8')
+    return SDK.aw_data(attribute.value, None)
 
 def aw_data_set(attribute: AttributeEnum, value: str, length: int) -> None:
     raise NotImplementedError('This function is not implemented yet.')
