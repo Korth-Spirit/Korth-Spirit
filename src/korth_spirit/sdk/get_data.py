@@ -43,7 +43,7 @@ def get_data(attribute: AttributeEnum, type: Type) -> Union[int, float, bool, st
         str: aw_string,
         bool: aw_bool,
         float: aw_float,
-        bytes: aw_data @ 
+        bytes: aw_data
     }
 
     return switcher[type](attribute)
