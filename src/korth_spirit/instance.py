@@ -82,10 +82,10 @@ class Instance:
             Instance: The instance.
         """
         aw_login(self._instance, LoginData(
-            citizen_number=citizen_number,
+            citizen=citizen_number,
             password=password,
-            application=f'Portal Mage, Run by {citizen_number}, v0.0.1',
-            name=self.name
+            app_name=f'Python Wrapped Application #{citizen_number}',
+            bot_name=self.name
         ))
 
         return self
