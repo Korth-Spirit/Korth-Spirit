@@ -22,14 +22,12 @@ from ctypes import CDLL, CFUNCTYPE, POINTER, byref, c_char_p, c_int, c_void_p
 from dataclasses import fields
 from os import path
 from typing import Union, Optional
-
-import pkg_resources
 from korth_spirit.data import AddressData, LoginData, StateChangeData
 
 from .attribute import AttributeEnum
 from .event import EventEnum
 
-SDK_FILE = pkg_resources.resource_filename('data', 'aw64.dll')
+SDK_FILE = './aw64.dll'
 SDK = CDLL(SDK_FILE)
 AW_BUILD = 134 # AW 7.0
 AW_CALLBACK = CFUNCTYPE(None)

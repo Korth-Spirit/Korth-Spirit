@@ -14,6 +14,7 @@ This package is provided as a python package. To install it, run the following c
 pip install korth-spirit
 ```
 
+You will also need to inlcude the SDK with name 'aw64.dll' in the same directory as executing script. There were unexpected issues when calling `aw_create` that have been documented on [stackoverflow](https://stackoverflow.com/questions/70398807/why-does-ctype-function-crash-when-importing-from-python-submodule).
 
 ## Usage
 
