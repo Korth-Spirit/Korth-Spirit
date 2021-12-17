@@ -32,7 +32,7 @@ class EventBus:
         Args:
             event (Event): The event to publish and hook.
         """
-        from aw.sdk import AW_CALLBACK, aw_event_set
+        from korth_spirit.sdk import AW_CALLBACK, aw_event_set
 
         @AW_CALLBACK
         def mini_pub() -> None:
