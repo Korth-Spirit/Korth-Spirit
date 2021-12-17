@@ -18,7 +18,7 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from ctypes import CDLL, CFUNCTYPE, POINTER, byref, c_char_p, c_int, c_void_p
+from ctypes import CDLL, CFUNCTYPE, POINTER, byref, c_char_p, c_int, c_uint, c_void_p
 from dataclasses import fields
 from os import path
 from typing import Union, Optional
@@ -247,7 +247,7 @@ def aw_create(
 def aw_create_resolved(address: int, port: int) -> None:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_data(attribute: AttributeEnum) -> bytes:
+def aw_data(attribute: AttributeEnum) -> str:
     """
     Gets a data attribute.
 
@@ -260,8 +260,11 @@ def aw_data(attribute: AttributeEnum) -> bytes:
     Returns:
         bytes: The attribute value.
     """
-    SDK.aw_data.restype = c_void_p
-    return bytes(bytearray(c_char_p(SDK.aw_data(attribute.value)).value))
+    # char* aw_data (AW_ATTRIBUTE a, unsigned int *length)
+    SDK.aw_data.restype = c_char_p
+    SDK.aw_data.argtypes = [c_int, POINTER(c_uint)]
+
+    return SDK.aw_data(attribute.value, None).decode('utf-8')
 
 def aw_data_set(attribute: AttributeEnum, value: str, length: int) -> None:
     raise NotImplementedError('This function is not implemented yet.')

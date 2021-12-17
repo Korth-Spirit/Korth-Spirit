@@ -24,7 +24,7 @@ from . import aw_bool, aw_data, aw_float, aw_int, aw_string
 from .attribute import AttributeEnum
 
 
-def get_data(attribute: AttributeEnum, type: Type) -> Union[int, float, bool, str, bytes]:
+def get_data(attribute: AttributeEnum, type: Type) -> Union[int, float, bool, str]:
     """
     Gets a data attribute.
 
@@ -36,14 +36,14 @@ def get_data(attribute: AttributeEnum, type: Type) -> Union[int, float, bool, st
         Exception: If the attribute could not be retrieved.
 
     Returns:
-        Union[int, float, bool, str, bytes]: The attribute value.
+        Union[int, float, bool, str]: The attribute value.
     """
     switcher = {
         int: aw_int,
         str: aw_string,
         bool: aw_bool,
         float: aw_float,
-        bytes: aw_data
+        bytes: aw_data # This returns a str
     }
 
     return switcher[type](attribute)
