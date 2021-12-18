@@ -21,7 +21,8 @@
 from atexit import register
 
 from .instance import Instance
-from .sdk import AW_BUILD, aw_init, aw_term, AttributeEnum, EventEnum
+from .sdk import (AW_BUILD, AttributeEnum, CallBackEnum, EventEnum, aw_init,
+                  aw_term)
 
 aw_init(AW_BUILD)
 register(aw_term)
@@ -29,5 +30,6 @@ register(aw_term)
 __all__ = [
     'Instance'
     'AttributeEnum',
+    'CallBackEnum',
     'EventEnum'
 ]
