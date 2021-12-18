@@ -18,13 +18,16 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from ctypes import CDLL, CFUNCTYPE, POINTER, byref, c_char_p, c_int, c_uint, c_void_p
+from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char_p, c_int, c_uint,
+                    c_void_p)
 from dataclasses import fields
 from os import path
-from typing import Union, Optional
+from typing import Optional, Union
+
 from korth_spirit.data import AddressData, LoginData, StateChangeData
 
 from .attribute import AttributeEnum
+from .callback import CallBackEnum
 from .event import EventEnum
 
 SDK_FILE = './aw64.dll'
@@ -171,8 +174,18 @@ def aw_botmenu_send() -> None:
 def aw_callback(callback: c_void_p) -> None:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_callback_set(callback: c_void_p) -> None:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_callback_set(callback: CallBackEnum, handler: AW_CALLBACK) -> None:
+    """
+    Set a callback to the specified handler.
+
+    Args:
+        callback (CallBackEnum): The callback to set.
+        handler (AW_CALLBACK): The callback handler.
+    """
+    rc = SDK.aw_callback_set(callback.value, handler)
+
+    if rc != 0:
+        raise Exception(f'Failed to set the callback. Error code: {rc}')
 
 def aw_camera_set(session_id: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')

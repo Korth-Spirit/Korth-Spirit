@@ -75,24 +75,17 @@ class EventEnum(Enum):
     AW_EVENT_HUD_CLEAR = auto()
     AW_EVENT_CAV_DEFINITION_CHANGE = auto()
     AW_EVENT_WORLD_CAV_DEFINITION_CHANGE = auto()
-
     AW_EVENT_XFER_DISCONNECT = auto()
     AW_EVENT_XFER_OFFER = auto()
     AW_EVENT_XFER_REPLY = auto()
     AW_EVENT_XFER_SEND = auto()
     AW_EVENT_XFER_REQUEST = auto()
     AW_EVENT_XFER_CANCEL = auto()
-
     AW_EVENT_LASER_BEAM = auto()
     AW_EVENT_XFER_QUERY = auto()
-
     AW_EVENT_CAV_TEMPLATE_CHANGE = auto()
-
     AW_EVENT_PURCHASE_OFFER = auto()
-
     AW_EVENT_DIALOG = auto()
     AW_EVENT_DIALOG_ANSWER = auto()
-
     AW_EVENT_TELEGRAM_PENDING = auto()
     AW_EVENT_TELEGRAM_JOURNAL = auto()
-

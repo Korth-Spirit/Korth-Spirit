@@ -18,7 +18,7 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from korth_spirit.sdk import AttributeEnum, EventEnum
+from korth_spirit.sdk import AttributeEnum, CallBackEnum, EventEnum
 
 TRANSLATIONS = {
     EventEnum.AW_EVENT_ADMIN_WORLD_DELETE: [
@@ -393,5 +393,179 @@ TRANSLATIONS = {
         (int, AttributeEnum.AW_WORLDLIST_USERS),
         (int, AttributeEnum.AW_WORLDLIST_STATUS),
         (int, AttributeEnum.AW_WORLDLIST_RATING),
+    ],
+    CallBackEnum.AW_CALLBACK_ADDRESS: [
+        (int, AttributeEnum.AW_AVATAR_SESSION),
+        (int, AttributeEnum.AW_AVATAR_ADDRESS),
+    ],
+    CallBackEnum.AW_CALLBACK_ADMIN: [
+        (int, AttributeEnum.AW_SERVER_BUILD),
+        (int, AttributeEnum.AW_WORLD_BUILD_NUMBER),
+    ],
+    CallBackEnum.AW_CALLBACK_ADMIN_WORLD_LIST: [
+        (int, AttributeEnum.AW_SERVER_ID),
+    ],
+    CallBackEnum.AW_CALLBACK_ADMIN_WORLD_RESULT: [
+        (int, AttributeEnum.AW_SERVER_ID),
+        (int, AttributeEnum.AW_SERVER_INSTANCE),
+        (int, AttributeEnum.AW_SERVER_NAME),
+    ],
+    CallBackEnum.AW_CALLBACK_ATTRIBUTES_RESET_RESULT: [
+    ],
+    CallBackEnum.AW_CALLBACK_AVATAR_LOCATION: [
+    ],
+    CallBackEnum.AW_CALLBACK_BOTGRAM_RESULT: [
+    ],
+    CallBackEnum.AW_CALLBACK_BOTMENU_RESULT: [
+    ],
+    CallBackEnum.AW_CALLBACK_CAV: [
+        (int, AttributeEnum.AW_CAV_CITIZEN),
+        (int, AttributeEnum.AW_CAV_SESSION),
+        (int, AttributeEnum.AW_CAV_DEFINITION),
+    ],
+    CallBackEnum.AW_CALLBACK_CAV_RESULT: [
+        (int, AttributeEnum.AW_CAV_CITIZEN),
+        (int, AttributeEnum.AW_CAV_SESSION),
+    ],
+    CallBackEnum.AW_CALLBACK_CELL_RESULT: [
+        (int, AttributeEnum.AW_CELL_ITERATOR),
+    ],
+    CallBackEnum.AW_CALLBACK_CITIZEN_ATTRIBUTES: [
+        (int, AttributeEnum.AW_CITIZEN_NUMBER),
+        (int, AttributeEnum.AW_CITIZEN_NAME),
+        (int, AttributeEnum.AW_CITIZEN_PASSWORD),
+        (int, AttributeEnum.AW_CITIZEN_EMAIL),
+        (int, AttributeEnum.AW_CITIZEN_ENABLED),
+        (int, AttributeEnum.AW_CITIZEN_BETA),
+        (int, AttributeEnum.AW_CITIZEN_TRIAL),
+        (int, AttributeEnum.AW_CITIZEN_CAV_ENABLED),
+        (int, AttributeEnum.AW_CITIZEN_PAV_ENABLED),
+        (int, AttributeEnum.AW_CITIZEN_BOT_LIMIT),
+        (int, AttributeEnum.AW_CITIZEN_COMMENT),
+        (int, AttributeEnum.AW_CITIZEN_EXPIRATION_TIME),
+        (int, AttributeEnum.AW_CITIZEN_IMMIGRATION_TIME),
+        (int, AttributeEnum.AW_CITIZEN_LAST_LOGIN),
+        (int, AttributeEnum.AW_CITIZEN_PRIVILEGE_PASSWORD),
+        (int, AttributeEnum.AW_CITIZEN_PRIVACY),
+        (int, AttributeEnum.AW_CITIZEN_TOTAL_TIME),
+        (int, AttributeEnum.AW_CITIZEN_URL),
+    ],
+    CallBackEnum.AW_CALLBACK_CITIZEN_RESULT: [
+        (int, AttributeEnum.AW_CITIZEN_NUMBER),
+    ],
+    CallBackEnum.AW_CALLBACK_CREATE: [
+    ],
+    CallBackEnum.AW_CALLBACK_DELETE_ALL_OBJECTS_RESULT: [
+    ],
+    CallBackEnum.AW_CALLBACK_ENTER: [
+        (int, AttributeEnum.AW_WORLD_NAME),
+    ],
+    CallBackEnum.AW_CALLBACK_HUD_RESULT: [
+        (int, AttributeEnum.AW_HUD_ELEMENT_SESSION),
+        (int, AttributeEnum.AW_HUD_ELEMENT_ID),
+    ],
+    CallBackEnum.AW_CALLBACK_LICENSE_ATTRIBUTES: [
+        (int, AttributeEnum.AW_LICENSE_PASSWORD),
+        (int, AttributeEnum.AW_LICENSE_USERS),
+        (int, AttributeEnum.AW_LICENSE_RANGE),
+        (int, AttributeEnum.AW_LICENSE_EMAIL),
+        (int, AttributeEnum.AW_LICENSE_COMMENT),
+        (int, AttributeEnum.AW_LICENSE_CREATION_TIME),
+        (int, AttributeEnum.AW_LICENSE_EXPIRATION_TIME),
+        (int, AttributeEnum.AW_LICENSE_LAST_START),
+        (int, AttributeEnum.AW_LICENSE_LAST_ADDRESS),
+        (int, AttributeEnum.AW_LICENSE_HIDDEN),
+        (int, AttributeEnum.AW_LICENSE_ALLOW_TOURISTS),
+        (int, AttributeEnum.AW_LICENSE_VOIP),
+        (int, AttributeEnum.AW_LICENSE_PLUGINS),
+    ],
+    CallBackEnum.AW_CALLBACK_LICENSE_RESULT: [
+    ],
+    CallBackEnum.AW_CALLBACK_LOGIN: [
+        (int, AttributeEnum.AW_CITIZEN_BETA),
+        (int, AttributeEnum.AW_CITIZEN_CAV_ENABLED),
+        (int, AttributeEnum.AW_CITIZEN_NAME),
+        (int, AttributeEnum.AW_CITIZEN_NUMBER),
+        (int, AttributeEnum.AW_CITIZEN_PAV_ENABLED),
+        (int, AttributeEnum.AW_CITIZEN_TIME_LEFT),
+        (int, AttributeEnum.AW_LOGIN_PRIVILEGE_NAME),
+    ],
+    CallBackEnum.AW_CALLBACK_OBJECT_QUERY: [
+        (int, AttributeEnum.AW_OBJECT_TYPE),
+        (int, AttributeEnum.AW_OBJECT_ID),
+        (int, AttributeEnum.AW_OBJECT_NUMBER),
+        (int, AttributeEnum.AW_OBJECT_OWNER),
+        (int, AttributeEnum.AW_OBJECT_BUILD_TIMESTAMP),
+        (int, AttributeEnum.AW_OBJECT_X),
+        (int, AttributeEnum.AW_OBJECT_Y),
+        (int, AttributeEnum.AW_OBJECT_Z),
+        (int, AttributeEnum.AW_OBJECT_YAW),
+        (int, AttributeEnum.AW_OBJECT_TILT),
+        (int, AttributeEnum.AW_OBJECT_ROLL),
+        (int, AttributeEnum.AW_OBJECT_MODEL),
+        (int, AttributeEnum.AW_OBJECT_DESCRIPTION),
+        (int, AttributeEnum.AW_OBJECT_ACTION),
+        (int, AttributeEnum.AW_OBJECT_DATA),
+    ],
+    CallBackEnum.AW_CALLBACK_OBJECT_RESULT: [
+        (int, AttributeEnum.AW_OBJECT_NUMBER),
+        (int, AttributeEnum.AW_OBJECT_ID),
+        (int, AttributeEnum.AW_OBJECT_CALLBACK_REFERENCE),
+        (int, AttributeEnum.AW_CELL_X),
+        (int, AttributeEnum.AW_CELL_Z),
+    ],
+    CallBackEnum.AW_CALLBACK_QUERY: [
+        (int, AttributeEnum.AW_QUERY_COMPLETE),
+    ],
+    CallBackEnum.AW_CALLBACK_RELOAD_REGISTRY: [
+    ],
+    CallBackEnum.AW_CALLBACK_TERRAIN_DELETE_ALL_RESULT: [
+    ],
+    CallBackEnum.AW_CALLBACK_TERRAIN_LOAD_NODE_RESULT: [
+    ],
+    CallBackEnum.AW_CALLBACK_TERRAIN_NEXT_RESULT: [
+        (int, AttributeEnum.AW_TERRAIN_COMPLETE),
+    ],
+    CallBackEnum.AW_CALLBACK_TERRAIN_SET_RESULT: [
+        (int, AttributeEnum.AW_TERRAIN_X),
+        (int, AttributeEnum.AW_TERRAIN_Z),
+    ],
+    CallBackEnum.AW_CALLBACK_UNIVERSE_EJECTION: [
+        (int, AttributeEnum.AW_EJECTION_ADDRESS),
+        (int, AttributeEnum.AW_EJECTION_CREATION_TIME),
+        (int, AttributeEnum.AW_EJECTION_EXPIRATION_TIME),
+        (int, AttributeEnum.AW_EJECTION_COMMENT),
+    ],
+    CallBackEnum.AW_CALLBACK_UNIVERSE_EJECTION_RESULT: [
+    ],
+    CallBackEnum.AW_CALLBACK_USER_LIST: [
+        (int, AttributeEnum.AW_USERLIST_MORE),
+        (int, AttributeEnum.Aw_user_list),
+    ],
+    CallBackEnum.AW_CALLBACK_WORLD_CAV: [
+        (int, AttributeEnum.AW_CAV_CITIZEN),
+        (int, AttributeEnum.AW_CAV_SESSION),
+        (int, AttributeEnum.AW_CAV_DEFINITION),
+    ],
+    CallBackEnum.AW_CALLBACK_WORLD_CAV_RESULT: [
+        (int, AttributeEnum.AW_CAV_CITIZEN),
+        (int, AttributeEnum.AW_CAV_SESSION),
+    ],
+    CallBackEnum.AW_CALLBACK_WORLD_EJECTION: [
+        (int, AttributeEnum.AW_EJECTION_TYPE),
+        (int, AttributeEnum.AW_EJECTION_ADDRESS),
+        (int, AttributeEnum.AW_EJECTION_CREATION_TIME),
+        (int, AttributeEnum.AW_EJECTION_EXPIRATION_TIME),
+        (int, AttributeEnum.AW_EJECTION_COMMENT),
+    ],
+    CallBackEnum.AW_CALLBACK_WORLD_EJECTION_RESULT: [
+    ],
+    CallBackEnum.AW_CALLBACK_WORLD_INSTANCE: [
+        (int, AttributeEnum.AW_AVATAR_CITIZEN),
+        (int, AttributeEnum.AW_AVATAR_WORLD_INSTANCE),
+    ],
+    CallBackEnum.AW_CALLBACK_WORLD_LIST: [
+        (int, AttributeEnum.AW_WORLDLIST_MORE),
+        (int, AttributeEnum.Aw_world_list),
     ],
 }

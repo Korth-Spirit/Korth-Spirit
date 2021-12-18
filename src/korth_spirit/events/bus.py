@@ -18,39 +18,45 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from korth_spirit.sdk import EventEnum
+from typing import Union
+
+from korth_spirit.sdk import CallBackEnum, EventEnum
 
 from .event import Event
 from .translations import TRANSLATIONS
 
-
+EventType = Union[EventEnum, CallBackEnum]
 class EventBus:
-    def _hook_aw_event(self, event: EventEnum) -> None:
+    def _hook_aw_event(self, event: EventType) -> None:
         """
         Republish AW events to the bus.
 
         Args:
-            event (Event): The event to publish and hook.
+            event (EventType): The event to publish and hook.
         """
-        from korth_spirit.sdk import AW_CALLBACK, aw_event_set
+        from korth_spirit.sdk import AW_CALLBACK, aw_callback_set, aw_event_set
 
         @AW_CALLBACK
         def mini_pub() -> None:
             self.publish(event)
 
         self._refs[event] = mini_pub
-        aw_event_set(event, mini_pub)
+
+        if type(event) is EventEnum:
+            aw_event_set(event, mini_pub)
+        elif type(event) is CallBackEnum:
+            aw_callback_set(event, mini_pub)
 
     def __init__(self):
         self._refs = {}
         self._subscribers = {}
 
-    def subscribe(self, event: EventEnum, subscriber: callable) -> "EventBus":
+    def subscribe(self, event: EventType, subscriber: callable) -> "EventBus":
         """
         Subscribe to an event.
 
         Args:
-            event (Event): The event to subscribe to.
+            event (EventType): The event to subscribe to.
             subscriber (callable): The subscriber to the event.
 
         Returns:
@@ -61,12 +67,12 @@ class EventBus:
             self._hook_aw_event(event)
         self._subscribers[event].append(subscriber)
 
-    def unsubscribe(self, event: EventEnum, subscriber: callable) -> "EventBus":
+    def unsubscribe(self, event: EventType, subscriber: callable) -> "EventBus":
         """
         Unsubscribe from an event.
 
         Args:
-            event (Event): The event to unsubscribe from.
+            event (EventType): The event to unsubscribe from.
             subscriber (callable): The subscriber to the event.
 
         Returns:
@@ -77,12 +83,12 @@ class EventBus:
 
         return self
 
-    def publish(self, event: EventEnum, *args, **kwargs) -> "EventBus":
+    def publish(self, event: EventType, *args, **kwargs) -> "EventBus":
         """
         Publish an event.
 
         Args:
-            event (Event): The event to publish.
+            event (EventType): The event to publish.
             *args: The arguments to pass to the subscribers.
             **kwargs: The keyword arguments to pass to the subscribers.
 
