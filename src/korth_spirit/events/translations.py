@@ -539,8 +539,7 @@ TRANSLATIONS = {
     CallBackEnum.AW_CALLBACK_UNIVERSE_EJECTION_RESULT: [
     ],
     CallBackEnum.AW_CALLBACK_USER_LIST: [
-        (int, AttributeEnum.AW_USERLIST_MORE),
-        (int, AttributeEnum.Aw_user_list),
+        (int, AttributeEnum.AW_USERLIST_MORE)
     ],
     CallBackEnum.AW_CALLBACK_WORLD_CAV: [
         (int, AttributeEnum.AW_CAV_CITIZEN),
@@ -566,6 +565,5 @@ TRANSLATIONS = {
     ],
     CallBackEnum.AW_CALLBACK_WORLD_LIST: [
         (int, AttributeEnum.AW_WORLDLIST_MORE),
-        (int, AttributeEnum.Aw_world_list),
     ],
 }

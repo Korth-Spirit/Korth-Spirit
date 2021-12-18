@@ -22,7 +22,7 @@ from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char_p, c_int, c_uint,
                     c_void_p)
 from dataclasses import fields
 from os import path
-from typing import Optional, Union
+from typing import List, Optional, Union
 
 from korth_spirit.data import AddressData, LoginData, StateChangeData
 
@@ -551,8 +551,33 @@ def aw_object_query() -> int:
 def aw_object_select() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_query(x_sector: int, z_sector: int, sequence3_x_3: list) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_query(x_sector: int, z_sector: int, sequence3_x_3: List[List[int]]) -> None:
+    """
+    Queries the world using longitude and latitude.
+
+    Args:
+        x_sector (int): The longitude sector.
+        z_sector (int): The latitude sector.
+        sequence3_x_3 (List[List[int]]): The sequence of 3 x 3 cells.
+
+    Raises:
+        Exception: If the query failed.
+        Exception: If the sequence is invalid.
+    """
+    if len(sequence3_x_3) != 3:
+        raise Exception("The sequence must be 3 x 3.")
+
+    for row in sequence3_x_3:
+        if len(row) != 3:
+            raise Exception("The sequence must be 3 x 3.")
+    
+    sequence = (c_int * 9)(*[x for row in sequence3_x_3 for x in row])
+    SDK.aw_query.argtypes = [c_int, c_int, (c_int * 9)]
+    SDK.aw_query.restype = c_int
+    rc = SDK.aw_query(x_sector, z_sector, sequence)
+
+    if rc:
+        raise Exception(f"Failed to query: {rc}")
 
 def aw_query_5x5(x_sector: int, z_sector: int, sequence5_x_5: list) -> int:
     raise NotImplementedError('This function is not implemented yet.')
