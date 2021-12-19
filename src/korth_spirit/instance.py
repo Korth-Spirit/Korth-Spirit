@@ -19,8 +19,10 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from dataclasses import dataclass, field
+from typing import List
 
-from korth_spirit.data import LoginData, StateChangeData
+from korth_spirit.data import CellObjectData, LoginData, StateChangeData
+from korth_spirit.query import Query
 
 from .coords import Coordinates
 from .events import EventBus
@@ -146,6 +148,21 @@ class Instance:
         aw_whisper(session, message)
         
         return self
+
+    def query(self, x: int, z: int) -> List[CellObjectData]:
+        """
+        Query the sector objects in the 3x3 specified coordinates.
+
+        Args:
+            x (int): The x coordinate.
+            z (int): The z coordinate.
+
+        Returns:
+            List[CellObjectData]: The cell objects.
+        """
+        aw_instance_set(self._instance)
+
+        return Query(x, z).run(self)
 
     def subscribe(self, event: EventEnum, subscriber: callable) -> "Instance":
         """

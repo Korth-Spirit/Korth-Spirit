@@ -18,14 +18,23 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from .address_data import AddressData
-from .cell_object_data import CellObjectData
-from .login_data import LoginData
-from .state_change_data import StateChangeData
+from dataclasses import dataclass
 
-__all__ = [
-    "AddressData",
-    "CellObjectData",
-    "LoginData",
-    "StateChangeData",
-]
+
+@dataclass
+class CellObjectData:
+    type: int
+    id: int
+    number: int
+    owner: int
+    build_timestamp: int
+    x: int
+    y: int
+    z: int
+    yaw: int
+    tilt: int
+    roll: int
+    model: str
+    decription: str
+    action: str
+    data: bytes
