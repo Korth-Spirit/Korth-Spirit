@@ -99,15 +99,16 @@ class Query:
         Returns:
             List[CellObjectData]: The list of objects found in the 3x3 sector.
         """        
-        instance.subscribe(EventEnum.AW_CELL_BEGIN, self.on_cell_begin)
-        instance.subscribe(EventEnum.AW_CELL_OBJECT, self.on_receive_object)
+        instance.subscribe(EventEnum.AW_EVENT_CELL_BEGIN, self.on_cell_begin)
+        instance.subscribe(EventEnum.AW_EVENT_CELL_OBJECT, self.on_receive_object)
         instance.subscribe(CallBackEnum.AW_CALLBACK_QUERY, self.on_query_finished)
 
+        self._running = True
         while self._running:
             aw_wait()
 
-        instance.unsubscribe(EventEnum.AW_CELL_BEGIN, self.on_cell_begin)
-        instance.unsubscribe(EventEnum.AW_CELL_OBJECT, self.on_receive_object)
+        instance.unsubscribe(EventEnum.AW_EVENT_CELL_BEGIN, self.on_cell_begin)
+        instance.unsubscribe(EventEnum.AW_EVENT_CELL_OBJECT, self.on_receive_object)
         instance.unsubscribe(CallBackEnum.AW_CALLBACK_QUERY, self.on_query_finished)
 
         return self._objects
