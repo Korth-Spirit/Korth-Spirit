@@ -24,7 +24,8 @@ from dataclasses import fields
 from os import path
 from typing import List, Optional, Union
 
-from korth_spirit.data import AddressData, LoginData, StateChangeData
+from korth_spirit.data import (AddressData, LoginData, ObjectChangeData,
+                               StateChangeData)
 
 from .attribute import AttributeEnum
 from .callback import CallBackEnum
@@ -533,8 +534,34 @@ def aw_object_add() -> int:
 def aw_object_bump() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_object_change() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_object_change(data: ObjectChangeData) -> None:
+    """
+    Changes an object.
+
+    Args:
+        data (ObjectChangeData): The object data.
+
+    Raises:
+        Exception: If the object could not be changed.
+        Exception: If the change data has an unsupported type.
+    """    
+    for field in fields(data):
+        value = getattr(data, field.name, None)
+        attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
+        if value:
+            if type(value) == int:
+                aw_int_set(attr, value)
+            elif type(value) == str:
+                aw_string_set(attr, value)
+            elif type(value) == bytes:
+                aw_data_set(attr, value)
+            else:
+                raise Exception(f'Unsupported type: {type(value)}')
+
+    rc = SDK.aw_object_change()
+
+    if rc:
+        raise Exception(f"Failed to change object: {rc}")
 
 def aw_object_click() -> int:
     raise NotImplementedError('This function is not implemented yet.')
