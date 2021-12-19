@@ -48,7 +48,10 @@ class Query:
         sector_x = aw_sector_from_cell(event.cell_x)
         sector_z = aw_sector_from_cell(event.cell_z)
 
-        self._sequence[sector_x][sector_z] = aw_int(AttributeEnum.AW_CELL_SEQUENCE)
+        if (sector_x < -1 or sector_x > 1 or sector_z < -1 or sector_z > 1):
+            return
+        
+        self._sequence[sector_z + 1][sector_x + 1] = aw_int(AttributeEnum.AW_CELL_SEQUENCE)
 
     def on_receive_object(self, event: Event):
         """
