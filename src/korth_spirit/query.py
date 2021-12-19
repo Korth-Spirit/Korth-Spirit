@@ -20,12 +20,12 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from typing import List
 
-from korth_spirit.sdk.callback import CallBackEnum
+from sdk import CallBackEnum
 
 from .data import CellObjectData
 from .events import Event
-from .instance import Instance
-from .sdk import AttributeEnum, EventEnum, aw_int, aw_query, aw_sector_from_cell, aw_wait
+from .sdk import (AttributeEnum, EventEnum, aw_int, aw_query,
+                  aw_sector_from_cell, aw_wait)
 
 
 class Query:    
@@ -91,7 +91,7 @@ class Query:
         else:
             aw_query(self.x, self.z, self._sequence)
 
-    def run(self, instance: Instance) -> List[CellObjectData]:
+    def run(self, instance: "Instance") -> List[CellObjectData]:
         """
         Runs the query.
 
