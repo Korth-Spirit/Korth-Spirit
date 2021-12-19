@@ -20,11 +20,9 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from typing import List
 
-from sdk import CallBackEnum
-
 from .data import CellObjectData
 from .events import Event
-from .sdk import (AttributeEnum, EventEnum, aw_int, aw_query,
+from .sdk import (AttributeEnum, CallBackEnum, EventEnum, aw_int, aw_query,
                   aw_sector_from_cell, aw_wait)
 
 
