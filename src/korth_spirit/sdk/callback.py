@@ -22,7 +22,6 @@ from enum import Enum, auto
 
 
 class CallBackEnum(Enum):
-class CallBackEnum(Enum):
     AW_CALLBACK_CREATE = 0
     AW_CALLBACK_LOGIN = auto()
     AW_CALLBACK_ENTER = auto()
