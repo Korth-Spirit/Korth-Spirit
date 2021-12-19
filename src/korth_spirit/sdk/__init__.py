@@ -600,20 +600,17 @@ def aw_say(message: str) -> None:
     if rc:
         raise Exception(f"Failed to send message: {rc}")
 
-def aw_sector_from_cell(cell: int) -> None:
+def aw_sector_from_cell(cell: int) -> int:
     """
     Get the sector that a cell is located in.
 
     Args:
         cell (int): The cell.
-
-    Raises:
-        Exception: If the cell is invalid.
     """
-    rc = SDK.aw_sector_from_cell(cell)
-
-    if rc:
-        raise Exception(f"Failed to get sector: {rc}")
+    SDK.aw_sector_from_cell.argtypes = [c_int]
+    SDK.aw_sector_from_cell.restype = c_int
+    
+    return SDK.aw_sector_from_cell(cell)
 
 def aw_server_admin(domain: str, port: int, password: str, instance: c_void_p) -> int:
     raise NotImplementedError('This function is not implemented yet.')

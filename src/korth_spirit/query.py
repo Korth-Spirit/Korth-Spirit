@@ -45,8 +45,8 @@ class Query:
         Args:
             event (Event): The event that was triggered.
         """        
-        sector_x = aw_sector_from_cell(event.cell_X)
-        sector_z = aw_sector_from_cell(event.cell_Z)
+        sector_x = aw_sector_from_cell(event.cell_x)
+        sector_z = aw_sector_from_cell(event.cell_z)
 
         self._sequence[sector_x][sector_z] = aw_int(AttributeEnum.AW_CELL_SEQUENCE)
 
@@ -104,6 +104,7 @@ class Query:
         instance.subscribe(CallBackEnum.AW_CALLBACK_QUERY, self.on_query_finished)
 
         self._running = True
+        aw_query(self.x, self.z, self._sequence)
         while self._running:
             aw_wait()
 
