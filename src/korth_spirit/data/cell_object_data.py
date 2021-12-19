@@ -35,6 +35,6 @@ class CellObjectData:
     tilt: int
     roll: int
     model: str
-    decription: str
+    description: str
     action: str
     data: bytes

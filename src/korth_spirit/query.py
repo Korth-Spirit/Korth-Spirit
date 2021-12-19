@@ -74,7 +74,7 @@ class Query:
                 tilt = event.object_tilt,
                 roll = event.object_roll,
                 model = event.object_model,
-                decription = event.object_description,
+                description = event.object_description,
                 action = event.object_action,
                 data = event.object_data,
             )
