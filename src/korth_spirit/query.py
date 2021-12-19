@@ -109,7 +109,7 @@ class Query:
         self._running = True
         aw_query(self.x, self.z, self._sequence)
         while self._running:
-            aw_wait()
+            aw_wait(1)
 
         instance.unsubscribe(EventEnum.AW_EVENT_CELL_BEGIN, self.on_cell_begin)
         instance.unsubscribe(EventEnum.AW_EVENT_CELL_OBJECT, self.on_receive_object)
