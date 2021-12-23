@@ -293,7 +293,9 @@ def aw_data_set(attribute: AttributeEnum, value: bytes) -> None:
     SDK.aw_data_set.restype = c_int
     SDK.aw_data_set.argtypes = [c_int, c_char_p, c_uint]
 
-    rc = SDK.aw_data_set(attribute.value, value, len(value))
+    length = len(value) if value else 0
+
+    rc = SDK.aw_data_set(attribute.value, value, length)
 
     if rc:
         raise Exception(f"Failed to set data attribute: {rc}")
@@ -572,8 +574,7 @@ def aw_object_add(data: ObjectCreateData) -> ObjectCreatedData:
     for field in fields(data):
         value = getattr(data, field.name, None)
         attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
-        if value:
-            write_data(attr, value)
+        write_data(attr, value)
 
     rc = SDK.aw_object_add()
 
