@@ -386,9 +386,7 @@ class AttributeEnum(Enum):
     AW_BOTMENU_FROM_SESSION = auto()
     AW_BOTMENU_QUESTION = auto()
     AW_BOTMENU_ANSWER = auto()
-
     # attributes below are not used by the SDK
-
     AW_CONTACT_NUMBER = auto()
     AW_CONTACT_STATUS = auto()
     AW_CONTACT_NAME = auto()
@@ -421,9 +419,7 @@ class AttributeEnum(Enum):
     AW_REGISTER_RESULT = auto()
     AW_REGISTER_METHOD = auto()
     AW_VOIP_DATA = auto()
-
     # attributes below are used by the SDK
-
     AW_UNIVERSE_CAV_PATH = auto()
     AW_CITIZEN_PAV_ENABLED = auto()
     AW_CAV_CITIZEN = auto()
@@ -469,7 +465,6 @@ class AttributeEnum(Enum):
     AW_HUD_ELEMENT_CLICK_Z = auto()
     AW_HUD_ELEMENT_TEXTURE_OFFSET_X = auto()
     AW_HUD_ELEMENT_TEXTURE_OFFSET_Y = auto()
-
     AW_CITIZEN_PRIVACY = auto()
     AW_CITIZEN_TRIAL = auto()
     AW_UNIVERSE_CAV_PATH2 = auto()
@@ -492,7 +487,6 @@ class AttributeEnum(Enum):
     AW_OBJECT_SESSION_TO = auto()
     AW_WORLD_CAMERA_ZOOM = auto()
     AW_WORLD_WAIT_LIMIT = auto()
-
     AW_XFER_DISCONNECT_REASON = auto()
     AW_XFER_TYPE = auto()
     AW_XFER_FROM_SESSION = auto()
@@ -517,7 +511,6 @@ class AttributeEnum(Enum):
     AW_LICENSE_XFER_SHOW_RIGHTS = auto()
     AW_XFER_SHOW_CAPABILITY = auto()
     AW_XFER_SHOW_SEQUENCE = auto()
-
     AW_LASER_BEAM_SOURCE_TYPE = auto()
     AW_LASER_BEAM_SOURCE_ID = auto()
     AW_LASER_BEAM_SOURCE_X = auto()
@@ -531,19 +524,13 @@ class AttributeEnum(Enum):
     AW_LASER_BEAM_STYLE = auto()
     AW_LASER_BEAM_COLOR = auto()
     AW_LASER_BEAM_DEFINITION = auto()
-
     AW_WORLD_VOIPCAST_HOST = auto()
     AW_WORLD_VOIPCAST_PORT = auto()
-
     AW_MY_ZONE = auto()
     AW_AVATAR_ZONE = auto()
-
     AW_UNIVERSE_PER_CITIZEN_CAV = auto()
-
     AW_XFER_OWNER = auto()
-
     AW_WORLD_ENABLE_WIREFRAME = auto()
-
     AW_SHOPITEM_ID = auto()
     AW_SHOPITEM_CREATION = auto()
     AW_SHOPITEM_EXPIRATION = auto()
@@ -553,7 +540,6 @@ class AttributeEnum(Enum):
     AW_SHOPITEM_DESCRIPTION = auto()
     AW_SHOPITEM_OBJECT = auto()
     AW_SHOPITEM_DEFINITION = auto()
-
     AW_SHOPTRANS_ID = auto()
     AW_SHOPTRANS_CITIZEN = auto()
     AW_SHOPTRANS_ITEMID = auto()
@@ -564,15 +550,12 @@ class AttributeEnum(Enum):
     AW_SHOPTRANS_TOTAL = auto()
     AW_SHOPTRANS_ITERATOR = auto()
     AW_SHOPTRANS_MORE = auto()
-
     AW_SHOPITEM_CHANGED = auto()
     AW_LICENSE_SHOP = auto()
-
     AW_CITIZEN_PWD_EXP = auto()
     AW_UNIVERSE_EXPIRATION_DATE = auto()
     AW_UNIVERSE_IMMIGRATION = auto()
     AW_CITIZEN_SEC_PASSWORD = auto()
-
     AW_CHAT_CHANNEL = auto()
     AW_CHAT_CITIZEN = auto()
     AW_WORLD_CHAT_CHANNEL1_NAME = auto()
@@ -585,38 +568,30 @@ class AttributeEnum(Enum):
     AW_WORLD_CHAT_CHANNEL3_COLOR = auto()
     AW_WORLD_CHAT_CHANNEL4_COLOR = auto()
     AW_WORLD_CHAT_CHANNEL5_COLOR = auto()
-
     AW_WORLDLIST_BOTS = auto()
-
     AW_LICENSE_OWNER = auto()
     AW_WORLD_OWNER_CAPABILITY = auto()
-
     AW_WORLD_RIGHTS_OFFERED = auto()
     AW_WORLD_RIGHTS_ENTER_COSTS = auto()
     AW_WORLD_RIGHTS_BUILD_COSTS = auto()
     AW_WORLD_RIGHTS_V4_OBJS_COSTS = auto()
     AW_WORLD_RIGHTS_SPECIAL_OBJS_COSTS = auto()
     AW_WORLD_RIGHTS_SPECIAL_CMDS_COSTS = auto()
-
     AW_PURCHASE_KIND = auto()
     AW_PURCHASE_TYPE = auto()
     AW_PURCHASE_COSTS = auto()
-
     AW_CITRIGHT_TYPES = auto()
-
     AW_DLG_ORIGINATOR_SESSION = auto()
     AW_DLG_RECIPIENT_SESSION = auto()
     AW_DLG_REFERENCE = auto()
     AW_DLG_OPTION = auto()
     AW_DLG_TITLE = auto()
     AW_DLG_TEXT = auto()
-
     AW_DLG_ANSWER_ORIGINATOR_SESSION = auto()
     AW_DLG_ANSWER_RECIPIENT_SESSION = auto()
     AW_DLG_ANSWER_REFERENCE = auto()
     AW_DLG_ANSWER_OPTION = auto()
     AW_DLG_ANSWER_TEXT = auto()
-
     AW_WORLD_WATER_USE_SHADERS = auto()
     AW_WORLD_WATER_SURFACE_COLOR = auto()
     AW_WORLD_WATER_TINT_COLOR = auto()
@@ -649,27 +624,20 @@ class AttributeEnum(Enum):
     AW_WORLD_WATER_SHALLOW_DISTORTION = auto()
     AW_WORLD_WATER_SHALLOW_SCALE = auto()
     AW_WORLD_WATER_GRID_SCALE = auto()
-
     AW_UNIVERSE_BUY_CREDITS_URL = auto()
     AW_CITIZEN_ONLINE_STATE = auto()
     AW_CITIZEN_TITLE_NUMBER = auto()
     AW_CITIZEN_TITLE_STARS = auto()
     AW_UNIVERSE_IMMIGRATE_URL = auto()
     AW_CITIZEN_SESSION = auto()
-
     AW_CHAT_TARGET_TYPES = auto()
     AW_CHAT_TARGET_SESSION = auto()
-
     AW_CITIZEN_HASH = auto()
-
     AW_XFER_DATA4 = auto()
     AW_XFER_DATA5 = auto()
-
     AW_LICENSE_LAST_PORT = auto()
     AW_LICENSE_LAST_STOP = auto()
-
     AW_CONTACT_LAST_SEEN = auto()
-
     AW_WORLD_DISABLE_BALLOONS = auto()
     AW_WORLD_MAXIMUM_VISIBILITY = auto()
     AW_TELEGRAM_JOURNAL_START = auto()

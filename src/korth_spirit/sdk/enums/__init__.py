@@ -19,6 +19,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from .attribute import AttributeEnum
+from .attribute_types import AttributeTypes
 from .callback import CallBackEnum
 from .event import EventEnum
 from .rights import RightsEnum
@@ -26,6 +27,7 @@ from .world import WorldEnum
 
 __all__ = [
     'AttributeEnum',
+    'AttributeTypes',
     'CallBackEnum',
     'EventEnum',
     'RightsEnum',

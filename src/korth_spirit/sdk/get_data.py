@@ -21,23 +21,30 @@
 from typing import Type, Union
 
 from . import aw_bool, aw_data, aw_float, aw_int, aw_string
-from .enums.attribute import AttributeEnum
+from .enums import ATTRIBUTE_TYPES, AttributeEnum
 
 
-def get_data(attribute: AttributeEnum, type: Type) -> Union[int, float, bool, str]:
+def get_data(attribute: AttributeEnum, type: Type = None) -> Union[int, float, bool, str]:
     """
     Gets a data attribute.
 
     Args:
         attribute (AttributeEnum): The attribute name.
-        type (Type): The type of the attribute.
+        type (Type): The type of the attribute. Defaults to None.
 
     Raises:
         Exception: If the attribute could not be retrieved.
+        Exception: If the attribute type is not found.
 
     Returns:
         Union[int, float, bool, str, bytes]: The attribute value.
     """
+    if type is None:
+        try:
+            type = ATTRIBUTE_TYPES[attribute]
+        except KeyError:
+            raise Exception(f"No attribute type for {attribute}")
+
     switcher = {
         int: aw_int,
         str: aw_string,

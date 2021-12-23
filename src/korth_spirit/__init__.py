@@ -21,15 +21,19 @@
 from atexit import register
 
 from .instance import Instance
-from .sdk import (AW_BUILD, AttributeEnum, CallBackEnum, EventEnum, aw_init,
-                  aw_term)
+from .sdk import AW_BUILD, aw_init, aw_term, aw_wait
+from .sdk.enums import (AttributeEnum, CallBackEnum, EventEnum, RightsEnum,
+                        WorldEnum)
 
 aw_init(AW_BUILD)
 register(aw_term)
 
 __all__ = [
+    'aw_wait',
     'Instance'
     'AttributeEnum',
     'CallBackEnum',
-    'EventEnum'
+    'EventEnum',
+    'RightsEnum',
+    'WorldEnum'
 ]
