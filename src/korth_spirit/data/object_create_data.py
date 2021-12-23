@@ -34,4 +34,4 @@ class ObjectCreateData:
     description: str = None
     action: str = None
     data: bytes = None
-    call_back_reference: str = None
+    callback_reference: str = None
