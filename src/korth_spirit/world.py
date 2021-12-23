@@ -21,7 +21,7 @@
 from typing import Any
 
 from .sdk import aw_instance_set
-from .sdk.enums.world import WorldAttributesEnum
+from .sdk.enums import WorldEnum
 from .sdk.get_data import get_data
 from .sdk.write_data import write_data
 
@@ -52,7 +52,7 @@ class World:
         try:
             aw_instance_set(self.instance._instance)
             name = name.lower()
-            attribute = WorldAttributesEnum['AW_WORLD_' + name.upper()]
+            attribute = WorldEnum['AW_WORLD_' + name.upper()]
             return get_data(attribute.value)
         except KeyError:
             raise AttributeError(f"No world attribute named {name}")
@@ -71,7 +71,7 @@ class World:
         try:
             aw_instance_set(self.instance._instance)
             name = name.lower()
-            attribute = WorldAttributesEnum['AW_WORLD_' + name.upper()]
+            attribute = WorldEnum['AW_WORLD_' + name.upper()]
             write_data(attribute.value, value)
         except KeyError:
             raise AttributeError(f"No world attribute named {name}")
