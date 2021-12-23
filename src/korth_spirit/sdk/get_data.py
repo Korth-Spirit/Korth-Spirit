@@ -53,7 +53,4 @@ def get_data(attribute: Union[int, AttributeEnum], type: Type = None) -> Union[i
         bytes: aw_data
     }
 
-    if type(attribute) is int:
-        attribute = AttributeEnum(attribute)
-
-    return switcher[type](attribute.value)
+    return switcher[type](attribute)
