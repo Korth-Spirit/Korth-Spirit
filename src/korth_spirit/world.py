@@ -18,10 +18,10 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from typing import Any
+from typing import Any, Union
 
 from .sdk import aw_instance_set
-from .sdk.enums import WorldEnum
+from .sdk.enums import AttributeEnum, WorldEnum
 from .sdk.get_data import get_data
 from .sdk.write_data import write_data
 
@@ -36,42 +36,46 @@ class World:
         """
         self.instance = instance
 
-    def get_attribute(self, name: str) -> Any:
+    def get_attribute(self, name: Union[str, WorldEnum]) -> Any:
         """
         Get a world attribute.
 
         Args:
-            name (str): The name of the attribute to get.
+            name (Union[str, WorldEnum]): The name of the attribute to get.
 
         Raises:
             AttributeError: If the attribute does not exist.
 
         Returns:
             Any: The value of the attribute.
-        """        
-        try:
-            aw_instance_set(self.instance._instance)
-            name = name.lower()
-            attribute = WorldEnum['AW_WORLD_' + name.upper()]
-            return get_data(attribute.value)
-        except KeyError:
-            raise AttributeError(f"No world attribute named {name}")
+        """
+        if type(name) is str:
+            try:
+                attribute = WorldEnum['AW_WORLD_' + name.upper()]
+            except KeyError:
+                raise AttributeError(f"No world attribute named {name}")
 
-    def set_attribute(self, name: str, value: Any) -> None:
+        aw_instance_set(self.instance._instance)
+
+        return get_data(AttributeEnum(attribute.value))
+
+    def set_attribute(self, name: Union[str, WorldEnum], value: Any) -> None:
         """
         Set a world attribute.
 
         Args:
-            name (str): The name of the attribute to set.
+            name (Union[str, WorldEnum]): The name of the attribute to set.
             value (Any): The value to set the attribute to.
 
         Raises:
             AttributeError: If the attribute does not exist.
         """
-        try:
-            aw_instance_set(self.instance._instance)
-            name = name.lower()
-            attribute = WorldEnum['AW_WORLD_' + name.upper()]
-            write_data(attribute.value, value)
-        except KeyError:
-            raise AttributeError(f"No world attribute named {name}")
+        if type(name) is str:
+            try:
+                attribute = WorldEnum['AW_WORLD_' + name.upper()]
+            except KeyError:
+                raise AttributeError(f"No world attribute named {name}")
+
+        
+        aw_instance_set(self.instance._instance)
+        write_data(AttributeEnum(attribute.value), value)

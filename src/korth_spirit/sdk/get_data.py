@@ -24,12 +24,12 @@ from . import aw_bool, aw_data, aw_float, aw_int, aw_string
 from .enums import ATTRIBUTE_TYPES, AttributeEnum
 
 
-def get_data(attribute: AttributeEnum, type: Type = None) -> Union[int, float, bool, str]:
+def get_data(attribute: Union[int, AttributeEnum], type: Type = None) -> Union[int, float, bool, str]:
     """
     Gets a data attribute.
 
     Args:
-        attribute (AttributeEnum): The attribute name.
+        attribute (Union[int, AttributeEnum]): The attribute to get.
         type (Type): The type of the attribute. Defaults to None.
 
     Raises:
@@ -53,4 +53,7 @@ def get_data(attribute: AttributeEnum, type: Type = None) -> Union[int, float, b
         bytes: aw_data
     }
 
-    return switcher[type](attribute)
+    if type(attribute) is int:
+        attribute = AttributeEnum(attribute)
+
+    return switcher[type](attribute.value)
