@@ -18,30 +18,16 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from typing import Union
+from .attribute import AttributeEnum
+from .callback import CallBackEnum
+from .event import EventEnum
+from .rights import RightsEnum
+from .world import WorldEnum
 
-from . import aw_bool_set, aw_float_set, aw_int_set, aw_string_set
-from .enums.attribute import AttributeEnum
-
-
-def write_data(attribute: AttributeEnum, value: Union[int, str, bool, float]) -> None:
-    """
-    Sets an initialization attribute.
-
-    Args:
-        attribute (AttributeEnum): The attribute name.
-        value (Union[int, str, bool, float]): The attribute value.
-
-    Raises:
-        Exception: If the attribute could not be set.
-    """
-    attribute_type = type(value)
-
-    switcher = {
-        int: aw_int_set,
-        str: aw_string_set,
-        bool: aw_bool_set,
-        float: aw_float_set,
-    }
-
-    switcher[attribute_type](attribute, value)
+__all__ = [
+    'AttributeEnum',
+    'CallBackEnum',
+    'EventEnum',
+    'RightsEnum',
+    'WorldEnum'
+]

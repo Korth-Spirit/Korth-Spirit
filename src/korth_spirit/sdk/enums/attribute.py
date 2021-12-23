@@ -18,10 +18,10 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from enum import Enum, auto
+from enum import IntEnum, auto
 
 
-class AttributeEnum(Enum):
+class AttributeEnum(IntEnum):
     AW_LOGIN_NAME = 0
     AW_LOGIN_PASSWORD = auto()
     AW_LOGIN_OWNER = auto()

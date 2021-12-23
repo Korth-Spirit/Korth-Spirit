@@ -18,30 +18,21 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from typing import Union
+from enum import IntEnum
 
-from . import aw_bool_set, aw_float_set, aw_int_set, aw_string_set
-from .enums.attribute import AttributeEnum
+from .attribute import AttributeEnum
 
 
-def write_data(attribute: AttributeEnum, value: Union[int, str, bool, float]) -> None:
-    """
-    Sets an initialization attribute.
-
-    Args:
-        attribute (AttributeEnum): The attribute name.
-        value (Union[int, str, bool, float]): The attribute value.
-
-    Raises:
-        Exception: If the attribute could not be set.
-    """
-    attribute_type = type(value)
-
-    switcher = {
-        int: aw_int_set,
-        str: aw_string_set,
-        bool: aw_bool_set,
-        float: aw_float_set,
-    }
-
-    switcher[attribute_type](attribute, value)
+class RightsEnum(IntEnum):
+    AW_WORLD_BOTS_RIGHT = AttributeEnum.AW_WORLD_BOTS_RIGHT.value
+    AW_WORLD_BUILD_RIGHT = AttributeEnum.AW_WORLD_BUILD_RIGHT.value
+    AW_WORLD_EJECT_RIGHT = AttributeEnum.AW_WORLD_EJECT_RIGHT.value
+    AW_WORLD_EMINENT_DOMAIN_RIGHT = AttributeEnum.AW_WORLD_EMINENT_DOMAIN_RIGHT.value
+    AW_WORLD_ENTER_RIGHT = AttributeEnum.AW_WORLD_ENTER_RIGHT.value
+    AW_WORLD_PUBLIC_SPEAKER_RIGHT = AttributeEnum.AW_WORLD_PUBLIC_SPEAKER_RIGHT.value
+    AW_WORLD_SPEAK_RIGHT = AttributeEnum.AW_WORLD_SPEAK_RIGHT.value
+    AW_WORLD_SPECIAL_COMMANDS_RIGHT = AttributeEnum.AW_WORLD_SPECIAL_COMMANDS_RIGHT.value
+    AW_WORLD_SPECIAL_OBJECTS_RIGHT = AttributeEnum.AW_WORLD_SPECIAL_OBJECTS_RIGHT.value
+    AW_WORLD_TERRAIN_RIGHT = AttributeEnum.AW_WORLD_TERRAIN_RIGHT.value
+    AW_WORLD_VOIP_RIGHT = AttributeEnum.AW_WORLD_VOIP_RIGHT.value
+    AW_WORLD_V4_OBJECTS_RIGHT = AttributeEnum.AW_WORLD_V4_OBJECTS_RIGHT.value

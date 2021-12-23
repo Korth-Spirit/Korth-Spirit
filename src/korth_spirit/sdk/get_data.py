@@ -21,7 +21,7 @@
 from typing import Type, Union
 
 from . import aw_bool, aw_data, aw_float, aw_int, aw_string
-from .attribute import AttributeEnum
+from .enums.attribute import AttributeEnum
 
 
 def get_data(attribute: AttributeEnum, type: Type) -> Union[int, float, bool, str]:

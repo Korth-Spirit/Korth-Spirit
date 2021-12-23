@@ -18,30 +18,24 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from typing import Union
-
-from . import aw_bool_set, aw_float_set, aw_int_set, aw_string_set
-from .enums.attribute import AttributeEnum
+from korth_spirit.sdk import aw_has_world_right, aw_instance_set
+from korth_spirit.sdk.enums import RightsEnum
 
 
-def write_data(attribute: AttributeEnum, value: Union[int, str, bool, float]) -> None:
-    """
-    Sets an initialization attribute.
+class Avatar:
+    def __init__(self, instance: "Instance", citizen: int) -> None:
+        """
+        Constructor of an avatar.
 
-    Args:
-        attribute (AttributeEnum): The attribute name.
-        value (Union[int, str, bool, float]): The attribute value.
+        Args:
+            instance (Instance): The bot instance to gather information on the avatar from.
+            citizen (int): The citizen number of the avatar.
+        """        
+        aw_instance_set(self._instance)
 
-    Raises:
-        Exception: If the attribute could not be set.
-    """
-    attribute_type = type(value)
-
-    switcher = {
-        int: aw_int_set,
-        str: aw_string_set,
-        bool: aw_bool_set,
-        float: aw_float_set,
-    }
-
-    switcher[attribute_type](attribute, value)
+        for right in RightsEnum:
+            setattr(
+                self,
+                right.name.replace('AW_WORLD_', '').lower(),
+                aw_has_world_right(citizen, right.value)
+            )

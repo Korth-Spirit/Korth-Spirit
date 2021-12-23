@@ -27,9 +27,10 @@ from typing import List, Optional, Union
 from korth_spirit.data import (AddressData, LoginData, ObjectChangeData,
                                StateChangeData)
 
-from .attribute import AttributeEnum
-from .callback import CallBackEnum
-from .event import EventEnum
+from .enums.attribute import AttributeEnum
+from .enums.callback import CallBackEnum
+from .enums.event import EventEnum
+from .enums.rights import RightsEnum
 
 SDK_FILE = './aw64.dll'
 SDK = CDLL(SDK_FILE)
@@ -366,8 +367,18 @@ def aw_float_set(attribute: AttributeEnum, value: float) -> None:
     if rc:
         raise Exception(f"Failed to set initialization attribute: {rc}")
 
-def aw_has_world_right(citizen: int, right: AttributeEnum) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_has_world_right(citizen: int, right: RightsEnum) -> bool:
+    """
+    Checks if a citizen has a specified world right.
+
+    Args:
+        citizen (int): The citizen number.
+        right (RightsEnum): The right.
+
+    Returns:
+        bool: True if the citizen has the right, False otherwise.
+    """    
+    return SDK.aw_has_world_right(citizen, right.value)
 
 def aw_has_world_right_all(right: AttributeEnum) -> int:
     raise NotImplementedError('This function is not implemented yet.')

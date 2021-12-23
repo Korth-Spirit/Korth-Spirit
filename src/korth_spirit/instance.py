@@ -22,12 +22,14 @@ from dataclasses import dataclass, field
 from typing import List
 
 from korth_spirit.data import CellObjectData, LoginData, StateChangeData
-from korth_spirit.query import Query
 
+from .avatar import Avatar
 from .coords import Coordinates
 from .events import EventBus
+from .query import Query
 from .sdk import (EventEnum, aw_create, aw_destroy, aw_enter, aw_instance_set,
                   aw_login, aw_say, aw_state_change, aw_whisper)
+from .world import World
 
 
 @dataclass
@@ -163,6 +165,27 @@ class Instance:
         aw_instance_set(self._instance)
 
         return Query(x, z).run(self)
+
+    def get_avatar(self, citizen: int) -> Avatar:
+        """
+        Get the avatar for the specified citizen.
+
+        Args:
+            citizen (int): The citizen.
+
+        Returns:
+            Avatar: The avatar.
+        """
+        return Avatar(self, citizen)
+
+    def get_world(self) -> World:
+        """
+        Get the current world.
+
+        Returns:
+            str: The current world.
+        """
+        return World(self)
 
     def subscribe(self, event: EventEnum, subscriber: callable) -> "Instance":
         """
