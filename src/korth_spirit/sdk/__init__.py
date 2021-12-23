@@ -25,7 +25,7 @@ from os import path
 from typing import List, Optional, Union
 
 from korth_spirit.data import (AddressData, LoginData, ObjectChangeData,
-                               StateChangeData)
+                               ObjectDeleteData, StateChangeData)
 
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
@@ -552,19 +552,14 @@ def aw_object_change(data: ObjectChangeData) -> None:
     Raises:
         Exception: If the object could not be changed.
         Exception: If the change data has an unsupported type.
-    """    
+    """
+    from .write_data import write_data
+
     for field in fields(data):
         value = getattr(data, field.name, None)
         attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
         if value:
-            if type(value) == int:
-                aw_int_set(attr, value)
-            elif type(value) == str:
-                aw_string_set(attr, value)
-            elif type(value) == bytes:
-                aw_data_set(attr, value)
-            else:
-                raise Exception(f'Unsupported type: {type(value)}')
+            write_data(attr, value)
 
     rc = SDK.aw_object_change()
 
@@ -574,8 +569,28 @@ def aw_object_change(data: ObjectChangeData) -> None:
 def aw_object_click() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_object_delete() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_object_delete(data: ObjectDeleteData) -> None:
+    """
+    Deletes an object.
+
+    Args:
+        data (ObjectDeleteData): The object data.
+
+    Raises:
+        Exception: If the object could not be deleted.
+    """
+    from .write_data import write_data
+
+    for field in fields(data):
+        value = getattr(data, field.name, None)
+        attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
+        if value:
+            write_data(attr, value)
+
+    rc = SDK.aw_object_delete()
+
+    if rc:
+        raise Exception(f"Failed to delete object: {rc}")
 
 def aw_object_load() -> int:
     raise NotImplementedError('This function is not implemented yet.')
