@@ -36,12 +36,12 @@ class World:
         """
         self.instance = instance
 
-    def get_attribute(self, name: Union[str, WorldEnum]) -> Any:
+    def get_attribute(self, attribute: Union[str, WorldEnum]) -> Any:
         """
         Get a world attribute.
 
         Args:
-            name (Union[str, WorldEnum]): The name of the attribute to get.
+            attribute (Union[str, WorldEnum]): The name of the attribute to get.
 
         Raises:
             AttributeError: If the attribute does not exist.
@@ -49,32 +49,32 @@ class World:
         Returns:
             Any: The value of the attribute.
         """
-        if type(name) is str:
+        if type(attribute) is str:
             try:
-                attribute = WorldEnum['AW_WORLD_' + name.upper()]
+                attribute = WorldEnum['AW_WORLD_' + attribute.upper()]
             except KeyError:
-                raise AttributeError(f"No world attribute named {name}")
+                raise AttributeError(f"No world attribute named {attribute}")
 
         aw_instance_set(self.instance._instance)
 
         return get_data(AttributeEnum(attribute.value))
 
-    def set_attribute(self, name: Union[str, WorldEnum], value: Any) -> None:
+    def set_attribute(self, attribute: Union[str, WorldEnum], value: Any) -> None:
         """
         Set a world attribute.
 
         Args:
-            name (Union[str, WorldEnum]): The name of the attribute to set.
+            attribute (Union[str, WorldEnum]): The name of the attribute to set.
             value (Any): The value to set the attribute to.
 
         Raises:
             AttributeError: If the attribute does not exist.
         """
-        if type(name) is str:
+        if type(attribute) is str:
             try:
-                attribute = WorldEnum['AW_WORLD_' + name.upper()]
+                attribute = WorldEnum['AW_WORLD_' + attribute.upper()]
             except KeyError:
-                raise AttributeError(f"No world attribute named {name}")
+                raise AttributeError(f"No world attribute named {attribute}")
 
         
         aw_instance_set(self.instance._instance)
