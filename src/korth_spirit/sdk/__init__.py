@@ -27,10 +27,7 @@ from typing import List, Optional, Union
 from korth_spirit.data import (AddressData, LoginData, ObjectChangeData,
                                StateChangeData)
 
-from .enums.attribute import AttributeEnum
-from .enums.callback import CallBackEnum
-from .enums.event import EventEnum
-from .enums.rights import RightsEnum
+from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
 SDK_FILE = './aw64.dll'
 SDK = CDLL(SDK_FILE)

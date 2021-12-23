@@ -18,12 +18,12 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from enum import IntEnum, auto
+from enum import Enum, auto
 
 from .attribute import AttributeEnum
 
 
-class WorldEnum(IntEnum):
+class WorldEnum(Enum):
     AW_WORLD_NAME = AttributeEnum.AW_WORLD_NAME.value
     AW_WORLD_TITLE = auto()
     AW_WORLD_BACKDROP = auto()
