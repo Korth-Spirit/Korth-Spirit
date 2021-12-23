@@ -18,22 +18,20 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from .address_data import AddressData
-from .cell_object_data import CellObjectData
-from .login_data import LoginData
-from .object_change_data import ObjectChangeData
-from .object_create_data import ObjectCreateData
-from .object_created_data import ObjectCreatedData
-from .object_delete_data import ObjectDeleteData
-from .state_change_data import StateChangeData
+from dataclasses import dataclass
 
-__all__ = [
-    "AddressData",
-    "CellObjectData",
-    "LoginData",
-    "ObjectChangeData",
-    "ObjectCreateData",
-    "ObjectCreatedData",
-    "ObjectDeleteData",
-    "StateChangeData",
-]
+
+@dataclass
+class ObjectCreateData:
+    type: int = None
+    x: int = None
+    y: int = None
+    z: int = None
+    yaw: int = None
+    tilt: int = None
+    roll: int = None
+    model: str = None
+    description: str = None
+    action: str = None
+    data: bytes = None
+    call_back_reference: str = None

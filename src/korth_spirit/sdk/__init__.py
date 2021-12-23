@@ -25,6 +25,7 @@ from os import path
 from typing import List, Optional, Union
 
 from korth_spirit.data import (AddressData, LoginData, ObjectChangeData,
+                               ObjectCreateData, ObjectCreatedData,
                                ObjectDeleteData, StateChangeData)
 
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
@@ -536,8 +537,39 @@ def aw_mover_set_state(id: int, state: int, model_num: int) -> int:
 def aw_noise(session_id: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_object_add() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_object_add(data: ObjectCreateData) -> ObjectCreatedData:
+    """
+    Creates an object.
+
+    Args:
+        data (ObjectCreateData): The object data.
+
+    Returns:
+        ObjectCreatedData: The created object data.
+    """
+    from .write_data import write_data
+    from .get_data import get_data
+
+    for field in fields(data):
+        value = getattr(data, field.name, None)
+        attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
+        if value:
+            write_data(attr, value)
+
+    rc = SDK.aw_object_add()
+
+    if rc:
+        raise Exception(f"Failed to create object: {rc}")
+
+    ret = ObjectCreatedData()
+    for field in fields(ret):
+        prepend = 'AW_OBJECT_'
+        if 'CELL' in field.name.upper():
+            prepend = 'AW_'
+        attr = getattr(AttributeEnum, f'{prepend}{field.name.upper()}')
+        setattr(ret, field.name, get_data(attr))
+
+    return ret
 
 def aw_object_bump() -> int:
     raise NotImplementedError('This function is not implemented yet.')
