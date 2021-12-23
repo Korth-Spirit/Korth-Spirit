@@ -21,7 +21,7 @@
 from typing import Union
 
 from . import aw_bool_set, aw_float_set, aw_int_set, aw_string_set
-from .enums import AttributeEnum, AttributeTypes
+from .enums import AttributeEnum
 
 
 def write_data(attribute: AttributeEnum, value: Union[int, str, bool, float]) -> None:
