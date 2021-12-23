@@ -20,11 +20,11 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from typing import Union
 
-from . import aw_bool_set, aw_float_set, aw_int_set, aw_string_set
-from .enums import AttributeEnum
+from . import aw_bool_set, aw_data_set, aw_float_set, aw_int_set, aw_string_set
+from .enums import ATTRIBUTE_TYPES, AttributeEnum
 
 
-def write_data(attribute: AttributeEnum, value: Union[int, str, bool, float]) -> None:
+def write_data(attribute: AttributeEnum, value: Union[int, str, bool, float] = None) -> None:
     """
     Sets an initialization attribute.
 
@@ -37,11 +37,15 @@ def write_data(attribute: AttributeEnum, value: Union[int, str, bool, float]) ->
     """
     attribute_type = type(value)
 
+    if attribute_type == type(None):
+        attribute_type = ATTRIBUTE_TYPES[attribute]
+
     switcher = {
         int: aw_int_set,
         str: aw_string_set,
         bool: aw_bool_set,
         float: aw_float_set,
+        bytes: aw_data_set
     }
 
     switcher[attribute_type](attribute, value)

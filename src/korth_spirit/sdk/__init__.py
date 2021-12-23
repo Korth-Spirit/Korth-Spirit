@@ -279,7 +279,26 @@ def aw_data(attribute: AttributeEnum) -> bytes:
 
     return SDK.aw_data(attribute.value, None)
 
-def aw_data_set(attribute: AttributeEnum, value: str, length: int) -> None:
+def aw_data_set(attribute: AttributeEnum, value: bytes) -> None:
+    """
+    Sets a data attribute.
+
+    Args:
+        attribute (AttributeEnum): The attribute name.
+        value (bytes): The attribute value.
+
+    Raises:
+        Exception: If the attribute could not be set.
+    """
+    SDK.aw_data_set.restype = c_int
+    SDK.aw_data_set.argtypes = [c_int, c_char_p, c_uint]
+
+    rc = SDK.aw_data_set(attribute.value, value, len(value))
+
+    if rc:
+        raise Exception(f"Failed to set data attribute: {rc}")
+
+def aw_delete_all_objects() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
 def aw_delete_all_objects() -> int:
