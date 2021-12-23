@@ -567,7 +567,10 @@ def aw_object_add(data: ObjectCreateData) -> ObjectCreatedData:
         if 'CELL' in field.name.upper():
             prepend = 'AW_'
         attr = getattr(AttributeEnum, f'{prepend}{field.name.upper()}')
-        setattr(ret, field.name, get_data(attr))
+        data = get_data(attr)
+
+        if data:
+            setattr(ret, field.name, data)
 
     return ret
 
