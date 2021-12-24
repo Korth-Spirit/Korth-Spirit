@@ -30,7 +30,7 @@ register(aw_term)
 
 __all__ = [
     'aw_wait',
-    'Instance'
+    'Instance',
     'AttributeEnum',
     'CallBackEnum',
     'EventEnum',

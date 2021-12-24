@@ -27,7 +27,7 @@ from typing import List, Optional, Union
 from korth_spirit.data import (AddressData, CellIteratorData, LoginData,
                                ObjectChangeData, ObjectCreateData,
                                ObjectCreatedData, ObjectDeleteData,
-                               StateChangeData.)
+                               StateChangeData)
 
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
