@@ -23,7 +23,10 @@ from dataclasses import dataclass
 
 @dataclass
 class ObjectChangeData:
-    id: int
+    old_number: int = None
+    old_x: int = None
+    old_z: int = None
+    id: int = None
     type: int = None
     owner: int = None
     build_timestamp: int = None

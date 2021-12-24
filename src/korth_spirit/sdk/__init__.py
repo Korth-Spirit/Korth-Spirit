@@ -633,8 +633,7 @@ def aw_object_change(data: ObjectChangeData) -> None:
     for field in fields(data):
         value = getattr(data, field.name, None)
         attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
-        if value:
-            write_data(attr, value)
+        write_data(attr, value)
 
     rc = SDK.aw_object_change()
 
