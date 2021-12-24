@@ -90,11 +90,5 @@ class World:
         Yields:
             Iterator[AWObject]: The objects in the world.
         """        
-        world_size = self.get_attribute(WorldEnum.AW_WORLD_SIZE)
-        half = int(ceil(world_size / 2))
-        scan_range = range(-half, half)
-
-        for x in scan_range:
-            for z in scan_range:
-                for obj in Query(x, z).run(self.instance):
-                    yield AWObject.from_cell_object(obj)
+        for obj in Query().run(self.instance):
+            yield AWObject.from_cell_object(obj)

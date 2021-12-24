@@ -216,6 +216,7 @@ def aw_cell_next(combine: bool = False, iterator: CellIteratorData = None) -> No
     if iterator:
         aw_int_set(AttributeEnum.AW_CELL_ITERATOR, iterator.iterator)
 
+    aw_bool_set(AttributeEnum.AW_CELL_COMBINE, combine)
     rc = SDK.aw_cell_next()
 
     if rc != 0:

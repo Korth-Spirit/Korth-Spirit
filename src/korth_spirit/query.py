@@ -26,7 +26,14 @@ from .sdk import EventEnum, aw_cell_next, aw_wait
 
 
 class Query:    
-    def __init__(self, x: int, z: int):
+    def __init__(self, x: int = None, z: int = None):
+        """
+        If x and z are not provided, the query will run until it fails.
+
+        Args:
+            x (int, optional): The x coordinate of the 3x3 sector. Defaults to None.
+            z (int, optional): The z coordinate of the 3x3 sector. Defaults to None.
+        """
         self.x = x
         self.z = z
         self._objects = []
@@ -70,14 +77,24 @@ class Query:
         """        
         instance.subscribe(EventEnum.AW_EVENT_CELL_OBJECT, self.on_receive_object)
 
-        aw_cell_next(
-            combine=False,
-            iterator=CellIteratorData(
-                x=self.x,
-                z=self.z,
+        if self.x and self.z:
+            aw_cell_next(
+                combine=False,
+                iterator=CellIteratorData(
+                    x=self.x,
+                    z=self.z,
+                )
             )
-        )
-        aw_wait(1)
+            aw_wait(1)
+        else:
+            try:
+                while True:
+                    aw_cell_next(
+                        combine=True,
+                    )
+                    aw_wait(1)
+            except Exception as e:
+                print(e)
 
         instance.unsubscribe(EventEnum.AW_EVENT_CELL_OBJECT, self.on_receive_object)
 
