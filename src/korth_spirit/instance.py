@@ -153,7 +153,7 @@ class Instance:
 
     def query(self, x: int, z: int) -> List[CellObjectData]:
         """
-        Query the sector objects in the 3x3 specified coordinates.
+        Query a cell.
 
         Args:
             x (int): The x coordinate.

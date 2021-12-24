@@ -24,9 +24,10 @@ from dataclasses import fields
 from os import path
 from typing import List, Optional, Union
 
-from korth_spirit.data import (AddressData, LoginData, ObjectChangeData,
-                               ObjectCreateData, ObjectCreatedData,
-                               ObjectDeleteData, StateChangeData)
+from korth_spirit.data import (AddressData, CellIteratorData, LoginData,
+                               ObjectChangeData, ObjectCreateData,
+                               ObjectCreatedData, ObjectDeleteData,
+                               StateChangeData.)
 
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
@@ -199,8 +200,26 @@ def aw_cav_delete() -> int:
 def aw_cav_request(citizen: int, session: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_cell_next() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_cell_next(combine: bool = False, iterator: CellIteratorData = None) -> None:
+    """
+    Queries the next cell in the cell iterator.
+    If combine is set to true this call will batch multiple cells.
+    A specific cell can be set by setting the iterator to zero and z and x cell coordinates.
+
+    Args:
+        combine (bool, optional): Whether to combine multiple cells. Defaults to False.
+        iterator (CellIteratorData, optional):  The cell iterator. Defaults to None.
+
+    Raises:
+        Exception: If the cell could not be queried.
+    """    
+    if iterator:
+        aw_int_set(AttributeEnum.AW_CELL_ITERATOR.value, iterator.iterator)
+
+    rc = SDK.aw_cell_next()
+
+    if rc != 0:
+        raise Exception(f'Failed to get the next cell. Error code: {rc}')
 
 def aw_check_right(citizen: int, right: str) -> int:
     raise NotImplementedError('This function is not implemented yet.')
@@ -568,8 +587,8 @@ def aw_object_add(data: ObjectCreateData) -> ObjectCreatedData:
     Returns:
         ObjectCreatedData: The created object data.
     """
-    from .write_data import write_data
     from .get_data import get_data
+    from .write_data import write_data
 
     for field in fields(data):
         value = getattr(data, field.name, None)

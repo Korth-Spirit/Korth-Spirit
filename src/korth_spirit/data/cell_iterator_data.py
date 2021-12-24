@@ -18,24 +18,32 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from .address_data import AddressData
-from .cell_iterator_data import CellIteratorData
-from .cell_object_data import CellObjectData
-from .login_data import LoginData
-from .object_change_data import ObjectChangeData
-from .object_create_data import ObjectCreateData
-from .object_created_data import ObjectCreatedData
-from .object_delete_data import ObjectDeleteData
-from .state_change_data import StateChangeData
+from ctypes import Structure, Union, c_int, c_short
+from dataclasses import dataclass
+
+class _C_Cell(Structure):
+    _fields_ = [
+        ("z", c_short),
+        ("x", c_short)
+    ]
+
+class _C_Interator(Union):
+    _fields_ = [("iterator", c_int),
+                ("cell", _C_Cell)]
+
+@dataclass
+class CellIteratorData:
+    iterator: int = 0
+    x: int = None
+    z: int = None
+
+    def __post_init__(self):
+        cell = _C_Cell(self.z, self.x)
+        self._c_iterator = _C_Interator()
+        self._c_iterator.cell = cell
+        self._c_iterator.iterator = self.iterator
+
 
 __all__ = [
-    "AddressData",
-    "CellIteratorData",
-    "CellObjectData",
-    "LoginData",
-    "ObjectChangeData",
-    "ObjectCreateData",
-    "ObjectCreatedData",
-    "ObjectDeleteData",
-    "StateChangeData",
+    "CellIteratorData"
 ]

@@ -20,39 +20,20 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from typing import List
 
+from korth_spirit.data.cell_iterator_data import CellIteratorData
+
 from .data import CellObjectData
 from .events import Event
-from .sdk import (AttributeEnum, CallBackEnum, EventEnum, aw_int, aw_query,
+from .sdk import (AttributeEnum, CallBackEnum, EventEnum, aw_cell_next, aw_int, aw_query,
                   aw_sector_from_cell, aw_wait)
 
 
 class Query:    
     def __init__(self, x: int, z: int):
-        self._running = False
         self.x = x
         self.z = z
         self._objects = []
-        self._sequence = [
-            [0, 0, 0],
-            [0, 0, 0],
-            [0, 0, 0],
-        ]
     
-    def on_cell_begin(self, event: Event):
-        """
-        This is the callback that is called when a cell begins.
-
-        Args:
-            event (Event): The event that was triggered.
-        """        
-        sector_x = aw_sector_from_cell(event.cell_x)
-        sector_z = aw_sector_from_cell(event.cell_z)
-
-        if (sector_x < -1 or sector_x > 1 or sector_z < -1 or sector_z > 1):
-            return
-        
-        self._sequence[sector_z + 1][sector_x + 1] = aw_int(AttributeEnum.AW_CELL_SEQUENCE)
-
     def on_receive_object(self, event: Event):
         """
         This is the callback that is called when an object is found in a cell.
@@ -80,18 +61,6 @@ class Query:
             )
         )
 
-    def on_query_finished(self, event: Event):
-        """
-        This is the callback that is called when the query finishes.
-
-        Args:
-            event (Event): The event that was triggered.
-        """        
-        if event.query_complete:
-            self._running = False
-        else:
-            aw_query(self.x, self.z, self._sequence)
-
     def run(self, instance: "Instance") -> List[CellObjectData]:
         """
         Runs the query.
@@ -102,17 +71,17 @@ class Query:
         Returns:
             List[CellObjectData]: The list of objects found in the 3x3 sector.
         """        
-        instance.subscribe(EventEnum.AW_EVENT_CELL_BEGIN, self.on_cell_begin)
         instance.subscribe(EventEnum.AW_EVENT_CELL_OBJECT, self.on_receive_object)
-        instance.subscribe(CallBackEnum.AW_CALLBACK_QUERY, self.on_query_finished)
 
-        self._running = True
-        aw_query(self.x, self.z, self._sequence)
-        while self._running:
-            aw_wait(1)
+        aw_cell_next(
+            combine=False,
+            iterator=CellIteratorData(
+                x=self.x,
+                z=self.z,
+            )
+        )
+        aw_wait(1)
 
-        instance.unsubscribe(EventEnum.AW_EVENT_CELL_BEGIN, self.on_cell_begin)
         instance.unsubscribe(EventEnum.AW_EVENT_CELL_OBJECT, self.on_receive_object)
-        instance.unsubscribe(CallBackEnum.AW_CALLBACK_QUERY, self.on_query_finished)
 
         return self._objects
