@@ -214,7 +214,7 @@ def aw_cell_next(combine: bool = False, iterator: CellIteratorData = None) -> No
         Exception: If the cell could not be queried.
     """    
     if iterator:
-        aw_int_set(AttributeEnum.AW_CELL_ITERATOR.value, iterator.iterator)
+        aw_int_set(AttributeEnum.AW_CELL_ITERATOR, iterator.iterator)
 
     rc = SDK.aw_cell_next()
 

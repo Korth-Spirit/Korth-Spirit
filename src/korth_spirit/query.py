@@ -20,12 +20,9 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from typing import List
 
-from korth_spirit.data.cell_iterator_data import CellIteratorData
-
-from .data import CellObjectData
+from .data import CellIteratorData, CellObjectData
 from .events import Event
-from .sdk import (AttributeEnum, CallBackEnum, EventEnum, aw_cell_next, aw_int, aw_query,
-                  aw_sector_from_cell, aw_wait)
+from .sdk import EventEnum, aw_cell_next, aw_wait
 
 
 class Query:    
