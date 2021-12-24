@@ -23,7 +23,17 @@ Please know this package is in alpha and a work in progress. The API is subject 
 Before using this project, you must agree to the Active Worlds Software Development Kit (SDK) license agreement. This can be found at [http://www.activeworlds.com/sdk/download.htm](http://www.activeworlds.com/sdk/download.htm). The Spirit of Korth is not affiliated with Active Worlds Inc. This project is not affiliated with Active Worlds Inc.
 
 
+Greeter Bot example using the Korth Spirit wrapper for the Active Worlds SDK.
 ```python
+bot.login(
+    citizen_number=int(input("Citizen Number: ")),
+    password=input("Password: ")
+).subscribe(
+    EventEnum.AW_EVENT_AVATAR_ADD,
+    lambda e: bot.say(f"Salutations {e.avatar_name}!")
+).enter_world(
+    world_name=input("World: ")
+).move_to(Coordinates(x=0, y=0, z=0))
 ```
 
 ## License
