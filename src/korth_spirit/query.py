@@ -94,7 +94,8 @@ class Query:
                     )
                     aw_wait(1)
             except Exception as e:
-                print(e)
+                if 'Error code: 74' not in str(e):
+                    raise e
 
         instance.unsubscribe(EventEnum.AW_EVENT_CELL_OBJECT, self.on_receive_object)
 
