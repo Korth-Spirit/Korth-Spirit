@@ -18,14 +18,15 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+from math import ceil
 from typing import Any, Iterable, Union
 
 from .aw_object import AWObject
+from .query import Query
 from .sdk import aw_instance_set
 from .sdk.enums import AttributeEnum, WorldEnum
 from .sdk.get_data import get_data
 from .sdk.write_data import write_data
-from .utilities import ceil_division
 
 
 class World:
@@ -84,16 +85,16 @@ class World:
 
     def query(self) -> Iterable[AWObject]:
         """
-        Queries the entire world. Assumes priveleges.
-        It is important to remember that we're scanning sectors of 8x8 cells in a 3x3 grid.
+        Query the world.
 
-        Returns:
-            Iterable[AWObject]: A list of the objects queried.
-        """
+        Yields:
+            Iterator[AWObject]: The objects in the world.
+        """        
         world_size = self.get_attribute(WorldEnum.AW_WORLD_SIZE)
-        scan_range = ceil_division(world_size, 8)
+        half = int(ceil(world_size / 2))
+        scan_range = range(-half, half)
 
-        for x in range(-scan_range, scan_range + 1):
-            for z in range(-scan_range, scan_range + 1):
-                for obj in self.instance.query(x * 8, z * 8):
+        for x in scan_range:
+            for z in scan_range:
+                for obj in Query(x, z).run(self.instance):
                     yield AWObject.from_cell_object(obj)
