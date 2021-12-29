@@ -19,9 +19,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from dataclasses import dataclass, field
-from typing import List
-
-from korth_spirit.data import CellObjectData, LoginData, StateChangeData
+from typing import Any, List
 
 from .avatar import Avatar
 from .coords import Coordinates
@@ -56,6 +54,8 @@ class Instance:
         Args:
             coords (Coordinates): The coordinates of the instance.
         """
+        from .data import StateChangeData
+        
         if not hasattr(self, '_instance'):
             self._coords = coords
             return
@@ -84,6 +84,8 @@ class Instance:
         Returns:
             Instance: The instance.
         """
+        from .data import LoginData
+
         aw_login(self._instance, LoginData(
             citizen=citizen_number,
             password=password,
@@ -150,7 +152,7 @@ class Instance:
         
         return self
 
-    def query(self, query_type: QueryEnum = QueryEnum.OBJECT, **kwargs) -> List[CellObjectData]:
+    def query(self, query_type: QueryEnum = QueryEnum.OBJECT, **kwargs) -> List[Any]:
         """
         Make a query from the instance.
 
@@ -159,7 +161,7 @@ class Instance:
             **kwargs: The query arguments.
 
         Returns:
-            List[CellObjectData]: [description]
+            List[Any]: The query results.
         """        
         aw_instance_set(self._instance)
 

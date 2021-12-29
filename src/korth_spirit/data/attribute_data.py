@@ -21,10 +21,6 @@
 from dataclasses import dataclass
 from typing import Any, Type
 
-from korth_spirit.sdk.enums.attribute import AttributeEnum
-
-from ..sdk.write_data import write_data
-
 
 @dataclass(frozen=True)
 class AttributeData:
@@ -41,6 +37,9 @@ class AttributeData:
         """
         Set the value of the attribute.
         """
+        from ..sdk.enums import AttributeEnum
+        from ..sdk.write_data import write_data
+        
         write_data(AttributeEnum[self.name], value)
 
         return AttributeData(

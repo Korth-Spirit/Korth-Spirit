@@ -21,7 +21,6 @@
 from dataclasses import dataclass
 from typing import Any
 
-from ..sdk import aw_object_add, aw_object_change
 from .object_change_data import ObjectChangeData
 from .object_create_data import ObjectCreateData
 
@@ -52,6 +51,8 @@ class CellObjectData:
             name (str): The name of the attribute.
             value (Any): The value of the attribute.
         """
+        from ..sdk import aw_object_change
+        
         copy = self.copy()
 
         setattr(copy, name, value)
@@ -76,6 +77,7 @@ class CellObjectData:
         Returns:
             CellObjectData: The new CellObjectData instance.
         """
+        from ..sdk import aw_object_add
 
         return CellObjectData(
             **aw_object_add(

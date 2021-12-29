@@ -24,11 +24,9 @@ from dataclasses import fields
 from os import path
 from typing import List, Optional, Union
 
-from korth_spirit.data import (AddressData, CellIteratorData, LoginData,
-                               ObjectChangeData, ObjectCreateData,
-                               ObjectCreatedData, ObjectDeleteData,
-                               StateChangeData)
-
+from ..data import (AddressData, CellIteratorData, LoginData, ObjectChangeData,
+                    ObjectCreateData, ObjectCreatedData, ObjectDeleteData,
+                    StateChangeData)
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
 SDK_FILE = './aw64.dll'
