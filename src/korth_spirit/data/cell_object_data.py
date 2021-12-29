@@ -56,11 +56,12 @@ class CellObjectData:
         
         orig = deepcopy(self.__dict__)
         orig.update({name: value})
+        number = orig.pop("number")
 
         aw_object_change(
             ObjectChangeData(
                 **orig,
-                old_number=orig.get("number"),
+                old_number=number,
                 old_x=orig.get("x"),
                 old_z=orig.get("z"),
             )
