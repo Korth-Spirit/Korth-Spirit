@@ -18,7 +18,7 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from copy import copy
+from copy import deepcopy
 from dataclasses import dataclass
 from typing import Any
 
@@ -54,9 +54,8 @@ class CellObjectData:
         """
         from ..sdk import aw_object_change
         
-        orig = copy(self)
-
-        setattr(orig, name, value)
+        orig = deepcopy(self.__dict__)
+        orig.update({name: value})
 
         aw_object_change(
             ObjectChangeData(
