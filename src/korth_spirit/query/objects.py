@@ -136,9 +136,7 @@ class ObjectQuery:
         Returns:
             List[CellObjectData]: The list of objects found in the 3x3 sector.
         """
-        x, z = kwargs.get('x'), kwargs.get('z')
-        
-        if x is not None and z is not None:
-            return self.query_specific(x, z)
+        if kwargs.get('x') and kwargs.get('z'):
+            return self.query_specific(**kwargs)
         
         return self.query_all()

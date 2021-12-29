@@ -116,9 +116,7 @@ class TerrainQuery:
         Returns:
             Iterable[TerrainNodeData]: The result of the query.
         """
-        x, z = kwargs.get("x"), kwargs.get("z")
-        
-        if x is None or z is None:
-            return self.query_all()
-        
-        return self.query_specific(x, z)
+        if kwargs.get("x") and kwargs.get("z"):
+            return self.query_specific(**kwargs)
+
+        return self.query_all()
