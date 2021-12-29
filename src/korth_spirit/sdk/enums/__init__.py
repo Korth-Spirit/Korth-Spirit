@@ -23,13 +23,11 @@ from .attribute_types import ATTRIBUTE_TYPES
 from .callback import CallBackEnum
 from .event import EventEnum
 from .rights import RightsEnum
-from .world import WorldEnum
 
 __all__ = [
     'AttributeEnum',
     'ATTRIBUTE_TYPES',
     'CallBackEnum',
     'EventEnum',
-    'RightsEnum',
-    'WorldEnum'
+    'RightsEnum'
 ]

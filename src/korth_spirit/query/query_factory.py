@@ -18,28 +18,33 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from .address_data import AddressData
-from .attribute_data import AttributeData
-from .cell_iterator_data import CellIteratorData
-from .cell_object_data import CellObjectData
-from .login_data import LoginData
-from .object_change_data import ObjectChangeData
-from .object_create_data import ObjectCreateData
-from .object_created_data import ObjectCreatedData
-from .object_delete_data import ObjectDeleteData
-from .state_change_data import StateChangeData
-from .terrain_node_data import TerrainNodeData
+from korth_spirit.query.world_attribute import WorldAttributeQuery
 
-__all__ = [
-    "AddressData",
-    "AttributeData",
-    "CellIteratorData",
-    "CellObjectData",
-    "LoginData",
-    "ObjectChangeData",
-    "ObjectCreateData",
-    "ObjectCreatedData",
-    "ObjectDeleteData",
-    "StateChangeData",
-    "TerrainNodeData",
-]
+from .objects import ObjectQuery
+from .query_enum import QueryEnum
+from .terrain import TerrainQuery
+
+
+class QueryFactory:
+    def __init__(self, instance: "Instance", query_type: QueryEnum = QueryEnum.OBJECT) -> None:
+        self.query_type = query_type
+        self.instance = instance
+
+    def __call__(self, **kwargs) -> "Query":
+        """
+        Creates a query.
+
+        Args:
+            **kwargs: The query arguments.
+
+        Returns:
+            Query: The query.
+        """
+        if self.query_type == QueryEnum.OBJECT:
+            return ObjectQuery(self.instance).query(**kwargs)
+        elif self.query_type == QueryEnum.TERRAIN:
+            return TerrainQuery(self.instance).query(**kwargs)
+        elif self.query_type == QueryEnum.WORLD:
+            return WorldAttributeQuery(self.instance).query(**kwargs)
+        
+        raise ValueError("Invalid query type.")

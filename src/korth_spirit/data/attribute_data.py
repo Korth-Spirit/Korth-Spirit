@@ -19,49 +19,32 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from dataclasses import dataclass
-from .data import CellObjectData
+from typing import Any, Type
 
-@dataclass
-class AWObject:
+from korth_spirit.sdk.enums.attribute import AttributeEnum
+
+from ..sdk.write_data import write_data
+
+
+@dataclass(frozen=True)
+class AttributeData:
     """
-    Wrapper for Active Worlds Object.
+    Attributes:
+        name (str): The name of the attribute.
+        value (str): The value of the attribute.
     """
-    number: int # It would be nice to have a unique ID for each object, but this is not possible.
-    type: int = None
-    owner: int = None
-    build_timestamp: int = None
+    name: str
+    value: Any
+    typed: Type
 
-    x: int = None
-    y: int = None
-    z: int = None
-    yaw: int = None
-    tilt: int = None
-    roll: int = None
-    model: str = None
-
-    description: str = None
-    action: str = None
-    
-    data: bytes = None
-
-    @staticmethod
-    def from_cell_object(cell_obj: CellObjectData):
+    def set(self, value: Any) -> "AttributeData":
         """
-        Create an AWObject from a CellObjectData.
+        Set the value of the attribute.
         """
-        return AWObject(
-            number=cell_obj.number,
-            type=cell_obj.type,
-            owner=cell_obj.owner,
-            build_timestamp=cell_obj.build_timestamp,
-            x=cell_obj.x,
-            y=cell_obj.y,
-            z=cell_obj.z,
-            yaw=cell_obj.yaw,
-            tilt=cell_obj.tilt,
-            roll=cell_obj.roll,
-            model=cell_obj.model,
-            description=cell_obj.description,
-            action=cell_obj.action,
-            data=cell_obj.data
+        write_data(AttributeEnum[self.name], value)
+
+        return AttributeData(
+            name=self.name,
+            value=value,
+            typed=self.typed,
         )
