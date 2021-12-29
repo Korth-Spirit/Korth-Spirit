@@ -60,9 +60,9 @@ class CellObjectData:
         aw_object_change(
             ObjectChangeData(
                 **orig,
-                old_number=orig.number,
-                old_x=orig.x,
-                old_z=orig.z
+                old_number=orig.get("number"),
+                old_x=orig.get("x"),
+                old_z=orig.get("z"),
             )
         )
 
