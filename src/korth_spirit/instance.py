@@ -26,10 +26,9 @@ from korth_spirit.data import CellObjectData, LoginData, StateChangeData
 from .avatar import Avatar
 from .coords import Coordinates
 from .events import EventBus
-from .query import Query
+from .query import QueryEnum, QueryFactory
 from .sdk import (EventEnum, aw_create, aw_destroy, aw_enter, aw_instance_set,
                   aw_login, aw_say, aw_state_change, aw_whisper)
-from .world import World
 
 
 @dataclass
@@ -151,20 +150,20 @@ class Instance:
         
         return self
 
-    def query(self, x: int, z: int) -> List[CellObjectData]:
+    def query(self, query_type: QueryEnum = QueryEnum.OBJECT, **kwargs) -> List[CellObjectData]:
         """
-        Query a cell.
+        Make a query from the instance.
 
         Args:
-            x (int): The x coordinate.
-            z (int): The z coordinate.
+            query_type (QueryEnum, optional): The query type. Defaults to QueryEnum.OBJECT.
+            **kwargs: The query arguments.
 
         Returns:
-            List[CellObjectData]: The cell objects.
-        """
+            List[CellObjectData]: [description]
+        """        
         aw_instance_set(self._instance)
 
-        return Query(x, z).run(self)
+        return QueryFactory(self, query_type)(**kwargs)
 
     def get_avatar(self, citizen: int) -> Avatar:
         """
@@ -177,15 +176,6 @@ class Instance:
             Avatar: The avatar.
         """
         return Avatar(self, citizen)
-
-    def get_world(self) -> World:
-        """
-        Get the current world.
-
-        Returns:
-            str: The current world.
-        """
-        return World(self)
 
     def subscribe(self, event: EventEnum, subscriber: callable) -> "Instance":
         """

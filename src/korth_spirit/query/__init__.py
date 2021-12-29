@@ -18,28 +18,20 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from .address_data import AddressData
-from .attribute_data import AttributeData
-from .cell_iterator_data import CellIteratorData
-from .cell_object_data import CellObjectData
-from .login_data import LoginData
-from .object_change_data import ObjectChangeData
-from .object_create_data import ObjectCreateData
-from .object_created_data import ObjectCreatedData
-from .object_delete_data import ObjectDeleteData
-from .state_change_data import StateChangeData
-from .terrain_node_data import TerrainNodeData
+from .objects import ObjectQuery
+from .query import Query
+from .query_enum import QueryEnum
+from .query_factory import QueryFactory
+from .terrain import TerrainQuery
+from .world_attribute import WorldAttributeQuery
+from .world_attribute_enum import WorldAttributeEnum
 
 __all__ = [
-    "AddressData",
-    "AttributeData",
-    "CellIteratorData",
-    "CellObjectData",
-    "LoginData",
-    "ObjectChangeData",
-    "ObjectCreateData",
-    "ObjectCreatedData",
-    "ObjectDeleteData",
-    "StateChangeData",
-    "TerrainNodeData",
+    "ObjectQuery",
+    "Query",
+    "QueryEnum",
+    "QueryFactory",
+    "TerrainQuery",
+    "WorldAttributeQuery",
+    "WorldAttributeEnum",
 ]

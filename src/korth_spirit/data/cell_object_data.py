@@ -19,9 +19,14 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from dataclasses import dataclass
+from typing import Any
+
+from ..sdk import aw_object_add, aw_object_change
+from .object_change_data import ObjectChangeData
+from .object_create_data import ObjectCreateData
 
 
-@dataclass
+@dataclass(frozen=True)
 class CellObjectData:
     type: int
     id: int
@@ -38,3 +43,44 @@ class CellObjectData:
     description: str
     action: str
     data: bytes
+
+    def set(self, name: str, value: Any) -> "CellObjectData":
+        """
+        Set the value of the attribute.
+
+        Args:
+            name (str): The name of the attribute.
+            value (Any): The value of the attribute.
+        """
+        copy = self.copy()
+
+        setattr(copy, name, value)
+
+        aw_object_change(
+            ObjectChangeData(
+                **copy,
+                old_number=copy.number,
+                old_x=copy.x,
+                old_z=copy.z
+            )
+        )
+
+    @staticmethod
+    def create(**kwargs) -> "CellObjectData":
+        """
+        Create a new CellObjectData instance.
+
+        Args:
+            **kwargs: The attributes of the instance.
+
+        Returns:
+            CellObjectData: The new CellObjectData instance.
+        """
+
+        return CellObjectData(
+            **aw_object_add(
+                ObjectCreateData(
+                    **kwargs
+                )
+            )
+        )

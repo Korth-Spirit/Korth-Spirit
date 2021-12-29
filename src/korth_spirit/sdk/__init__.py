@@ -19,7 +19,7 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char_p, c_int, c_uint,
-                    c_void_p)
+                    c_ulong, c_void_p)
 from dataclasses import fields
 from os import path
 from typing import List, Optional, Union
@@ -852,11 +852,48 @@ def aw_terrain_delete_all() -> int:
 def aw_terrain_load_node() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_terrain_next() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_terrain_next() -> bool:
+    """
+    Gets the next terrain node.
 
-def aw_terrain_query(page_x: int, page_z: int, long: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+    Raises:
+        Exception: If an error occured.
+
+    Returns:
+        bool: True if completed, False if not.
+    """    
+    SDK.aw_terrain_next.restype = c_int
+    rc = SDK.aw_terrain_next()
+
+    if rc:
+        raise Exception(f"Failed to get next terrain: {rc}")
+
+    return aw_bool(AttributeEnum.AW_TERRAIN_COMPLETE)
+
+def aw_terrain_query(page_x: int, page_z: int, sequence: int) -> bool:
+    """
+    Queries the terrain for the specified page.
+
+    Args:
+        page_x (int): The page's X coordinate.
+        page_z (int): The page's Z coordinate.
+        sequence (int): The sequence number.
+
+    Raises:
+        Exception: If the terrain query failed.
+
+    Returns:
+        bool: True if the terrain query has completed, False otherwise.
+    """
+    SDK.aw_terrain_query.argtypes = [c_int, c_int, c_ulong]
+    SDK.aw_terrain_query.restype = c_int
+    
+    rc = SDK.aw_terrain_query(page_x, page_z, sequence)
+
+    if rc:
+        raise Exception(f"Failed to query terrain: {rc}")
+
+    return aw_bool(AttributeEnum.AW_TERRAIN_COMPLETE)
 
 def aw_terrain_set(cell_x: int, cell_z: int, count: int, texture: int, *heights: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')

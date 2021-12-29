@@ -20,10 +20,10 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from enum import Enum, auto
 
-from .attribute import AttributeEnum
+from ..sdk.enums.attribute import AttributeEnum
 
 
-class WorldEnum(Enum):
+class WorldAttributeEnum(Enum):
     AW_WORLD_NAME = AttributeEnum.AW_WORLD_NAME.value
     AW_WORLD_TITLE = auto()
     AW_WORLD_BACKDROP = auto()
