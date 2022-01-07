@@ -24,9 +24,9 @@ from dataclasses import fields
 from os import path
 from typing import List, Optional, Union
 
-from ..data import (AddressData, BotMenuData, CellIteratorData, LoginData,
-                    ObjectChangeData, ObjectCreateData, ObjectCreatedData,
-                    ObjectDeleteData, StateChangeData)
+from ..data import (AddressData, BotMenuData, CavChangeData, CellIteratorData,
+                    LoginData, ObjectChangeData, ObjectCreateData,
+                    ObjectCreatedData, ObjectDeleteData, StateChangeData)
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
 SDK_FILE = './aw64.dll'
@@ -237,9 +237,25 @@ def aw_callback_set(callback: CallBackEnum, handler: AW_CALLBACK) -> None:
 def aw_camera_set(session_id: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_cav_change() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_cav_change(data: CavChangeData) -> None:
+    """
+    Changes the CAV of the specified citizen.
 
+    Args:
+        data (CavChangeData): The CAV change data.
+
+    Raises:
+        Exception: If the CAV could not be changed.
+    """
+    aw_int_set(AttributeEnum.AW_CAV_CITIZEN, data.citizen)
+    aw_int_set(AttributeEnum.AW_CAV_SESSION, data.session)
+    aw_data_set(AttributeEnum.AW_CAV_DEFINITION, data.definition)
+
+    rc = SDK.aw_cav_change()
+
+    if rc != 0:
+        raise Exception(f'Failed to change the CAV. Error code: {rc}')
+    
 def aw_cav_delete() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 

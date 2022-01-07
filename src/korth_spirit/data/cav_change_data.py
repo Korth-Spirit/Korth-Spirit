@@ -18,32 +18,14 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from .address_data import AddressData
-from .attribute_data import AttributeData
-from .bot_menu_data import BotMenuData
-from .cav_change_data import CavChangeData
-from .cell_iterator_data import CellIteratorData
-from .cell_object_data import CellObjectData
-from .login_data import LoginData
-from .object_change_data import ObjectChangeData
-from .object_create_data import ObjectCreateData
-from .object_created_data import ObjectCreatedData
-from .object_delete_data import ObjectDeleteData
-from .state_change_data import StateChangeData
-from .terrain_node_data import TerrainNodeData
+from dataclasses import dataclass
 
-__all__ = [
-    "AddressData",
-    "AttributeData",
-    "BotMenuData",
-    "CavChangeData",
-    "CellIteratorData",
-    "CellObjectData",
-    "LoginData",
-    "ObjectChangeData",
-    "ObjectCreateData",
-    "ObjectCreatedData",
-    "ObjectDeleteData",
-    "StateChangeData",
-    "TerrainNodeData",
-]
+
+@dataclass
+class CavChangeData:
+    citizen: int
+    session: int
+    definition: bytes
+
+    def is_bot_or_tourist(self) -> bool:
+        return self.citizen == 0 and self.session != 0
