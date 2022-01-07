@@ -460,8 +460,17 @@ def aw_event_set(event: EventEnum, handler: AW_CALLBACK) -> None:
     if rc:
         raise Exception(f"Failed to set event handler: {rc}, {event}")
 
-def aw_exit() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_exit() -> None:
+    """
+    Exits the world.
+
+    Raises:
+        Exception: If the world could not be exited.
+    """
+    rc = SDK.aw_exit()
+
+    if rc:
+        raise Exception(f"Failed to exit world: {rc}")
 
 def aw_float(attribute: AttributeEnum) -> float:
     """
