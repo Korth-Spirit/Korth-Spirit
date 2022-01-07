@@ -308,7 +308,7 @@ def aw_check_right(citizen: int, right: str) -> bool:
     """ 
     SDK.aw_check_right.argtypes = [c_int, c_char_p]
     SDK.aw_check_right.restype = c_int
-    
+
     return bool(SDK.aw_check_right(citizen, right))
 
 def aw_check_right_all(right: str) -> int:
@@ -405,11 +405,14 @@ def aw_data_set(attribute: AttributeEnum, value: bytes) -> None:
     if rc:
         raise Exception(f"Failed to set data attribute: {rc}")
 
-def aw_delete_all_objects() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_delete_all_objects() -> None:
+    """
+    Deletes all objects in a world.
+    """
+    SDK.aw_delete_all_objects.restype = c_int
+    SDK.aw_delete_all_objects.argtypes = []
 
-def aw_delete_all_objects() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+    SDK.aw_delete_all_objects()   
 
 def aw_destroy(instance: c_void_p) -> None:
     """
