@@ -284,8 +284,32 @@ def aw_cell_next(combine: bool = False, iterator: CellIteratorData = None) -> No
     if rc != 0:
         raise Exception(f'Failed to get the next cell. Error code: {rc}')
 
-def aw_check_right(citizen: int, right: str) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_check_right(citizen: int, right: str) -> bool:
+    """
+    Checks if the citizen has the specified right.
+
+    Args:
+        citizen (int): The citizen number to check the right of.
+        right (str): A rights list.
+            0    ... tourists
+            any# ... citizen number
+            -    ... exclusion sign
+            #~#  ... citizen range
+            *    ... everyone
+            , blank  ... delimiters
+
+    Example:
+        "1~2300,-512~1024" 
+            Grants rights to 1 to 2300
+            Deny rights to 512 to 1024.
+
+    Returns:
+        bool: True if the citizen has the right, False otherwise.
+    """ 
+    SDK.aw_check_right.argtypes = [c_int, c_char_p]
+    SDK.aw_check_right.restype = c_int
+    
+    return bool(SDK.aw_check_right(citizen, right))
 
 def aw_check_right_all(right: str) -> int:
     raise NotImplementedError('This function is not implemented yet.')
