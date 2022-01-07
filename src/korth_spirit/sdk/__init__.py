@@ -24,15 +24,47 @@ from dataclasses import fields
 from os import path
 from typing import List, Optional, Union
 
-from ..data import (AddressData, CellIteratorData, LoginData, ObjectChangeData,
-                    ObjectCreateData, ObjectCreatedData, ObjectDeleteData,
-                    StateChangeData)
+from ..data import (AddressData, BotMenuData, CellIteratorData, LoginData,
+                    ObjectChangeData, ObjectCreateData, ObjectCreatedData,
+                    ObjectDeleteData, StateChangeData)
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
 SDK_FILE = './aw64.dll'
 SDK = CDLL(SDK_FILE)
 AW_BUILD = 134 # AW 7.0
 AW_CALLBACK = CFUNCTYPE(None)
+
+def aw_int_set(attribute: AttributeEnum, value: int) -> None:
+    """
+    Sets an initialization attribute.
+
+    Args:
+        AttributeEnum (AttributeEnum): The attribute name.
+        value (int): The attribute value.
+
+    Raises:
+        Exception: If the attribute could not be set.
+    """
+    rc = SDK.aw_int_set(attribute.value, value)
+
+    if rc:
+        raise Exception(f"Failed to set initialization attribute: {rc}")
+
+def aw_string_set(attribute: AttributeEnum, value: str) -> None:
+    """
+    Sets an initialization attribute.
+
+    Args:
+        attribute (AttributeEnum): The attribute name.
+        value (str): The attribute value.
+
+    Raises:
+        Exception: If the attribute could not be set.
+    """
+    rc = SDK.aw_string_set(attribute.value, value.encode('utf-8'))
+
+    if rc:
+        raise Exception(f"Failed to set initialization attribute: {rc}")
 
 def aw_address(session_id: int) -> AddressData:
     """
@@ -159,16 +191,32 @@ def aw_botgram_send(text: str, citizen: int) -> None:
         text (str): The text to send.
         citizen (int): The citizen ID to send the botgram to.
     """
-    aw_string_set(AttributeEnum.AW_BOTGRAM_TEXT.value, text)
-    aw_int_set(AttributeEnum.AW_BOTGRAM_TO.value, citizen)
+    aw_string_set(AttributeEnum.AW_BOTGRAM_TEXT, text)
+    aw_int_set(AttributeEnum.AW_BOTGRAM_TO, citizen)
 
     rc = SDK.aw_botgram_send()
 
     if rc != 0:
         raise Exception(f'Failed to send the botgram. Error code: {rc}')
 
-def aw_botmenu_send() -> None:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_botmenu_send(data: BotMenuData) -> None:
+    """
+    Builds and sends a botmenu to the defined session.
+
+    Raises:
+        Exception: If the botmenu could not be sent.
+
+    Args:
+        data (BotMenuData): The botmenu data.
+    """
+    aw_int_set(AttributeEnum.AW_BOTMENU_TO_SESSION, data.to_session)
+    aw_string_set(AttributeEnum.AW_BOTMENU_QUESTION, data.question)
+    aw_string_set(AttributeEnum.AW_BOTMENU_ANSWER, data.answer)
+
+    rc = SDK.aw_botmenu_send()
+    
+    if rc != 0:
+        raise Exception(f'Failed to send the botmenu. Error code: {rc}')
 
 def aw_callback(callback: c_void_p) -> None:
     raise NotImplementedError('This function is not implemented yet.')
@@ -291,7 +339,6 @@ def aw_data(attribute: AttributeEnum) -> bytes:
     Returns:
         bytes: The attribute value.
     """
-    # char* aw_data (AW_ATTRIBUTE a, unsigned int *length)
     SDK.aw_data.restype = c_char_p
     SDK.aw_data.argtypes = [c_int, POINTER(c_uint)]
 
@@ -494,22 +541,6 @@ def aw_int(attribute: AttributeEnum) -> int:
         int: The attribute value.
     """
     return int(SDK.aw_int(attribute.value))
-
-def aw_int_set(attribute: AttributeEnum, value: int) -> None:
-    """
-    Sets an initialization attribute.
-
-    Args:
-        AttributeEnum (AttributeEnum): The attribute name.
-        value (int): The attribute value.
-
-    Raises:
-        Exception: If the attribute could not be set.
-    """
-    rc = SDK.aw_int_set(attribute.value, value)
-
-    if rc:
-        raise Exception(f"Failed to set initialization attribute: {rc}")
 
 def aw_laser_beam() -> int:
     raise NotImplementedError('This function is not implemented yet.')
@@ -812,22 +843,6 @@ def aw_string(attribute: AttributeEnum) -> str:
 
 def aw_string_from_unicode(the_string: str) -> str:
     raise NotImplementedError('This function is not implemented yet.')
-
-def aw_string_set(attribute: AttributeEnum, value: str) -> None:
-    """
-    Sets an initialization attribute.
-
-    Args:
-        attribute (AttributeEnum): The attribute name.
-        value (str): The attribute value.
-
-    Raises:
-        Exception: If the attribute could not be set.
-    """
-    rc = SDK.aw_string_set(attribute.value, value.encode('utf-8'))
-
-    if rc:
-        raise Exception(f"Failed to set initialization attribute: {rc}")
 
 def aw_string_set_MBCS_codepage(codepage: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
