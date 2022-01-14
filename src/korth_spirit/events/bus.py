@@ -83,6 +83,31 @@ class EventBus:
 
         return self
 
+    def unsubscribe_all(self, event: EventType) -> "EventBus":
+        """
+        Unsubscribe from all events.
+
+        Args:
+            event (EventType): The event to unsubscribe from.
+
+        Returns:
+            EventBus: The event bus.
+        """
+        if event in self._subscribers:
+            del self._subscribers[event]
+
+        for ref in self._refs:
+            from korth_spirit.sdk import AW_CALLBACK, aw_callback_set, aw_event_set
+
+            if type(ref) is EventEnum:
+                aw_event_set(ref, None)
+            elif type(ref) is CallBackEnum:
+                aw_callback_set(ref, None)
+
+        self._refs = {}
+
+        return self
+
     def publish(self, event: EventType, *args, **kwargs) -> "EventBus":
         """
         Publish an event.
