@@ -83,7 +83,7 @@ class EventBus:
 
         return self
 
-    def unsubscribe_all(self, event: EventType) -> "EventBus":
+    def unsubscribe_all(self) -> "EventBus":
         """
         Unsubscribe from all events.
 
@@ -93,9 +93,6 @@ class EventBus:
         Returns:
             EventBus: The event bus.
         """
-        if event in self._subscribers:
-            del self._subscribers[event]
-
         for ref in self._refs:
             from korth_spirit.sdk import AW_CALLBACK, aw_callback_set, aw_event_set
 
@@ -105,6 +102,7 @@ class EventBus:
                 aw_callback_set(ref, None)
 
         self._refs = {}
+        self._subscribers = {}
 
         return self
 
