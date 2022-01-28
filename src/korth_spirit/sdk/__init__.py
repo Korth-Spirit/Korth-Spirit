@@ -926,7 +926,12 @@ def aw_terrain_next() -> bool:
 
     Returns:
         bool: True if completed, False if not.
-    """    
+    """
+    aw_int_set(
+        AttributeEnum.AW_TERRAIN_VERSION_NEEDED,
+        2
+    )
+    
     SDK.aw_terrain_next.restype = c_int
     rc = SDK.aw_terrain_next()
 
