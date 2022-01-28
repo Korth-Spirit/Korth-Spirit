@@ -28,13 +28,13 @@ Greeter Bot example using the Korth Spirit wrapper for the Active Worlds SDK.
 bot.login(
     citizen_number=int(input("Citizen Number: ")),
     password=input("Password: ")
-).subscribe(
-    EventEnum.AW_EVENT_AVATAR_ADD,
-    lambda e: bot.say(f"Salutations {e.avatar_name}!")
 ).enter_world(
     world_name=input("World: ")
 ).move_to(
     x=0, y=0, z=0
+).bus.subscribe(
+    EventEnum.AW_EVENT_AVATAR_ADD,
+    lambda e: bot.say(f"Salutations {e.avatar_name}!")
 )
 ```
 

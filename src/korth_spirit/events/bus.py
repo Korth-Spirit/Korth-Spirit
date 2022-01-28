@@ -94,7 +94,7 @@ class EventBus:
             EventBus: The event bus.
         """
         for ref in self._refs:
-            from korth_spirit.sdk import AW_CALLBACK, aw_callback_set, aw_event_set
+            from korth_spirit.sdk import aw_callback_set, aw_event_set
 
             if type(ref) is EventEnum:
                 aw_event_set(ref, None)

@@ -21,27 +21,18 @@
 from dataclasses import dataclass, field
 from typing import Any, List
 
-from .avatar import Avatar
-from .data import LoginData, StateChangeData
-from .events import EventBus
-from .query import QueryEnum, QueryFactory
-from .sdk import (EventEnum, aw_create, aw_destroy, aw_enter, aw_instance_set,
-                  aw_login, aw_say, aw_state_change, aw_whisper)
+from ..data import LoginData, StateChangeData
+from ..events import EventBus
+from ..query import QueryEnum, QueryFactory
+from ..sdk import (aw_enter, aw_instance_set, aw_login, aw_say,
+                   aw_state_change, aw_whisper)
+from .context import Context
 
 
 @dataclass
-class Instance:
+class Instance(Context):
     name: str
     bus: EventBus = field(init=False, repr=False, default_factory=EventBus)
-
-    def __enter__(self) -> "Instance":
-        self._instance = aw_create()
-
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        aw_instance_set(self._instance)
-        aw_destroy(self._instance)
 
     def login(self, citizen_number: int, password: str) -> "Instance":
         """
@@ -59,18 +50,18 @@ class Instance:
 
         return self
     
-    def enter_world(self, name: str) -> "Instance":
+    def enter(self, world: str) -> "Instance":
         """
         Enter the specified world.
 
         Args:
-            world_name (str): The name of the world.
+            world (str): The name of the world.
 
         Returns:
             Instance: The instance.
         """
         aw_instance_set(self._instance)
-        aw_enter(name)
+        aw_enter(world)
         return self
 
     def move_to(self, x: int, y: int, z: int) -> "Instance":
@@ -133,31 +124,3 @@ class Instance:
         aw_instance_set(self._instance)
 
         return QueryFactory(self, query_type)(**kwargs)
-
-    def subscribe(self, event: EventEnum, subscriber: callable) -> "Instance":
-        """
-        Subscribe to an event.
-
-        Args:
-            event (Event): The event to subscribe to.
-            subscriber (callable): The subscriber to the event.
-
-        Returns:
-            Instance: The instance.
-        """
-        self.bus.subscribe(event, subscriber)
-        return self
-
-    def unsubscribe(self, event: EventEnum, subscriber: callable) -> "Instance":
-        """
-        Unsubscribe from an event.
-
-        Args:
-            event (Event): The event to unsubscribe from.
-            subscriber (callable): The subscriber to the event.
-
-        Returns:
-            Instance: The instance.
-        """
-        self.bus.unsubscribe(event, subscriber)
-        return self
