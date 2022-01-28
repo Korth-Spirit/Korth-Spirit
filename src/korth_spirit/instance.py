@@ -134,18 +134,6 @@ class Instance:
 
         return QueryFactory(self, query_type)(**kwargs)
 
-    def get_avatar(self, citizen: int) -> Avatar:
-        """
-        Get the avatar for the specified citizen.
-
-        Args:
-            citizen (int): The citizen.
-
-        Returns:
-            Avatar: The avatar.
-        """
-        return Avatar(self, citizen)
-
     def subscribe(self, event: EventEnum, subscriber: callable) -> "Instance":
         """
         Subscribe to an event.
