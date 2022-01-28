@@ -18,7 +18,7 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char_p, c_int, c_uint,
+from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char, c_char_p, c_int, c_uint,
                     c_ulong, c_void_p)
 from dataclasses import fields
 from os import path
@@ -366,12 +366,13 @@ def aw_create(
 def aw_create_resolved(address: int, port: int) -> None:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_data(attribute: AttributeEnum) -> Union[bytes, list[bytes]]:
+def aw_data(attribute: AttributeEnum, ret_type = c_char) -> Union[bytes, list[bytes]]:
     """
     Gets a data attribute.
 
     Args:
         attribute (AttributeEnum): The attribute name.
+        ret_type (c_char, optional): The return type. Defaults to c_char.
 
     Raises:
         Exception: If the attribute could not be retrieved.
@@ -379,7 +380,7 @@ def aw_data(attribute: AttributeEnum) -> Union[bytes, list[bytes]]:
     Returns:
         Union[bytes, list[bytes]]: The attribute value.
     """
-    SDK.aw_data.restype = c_char_p
+    SDK.aw_data.restype = POINTER(ret_type)
     SDK.aw_data.argtypes = [c_int, POINTER(c_uint)]
     data_length = c_uint()
 

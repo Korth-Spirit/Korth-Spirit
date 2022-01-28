@@ -24,13 +24,13 @@ from . import aw_bool, aw_data, aw_float, aw_int, aw_string
 from .enums import ATTRIBUTE_TYPES, AttributeEnum
 
 
-def get_data(attribute: Union[int, AttributeEnum], type: Type = None) -> Union[int, float, bool, str, bytes, list[bytes]]:
+def get_data(attribute: Union[int, AttributeEnum], aw_type: Type = None) -> Union[int, float, bool, str, bytes, list[bytes]]:
     """
     Gets a data attribute.
 
     Args:
         attribute (Union[int, AttributeEnum]): The attribute to get.
-        type (Type): The type of the attribute. Defaults to None.
+        aw_type (Type): The type of the attribute. Defaults to None.
 
     Raises:
         Exception: If the attribute could not be retrieved.
@@ -39,11 +39,14 @@ def get_data(attribute: Union[int, AttributeEnum], type: Type = None) -> Union[i
     Returns:
         Union[int, float, bool, str, bytes]: The attribute value.
     """
-    if type is None:
+    if aw_type is None:
         try:
-            type = ATTRIBUTE_TYPES[attribute]
+            aw_type = ATTRIBUTE_TYPES[attribute]
         except KeyError:
             raise Exception(f"No attribute type for {attribute}")
+
+    if type(aw_type) == tuple:
+        aw_type, *args = aw_type
 
     switcher = {
         int: aw_int,
@@ -53,4 +56,4 @@ def get_data(attribute: Union[int, AttributeEnum], type: Type = None) -> Union[i
         bytes: aw_data
     }
 
-    return switcher[type](attribute)
+    return switcher[aw_type](attribute, *args)

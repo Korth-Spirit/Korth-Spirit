@@ -18,6 +18,8 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+import ctypes
+
 from .attribute import AttributeEnum
 
 ATTRIBUTE_TYPES = {
@@ -219,10 +221,10 @@ ATTRIBUTE_TYPES = {
 	AttributeEnum.AW_TELEPORT_Z: int,
 	AttributeEnum.AW_TERRAIN_COMPLETE: bool,
 	AttributeEnum.AW_TERRAIN_NODE_HEIGHT_COUNT: int,
-	AttributeEnum.AW_TERRAIN_NODE_HEIGHTS: bytes,
+	AttributeEnum.AW_TERRAIN_NODE_HEIGHTS: (bytes, ctypes.c_int32),
 	AttributeEnum.AW_TERRAIN_NODE_SIZE: int,
 	AttributeEnum.AW_TERRAIN_NODE_TEXTURE_COUNT: int,
-	AttributeEnum.AW_TERRAIN_NODE_TEXTURES: bytes,
+	AttributeEnum.AW_TERRAIN_NODE_TEXTURES: (bytes, ctypes.c_uint16),
 	AttributeEnum.AW_TERRAIN_NODE_X: int,
 	AttributeEnum.AW_TERRAIN_NODE_Z: int,
 	AttributeEnum.AW_TERRAIN_PAGE_X: int,
