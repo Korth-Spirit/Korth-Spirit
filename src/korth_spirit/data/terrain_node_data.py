@@ -25,5 +25,5 @@ class TerrainNodeData:
     node_x: int
     node_z: int
     node_size: int
-    heights: bytes
-    textures: bytes
+    heights: list[int]
+    textures: list[int]

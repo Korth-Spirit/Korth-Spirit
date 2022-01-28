@@ -48,8 +48,8 @@ class TerrainQuery:
                 node_x=event.terrain_node_x,
                 node_z=event.terrain_node_z,
                 node_size=event.terrain_node_size,
-                heights=event.terrain_node_heights,
-                textures=event.terrain_node_textures,
+                heights=[int.from_bytes(x, "little", signed=True) for x in event.terrain_node_heights],
+                textures=[int.from_bytes(x, "little", signed=False) for x in event.terrain_node_textures]
             )
         )
 
