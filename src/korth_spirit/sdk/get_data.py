@@ -45,6 +45,7 @@ def get_data(attribute: Union[int, AttributeEnum], aw_type: Type = None) -> Unio
         except KeyError:
             raise Exception(f"No attribute type for {attribute}")
 
+    args = []
     if type(aw_type) == tuple:
         aw_type, *args = aw_type
 
