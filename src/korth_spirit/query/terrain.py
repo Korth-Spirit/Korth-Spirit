@@ -67,7 +67,7 @@ class TerrainQuery:
         x, z = kwargs.get("x"), kwargs.get("z")
 
         self.data = []
-        self._instance.subscribe(
+        self._instance.bus.subscribe(
             EventEnum.AW_EVENT_TERRAIN_DATA,
             self.on_receive_terrain
         )
@@ -91,7 +91,7 @@ class TerrainQuery:
             Iterable[TerrainNodeData]: The result of the query.
         """
         self.data = []
-        self._instance.subscribe(
+        self._instance.bus.subscribe(
             EventEnum.AW_EVENT_TERRAIN_DATA,
             self.on_receive_terrain
         )

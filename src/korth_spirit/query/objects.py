@@ -76,7 +76,7 @@ class ObjectQuery:
         x, z = kwargs.get('x'), kwargs.get('z')
 
         self.data = []
-        self._instance.subscribe(
+        self._instance.bus.subscribe(
             EventEnum.AW_EVENT_CELL_OBJECT,
             self.on_receive_object
         )
@@ -104,7 +104,7 @@ class ObjectQuery:
             List[CellObjectData]: The list of objects found in the 3x3 sector.
         """        
         self.data = []
-        self._instance.subscribe(
+        self._instance.bus.subscribe(
             EventEnum.AW_EVENT_CELL_OBJECT,
             self.on_receive_object
         )
