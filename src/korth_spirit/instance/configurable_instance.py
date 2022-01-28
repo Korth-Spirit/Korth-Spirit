@@ -45,8 +45,8 @@ class ConfigurableInstance(Instance):
         return super().__enter__().login(
             citizen_number=self._configuration.get_citizen_number(),
             password=self._configuration.get_password()
-        ).enter_world(
-            world_name=self._configuration.get_world_name()
+        ).enter(
+            world=self._configuration.get_world_name()
         ).move_to(
-            coords=self._configuration.get_world_coordinates()
+            *self._configuration.get_world_coordinates()
         )

@@ -24,15 +24,23 @@ from typing import Any, List
 from ..data import LoginData, StateChangeData
 from ..events import EventBus
 from ..query import QueryEnum, QueryFactory
-from ..sdk import (aw_enter, aw_instance_set, aw_login, aw_say,
-                   aw_state_change, aw_wait, aw_whisper)
-from .context import Context
+from ..sdk import (aw_create, aw_destroy, aw_enter, aw_instance_set, aw_login,
+                   aw_say, aw_state_change, aw_wait, aw_whisper)
 
 
 @dataclass
-class Instance(Context):
+class Instance:
     name: str
     bus: EventBus = field(init=False, repr=False, default_factory=EventBus)
+
+    def __enter__(self) -> "Instance":
+        self._instance = aw_create()
+
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+        aw_instance_set(self._instance)
+        aw_destroy(self._instance)
 
     def login(self, citizen_number: int, password: str) -> "Instance":
         """
