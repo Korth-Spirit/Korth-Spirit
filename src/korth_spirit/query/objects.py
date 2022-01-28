@@ -90,7 +90,7 @@ class ObjectQuery:
         )
         aw_wait(1)
 
-        self._instance.unsubscribe(
+        self._instance.bus.unsubscribe(
             EventEnum.AW_EVENT_CELL_OBJECT,
             self.on_receive_object
         )
@@ -119,7 +119,7 @@ class ObjectQuery:
             if 'Error code: 74' not in str(e):
                 raise e
 
-        self._instance.unsubscribe(
+        self._instance.bus.unsubscribe(
             EventEnum.AW_EVENT_CELL_OBJECT,
             self.on_receive_object
         )

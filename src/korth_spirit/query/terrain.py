@@ -77,7 +77,7 @@ class TerrainQuery:
         ):
             aw_wait(1)
 
-        self._instance.unsubscribe(
+        self._instance.bus.unsubscribe(
             EventEnum.AW_EVENT_TERRAIN_DATA,
             self.on_receive_terrain
         )
@@ -99,7 +99,7 @@ class TerrainQuery:
         while not aw_terrain_next():
             aw_wait(1)
 
-        self._instance.unsubscribe(
+        self._instance.bus.unsubscribe(
             EventEnum.AW_EVENT_TERRAIN_DATA,
             self.on_receive_terrain
         )
