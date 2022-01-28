@@ -25,7 +25,7 @@ from ..data import LoginData, StateChangeData
 from ..events import EventBus
 from ..query import QueryEnum, QueryFactory
 from ..sdk import (aw_enter, aw_instance_set, aw_login, aw_say,
-                   aw_state_change, aw_whisper)
+                   aw_state_change, aw_wait, aw_whisper)
 from .context import Context
 
 
@@ -124,3 +124,13 @@ class Instance(Context):
         aw_instance_set(self._instance)
 
         return QueryFactory(self, query_type)(**kwargs)
+
+    def main_loop(self, timer: int = 100) -> None:
+        """
+        Run the main loop.
+
+        Args:
+            timer (int, optional): The timer interval in milliseconds. Defaults to 100.
+        """
+        while True:
+            aw_wait(timer)

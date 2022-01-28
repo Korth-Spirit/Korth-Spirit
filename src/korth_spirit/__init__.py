@@ -20,18 +20,18 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from atexit import register
 
-from .instance import Instance
-from .sdk import AW_BUILD, aw_init, aw_term, aw_wait
+from .instance import ConfigurableInstance, Instance
+from .sdk import AW_BUILD, aw_init, aw_term
 from .sdk.enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
 aw_init(AW_BUILD)
 register(aw_term)
 
 __all__ = [
-    'aw_wait',
-    'Instance',
     'AttributeEnum',
     'CallBackEnum',
-    'EventEnum',
+    "ConfigurableInstance",
+    "EventEnum",
+    'Instance',
     'RightsEnum'
 ]

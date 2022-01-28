@@ -111,3 +111,7 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# AWSDK
+aw.dll
+aw64.dll
