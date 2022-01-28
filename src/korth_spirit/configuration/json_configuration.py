@@ -97,9 +97,9 @@ class JsonConfiguration:
             tuple: The coordinates where the bot will enter.
         """
         return (
-            x=self._config["world_coordinates"]["x"],
-            y=self._config["world_coordinates"]["y"],
-            z=self._config["world_coordinates"]["z"],
+            self._config["world_coordinates"]["x"],
+            self._config["world_coordinates"]["y"],
+            self._config["world_coordinates"]["z"],
         )
 
     @cache
