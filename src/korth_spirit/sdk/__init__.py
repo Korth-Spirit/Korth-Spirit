@@ -366,7 +366,7 @@ def aw_create(
 def aw_create_resolved(address: int, port: int) -> None:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_data(attribute: AttributeEnum) -> bytes:
+def aw_data(attribute: AttributeEnum) -> Union[bytes, list[bytes]]:
     """
     Gets a data attribute.
 
@@ -377,12 +377,19 @@ def aw_data(attribute: AttributeEnum) -> bytes:
         Exception: If the attribute could not be retrieved.
 
     Returns:
-        bytes: The attribute value.
+        Union[bytes, list[bytes]]: The attribute value.
     """
     SDK.aw_data.restype = c_char_p
     SDK.aw_data.argtypes = [c_int, POINTER(c_uint)]
+    data_length = c_uint()
 
-    return SDK.aw_data(attribute.value, None)
+    data_p = SDK.aw_data(attribute.value, byref(data_length))
+
+    if data_length.value == 1:
+        return data_p
+        
+    return [data_p[i] for i in range(data_length.value)]
+    
 
 def aw_data_set(attribute: AttributeEnum, value: bytes) -> None:
     """
@@ -931,7 +938,7 @@ def aw_terrain_next() -> bool:
         AttributeEnum.AW_TERRAIN_VERSION_NEEDED,
         2
     )
-    
+
     SDK.aw_terrain_next.restype = c_int
     rc = SDK.aw_terrain_next()
 

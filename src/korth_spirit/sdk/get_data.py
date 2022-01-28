@@ -24,7 +24,7 @@ from . import aw_bool, aw_data, aw_float, aw_int, aw_string
 from .enums import ATTRIBUTE_TYPES, AttributeEnum
 
 
-def get_data(attribute: Union[int, AttributeEnum], type: Type = None) -> Union[int, float, bool, str]:
+def get_data(attribute: Union[int, AttributeEnum], type: Type = None) -> Union[int, float, bool, str, bytes, list[bytes]]:
     """
     Gets a data attribute.
 
