@@ -21,8 +21,6 @@
 import json
 from functools import cache
 
-from korth_spirit.coords import Coordinates
-
 
 class JsonConfiguration:
     def __init__(self, config_file: str):
@@ -88,7 +86,7 @@ class JsonConfiguration:
         return self._config["world_name"]
 
     @cache
-    def get_world_coordinates(self) -> Coordinates:
+    def get_world_coordinates(self) -> tuple:
         """
         Returns the coordinates of the world the bot will enter.
 
@@ -96,9 +94,9 @@ class JsonConfiguration:
             KeyError: If the world coordinates are not specified in the configuration file.
 
         Returns:
-            Coordinates: The coordinates where the bot will enter.
+            tuple: The coordinates where the bot will enter.
         """
-        return Coordinates(
+        return (
             x=self._config["world_coordinates"]["x"],
             y=self._config["world_coordinates"]["y"],
             z=self._config["world_coordinates"]["z"],

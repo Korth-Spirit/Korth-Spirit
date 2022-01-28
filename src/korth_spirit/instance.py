@@ -22,7 +22,7 @@ from dataclasses import dataclass, field
 from typing import Any, List
 
 from .avatar import Avatar
-from .coords import Coordinates
+from .data import LoginData, StateChangeData
 from .events import EventBus
 from .query import QueryEnum, QueryFactory
 from .sdk import (EventEnum, aw_create, aw_destroy, aw_enter, aw_instance_set,
@@ -32,41 +32,7 @@ from .sdk import (EventEnum, aw_create, aw_destroy, aw_enter, aw_instance_set,
 @dataclass
 class Instance:
     name: str
-    coords: Coordinates
-    _coords: Coordinates = field(init=False, repr=False, default=Coordinates(0, 0, 0))
     bus: EventBus = field(init=False, repr=False, default_factory=EventBus)
-
-    @property
-    def coords(self) -> Coordinates:
-        """
-        Get the coordinates of the instance.
-
-        Returns:
-            Coordinates: The coordinates of the instance.
-        """
-        return self._coords
-
-    @coords.setter
-    def coords(self, coords: Coordinates) -> None:
-        """
-        Set the coordinates of the instance.
-
-        Args:
-            coords (Coordinates): The coordinates of the instance.
-        """
-        from .data import StateChangeData
-        
-        if not hasattr(self, '_instance'):
-            self._coords = coords
-            return
-    
-        aw_state_change(self._instance, StateChangeData(
-            x = coords.x,
-            y = coords.y,
-            z = coords.z
-        ))
-        
-        self._coords = coords
 
     def __enter__(self) -> "Instance":
         self._instance = aw_create()
@@ -84,8 +50,6 @@ class Instance:
         Returns:
             Instance: The instance.
         """
-        from .data import LoginData
-
         aw_login(self._instance, LoginData(
             citizen=citizen_number,
             password=password,
@@ -95,7 +59,7 @@ class Instance:
 
         return self
     
-    def enter_world(self, world_name: str) -> "Instance":
+    def enter_world(self, name: str) -> "Instance":
         """
         Enter the specified world.
 
@@ -106,20 +70,23 @@ class Instance:
             Instance: The instance.
         """
         aw_instance_set(self._instance)
-        aw_enter(world_name)
+        aw_enter(name)
         return self
 
-    def move_to(self, coords: Coordinates) -> "Instance":
+    def move_to(self, x: int, y: int, z: int) -> "Instance":
         """
         Move to the specified coordinates.
 
         Args:
-            coords (Coordinates): The coordinates.
+            x (int): The x coordinate.
+            y (int): The y coordinate.
+            z (int): The z coordinate.
 
         Returns:
             Instance: The instance.
         """
-        self.coords = coords
+        aw_state_change(self._instance, StateChangeData(x=x, y=y, z=z))
+
         return self
 
     def say(self, message: str) -> "Instance":

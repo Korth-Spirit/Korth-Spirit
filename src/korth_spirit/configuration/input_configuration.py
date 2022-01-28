@@ -20,8 +20,6 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from functools import cache
 
-from korth_spirit.coords import Coordinates
-
 
 class InputConfiguration:
     @cache
@@ -69,12 +67,12 @@ class InputConfiguration:
         return input("World name: ")
 
     @cache
-    def get_world_coordinates(self) -> Coordinates:
+    def get_world_coordinates(self) -> tuple:
         """
         Returns the coordinates of the world the bot will enter.
 
         Returns:
-            Coordinates: The coordinates where the bot will enter.
+            tuple: The coordinates where the bot will enter.
         """
         while True:
             x, y, z = input(
@@ -82,7 +80,7 @@ class InputConfiguration:
             ).replace(" ", "").split(",")
 
             if x.isnumeric() and y.isnumeric() and z.isnumeric():
-                return Coordinates(
+                return (
                     int(x), int(y), int(z)
                 )
             print("Invalid coordinates.")

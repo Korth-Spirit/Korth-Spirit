@@ -21,8 +21,6 @@
 import os
 from functools import cache
 
-from korth_spirit.coords import Coordinates
-
 
 class EnvironmentConfiguration:
     @cache
@@ -79,7 +77,7 @@ class EnvironmentConfiguration:
         return os.environ["WORLD_NAME"]
 
     @cache
-    def get_world_coordinates(self) -> Coordinates:
+    def get_world_coordinates(self) -> tuple:
         """
         Returns the coordinates of the world the bot will enter.
 
@@ -88,9 +86,9 @@ class EnvironmentConfiguration:
             TypeError: If the environment variable is not an integer.
 
         Returns:
-            Coordinates: The coordinates where the bot will enter.
+            tuple: The coordinates where the bot will enter.
         """
-        return Coordinates(
+        return (
             int(os.environ["WORLD_X"]),
             int(os.environ["WORLD_Y"]),
             int(os.environ["WORLD_Z"])

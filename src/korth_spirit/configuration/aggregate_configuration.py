@@ -19,7 +19,6 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from typing import Dict, Tuple, Type
-from korth_spirit.coords import Coordinates
 
 
 class AggregateConfiguration:
@@ -113,7 +112,7 @@ class AggregateConfiguration:
 
         raise KeyError("No configuration has a world name.")
 
-    def get_world_coordinates(self) -> Coordinates:
+    def get_world_coordinates(self) -> tuple:
         """
         Returns the coordinates of the world the bot will enter.
 
@@ -121,7 +120,7 @@ class AggregateConfiguration:
             KeyError: No configuration has world coordinates.
 
         Returns:
-            Coordinates: The coordinates where the bot will enter.
+            tuple: The coordinates where the bot will enter.
         """
         for configuration in self._configurations:
             try:

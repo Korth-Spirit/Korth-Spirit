@@ -33,7 +33,9 @@ bot.login(
     lambda e: bot.say(f"Salutations {e.avatar_name}!")
 ).enter_world(
     world_name=input("World: ")
-).move_to(Coordinates(x=0, y=0, z=0))
+).move_to(
+    x=0, y=0, z=0
+)
 ```
 
 ## License
