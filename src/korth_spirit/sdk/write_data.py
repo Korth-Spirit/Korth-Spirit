@@ -24,13 +24,13 @@ from . import aw_bool_set, aw_data_set, aw_float_set, aw_int_set, aw_string_set
 from .enums import ATTRIBUTE_TYPES, AttributeEnum
 
 
-def write_data(attribute: AttributeEnum, value: Union[int, str, bool, float] = None) -> None:
+def write_data(attribute: AttributeEnum, value: Union[int, str, bool, float, bytes] = None) -> None:
     """
     Sets an initialization attribute.
 
     Args:
         attribute (AttributeEnum): The attribute name.
-        value (Union[int, str, bool, float]): The attribute value.
+        value (Union[int, str, bool, float, bytes]): The attribute value.
 
     Raises:
         Exception: If the attribute could not be set.
@@ -47,5 +47,8 @@ def write_data(attribute: AttributeEnum, value: Union[int, str, bool, float] = N
         float: aw_float_set,
         bytes: aw_data_set
     }
+
+    if value != False and not value:
+        value = None
 
     switcher[attribute_type](attribute, value)
