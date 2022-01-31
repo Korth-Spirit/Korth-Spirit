@@ -27,6 +27,7 @@ from .cav_delete_data import CavDeleteData
 from .cell_iterator_data import CellIteratorData
 from .cell_object_data import CellObjectData
 from .citizen_data import CitizenData
+from .console_message_data import ConsoleMessageData
 from .login_data import LoginData
 from .object_change_data import ObjectChangeData
 from .object_create_data import ObjectCreateData
@@ -45,6 +46,7 @@ __all__ = [
     "CellIteratorData",
     "CellObjectData",
     "CitizenData",
+    "ConsoleMessageData",
     "LoginData",
     "ObjectChangeData",
     "ObjectCreateData",

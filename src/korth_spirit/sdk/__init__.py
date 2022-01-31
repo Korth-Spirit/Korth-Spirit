@@ -27,11 +27,10 @@ from typing import List, Optional, Union
 from korth_spirit.data.citizen_data import CitizenData
 
 from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
-                    CavDeleteData, CellIteratorData, LoginData,
-                    ObjectChangeData, ObjectCreateData, ObjectCreatedData,
-                    ObjectDeleteData, StateChangeData)
-from .enums import (AttributeEnum, CallBackEnum, CameraEnum, EventEnum,
-                    RightsEnum)
+                    CavDeleteData, CellIteratorData, ConsoleMessageData,
+                    LoginData, ObjectChangeData, ObjectCreateData,
+                    ObjectCreatedData, ObjectDeleteData, StateChangeData)
+from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
 SDK_FILE = './aw64.dll'
 SDK = CDLL(SDK_FILE)
@@ -528,11 +527,60 @@ def aw_citizen_next(citizen: Optional[int] = None) -> CitizenData:
 
     return data
 
-def aw_citizen_previous() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_citizen_previous(citizen: Optional[int] = None) -> CitizenData:
+    """
+    Queries the previous citizen in the citizen iterator.
 
-def aw_console_message(session_id: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+    Args:
+        citizen (Optional[int], optional): The citizen number to start the query. Defaults to None.
+
+    Raises:
+        Exception: If the citizen could not be queried.
+
+    Returns:
+        CitizenData: The citizen data.
+    """    
+    from .get_data import get_data
+
+    if citizen:
+        aw_int_set(AttributeEnum.AW_CITIZEN_NUMBER, citizen)
+
+    rc = SDK.aw_citizen_previous()
+
+    if rc != 0:
+        raise Exception(f'Failed to get the previous citizen. Error code: {rc}')
+    
+    data = CitizenData()
+
+    for field in fields(data):
+        attr = getattr(AttributeEnum, f'AW_CITIZEN_{field.name.upper()}')
+        value = get_data(attr)
+        setattr(data, field.name, value)
+
+    return data
+
+def aw_console_message(session_id: int, data: ConsoleMessageData) -> None:
+    """
+    Sends a console message to the specified session.
+
+    Args:
+        session_id (int): The session ID to send the message to.
+        data (ConsoleMessageData): The message data.
+
+    Raises:
+        Exception: If the message could not be sent.
+    """
+    from .write_data import write_data
+
+    for field in fields(data):
+        value = getattr(data, field.name, None)
+        attr = getattr(AttributeEnum, f'AW_CONSOLE_{field.name.upper()}')
+        write_data(attr, value)
+    
+    rc = SDK.aw_console_message(session_id)
+
+    if rc != 0:
+        raise Exception(f'Failed to send the message. Error code: {rc}')
 
 def aw_create(
     domain: str = "auth.activeworlds.com",
