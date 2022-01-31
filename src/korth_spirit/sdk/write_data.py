@@ -45,7 +45,4 @@ def write_data(attribute: AttributeEnum, value: Union[int, str, bool, float, byt
         bytes: aw_data_set
     }
 
-    if value != False and not value:
-        value = None
-
     switcher[attribute_type](attribute, value)
