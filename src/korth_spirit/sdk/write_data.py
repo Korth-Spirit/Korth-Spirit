@@ -35,7 +35,11 @@ def write_data(attribute: AttributeEnum, value: Union[int, str, bool, float, byt
     Raises:
         Exception: If the attribute could not be set.
     """
-    attribute_type = ATTRIBUTE_TYPES[attribute]
+    aw_type = ATTRIBUTE_TYPES[attribute]
+
+    args = []
+    if type(aw_type) == tuple:
+        aw_type, *args = aw_type
 
     switcher = {
         int: aw_int_set,
@@ -45,4 +49,4 @@ def write_data(attribute: AttributeEnum, value: Union[int, str, bool, float, byt
         bytes: aw_data_set
     }
 
-    switcher[attribute_type](attribute, value)
+    switcher[aw_type](attribute, value, *args)

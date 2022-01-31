@@ -588,19 +588,20 @@ def aw_data(attribute: AttributeEnum, ret_type = c_char) -> Union[bytes, list[by
     return [data_p[i] for i in range(data_length.value)]
     
 
-def aw_data_set(attribute: AttributeEnum, value: bytes) -> None:
+def aw_data_set(attribute: AttributeEnum, value: bytes, ret_type = c_char) -> None:
     """
     Sets a data attribute.
 
     Args:
         attribute (AttributeEnum): The attribute name.
         value (bytes): The attribute value.
+        ret_type (c_char, optional): The data type in c. Defaults to c_char.
 
     Raises:
         Exception: If the attribute could not be set.
     """
     SDK.aw_data_set.restype = c_int
-    SDK.aw_data_set.argtypes = [c_int, c_char_p, c_uint]
+    SDK.aw_data_set.argtypes = [c_int, POINTER(ret_type), c_uint]
 
     length = len(value) if value else 0
 

@@ -39,12 +39,8 @@ def get_data(attribute: Union[int, AttributeEnum], aw_type: Type = None) -> Unio
     Returns:
         Union[int, float, bool, str, bytes]: The attribute value.
     """
-    if aw_type is None:
-        try:
-            aw_type = ATTRIBUTE_TYPES[attribute]
-        except KeyError:
-            raise Exception(f"No attribute type for {attribute}")
-
+    aw_type = ATTRIBUTE_TYPES[attribute]
+    
     args = []
     if type(aw_type) == tuple:
         aw_type, *args = aw_type
