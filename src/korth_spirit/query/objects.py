@@ -84,8 +84,8 @@ class ObjectQuery:
         aw_cell_next(
             combine=False,
             iterator=CellIteratorData(
-                x=self.x,
-                z=self.z,
+                x=x,
+                z=z,
             )
         )
         aw_wait(1)
@@ -136,7 +136,7 @@ class ObjectQuery:
         Returns:
             List[CellObjectData]: The list of objects found in the 3x3 sector.
         """
-        if kwargs.get('x') and kwargs.get('z'):
+        if kwargs.get('x') != None and kwargs.get('z') != None:
             return self.query_specific(**kwargs)
         
         return self.query_all()
