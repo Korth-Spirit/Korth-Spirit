@@ -18,38 +18,28 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from .address_data import AddressData
-from .attribute_data import AttributeData
-from .bot_menu_data import BotMenuData
-from .camera_set_data import CameraSetData
-from .cav_change_data import CavChangeData
-from .cav_delete_data import CavDeleteData
-from .cell_iterator_data import CellIteratorData
-from .cell_object_data import CellObjectData
-from .citizen_add_data import CitizenAddData
-from .login_data import LoginData
-from .object_change_data import ObjectChangeData
-from .object_create_data import ObjectCreateData
-from .object_created_data import ObjectCreatedData
-from .object_delete_data import ObjectDeleteData
-from .state_change_data import StateChangeData
-from .terrain_node_data import TerrainNodeData
+from dataclasses import dataclass
 
-__all__ = [
-    "AddressData",
-    "AttributeData",
-    "BotMenuData",
-    "CavChangeData",
-    "CavDeleteData",
-    "CameraSetData",
-    "CellIteratorData",
-    "CellObjectData",
-    "CitizenAddData",
-    "LoginData",
-    "ObjectChangeData",
-    "ObjectCreateData",
-    "ObjectCreatedData",
-    "ObjectDeleteData",
-    "StateChangeData",
-    "TerrainNodeData",
-]
+
+@dataclass
+class CitizenAddData:
+    """
+    Data for creating a new citizen of the universe.
+    """
+    number: int
+    name: str
+    password: str
+    email: str
+    beta: bool
+    trial: bool
+    cav_enabled: bool
+    pav_enabled : bool
+    bot_limit: int
+    comment: str
+    expiration_time: int
+    immigraation_time: int
+    last_login: int
+    privilege_password: str
+    privacy: int
+    total_time: int
+    citizen_url: str

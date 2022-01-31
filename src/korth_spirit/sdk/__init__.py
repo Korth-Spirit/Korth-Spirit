@@ -24,6 +24,8 @@ from dataclasses import fields
 from os import path
 from typing import List, Optional, Union
 
+from korth_spirit.data.citizen_add_data import CitizenAddData
+
 from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
                     CavDeleteData, CellIteratorData, LoginData,
                     ObjectChangeData, ObjectCreateData, ObjectCreatedData,
@@ -394,8 +396,29 @@ def aw_check_right_all(right: str) -> bool:
 
     return bool(rc)
 
-def aw_citizen_add() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_citizen_add(data: CitizenAddData) -> None:
+    """
+    Adds a citizen to the universe.
+
+    Args:
+        data (CitizenAddData): The citizen data.
+
+    Raises:
+        Exception: If the citizen could not be added.
+    """
+    from .write_data import write_data
+
+    for field in fields(data):
+        value = getattr(data, field.name, None)
+        attr = getattr(AttributeEnum, f'AW_CITIZEN_{field.name.upper()}')
+
+        if value is not None:
+            write_data(attr, value)
+    
+    rc = SDK.aw_citizen_add()
+
+    if rc != 0:
+        raise Exception(f'Failed to add the citizen. Error code: {rc}')
 
 def aw_citizen_attributes_by_name(name: str) -> int:
     raise NotImplementedError('This function is not implemented yet.')
