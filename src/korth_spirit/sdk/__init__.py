@@ -218,8 +218,24 @@ def aw_botmenu_send(data: BotMenuData) -> None:
     if rc != 0:
         raise Exception(f'Failed to send the botmenu. Error code: {rc}')
 
-def aw_callback(callback: c_void_p) -> None:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_callback(callback: CallBackEnum) -> c_void_p:
+    """
+    Retrieves the handler of a callback.
+
+    Args:
+        callback (c_void_p): The callback to retrieve the handler of.
+
+    Returns:
+        c_void_p: The handler of the callback.
+    """
+    return SDK.aw_callback(callback)
+
+    Args:
+        callback (c_void_p): [description]
+
+    Returns:
+        c_void_p: [description]
+    """    
 
 def aw_callback_set(callback: CallBackEnum, handler: AW_CALLBACK) -> None:
     """
