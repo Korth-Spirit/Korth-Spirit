@@ -24,7 +24,7 @@ from dataclasses import fields
 from os import path
 from typing import List, Optional, Union
 
-from korth_spirit.data.citizen_add_data import CitizenAddData
+from korth_spirit.data.citizen_data import CitizenData
 
 from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
                     CavDeleteData, CellIteratorData, LoginData,
@@ -396,7 +396,7 @@ def aw_check_right_all(right: str) -> bool:
 
     return bool(rc)
 
-def aw_citizen_add(data: CitizenAddData) -> None:
+def aw_citizen_add(data: CitizenData) -> None:
     """
     Adds a citizen to the universe.
 
@@ -456,8 +456,27 @@ def aw_citizen_attributes_by_number(citizen: int) -> None:
     if rc != 0:
         raise Exception(f'Failed to get the attributes of the citizen. Error code: {rc}')
 
-def aw_citizen_change() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_citizen_change(data: CitizenData) -> None:
+    """
+    Changes the data of the specified citizen.
+
+    Args:
+        data (CitizenData): The citizen data.
+
+    Raises:
+        Exception: If the citizen could not be changed.
+    """
+    from .write_data import write_data
+
+    for field in fields(data):
+        value = getattr(data, field.name, None)
+        attr = getattr(AttributeEnum, f'AW_CITIZEN_{field.name.upper()}')
+        write_data(attr, value)
+    
+    rc = SDK.aw_citizen_change()
+
+    if rc != 0:
+        raise Exception(f'Failed to change the citizen. Error code: {rc}')    
 
 def aw_citizen_delete(citizen: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')

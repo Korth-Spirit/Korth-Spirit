@@ -22,7 +22,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class CitizenAddData:
+class CitizenData:
     """
     Data for creating a new citizen of the universe.
     """
