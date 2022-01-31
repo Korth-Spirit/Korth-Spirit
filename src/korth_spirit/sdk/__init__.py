@@ -607,9 +607,6 @@ def aw_create(
 
     return instance
 
-def aw_create_resolved(address: int, port: int) -> None:
-    raise NotImplementedError('This function is not implemented yet.')
-
 def aw_data(attribute: AttributeEnum, ret_type = c_char) -> Union[bytes, list[bytes]]:
     """
     Gets a data attribute.
@@ -630,11 +627,10 @@ def aw_data(attribute: AttributeEnum, ret_type = c_char) -> Union[bytes, list[by
 
     data_p = SDK.aw_data(attribute.value, byref(data_length))
 
-    if data_length.value == 1:
+    if data_length.value <= 1:
         return data_p
         
     return [data_p[i] for i in range(data_length.value)]
-    
 
 def aw_data_set(attribute: AttributeEnum, value: bytes, ret_type = c_char) -> None:
     """
