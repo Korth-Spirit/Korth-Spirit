@@ -18,16 +18,18 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char, c_char_p, c_int, c_uint,
-                    c_ulong, c_void_p)
+from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char, c_char_p, c_int,
+                    c_uint, c_ulong, c_void_p)
 from dataclasses import fields
 from os import path
 from typing import List, Optional, Union
 
-from ..data import (AddressData, BotMenuData, CavChangeData, CellIteratorData,
-                    LoginData, ObjectChangeData, ObjectCreateData,
-                    ObjectCreatedData, ObjectDeleteData, StateChangeData)
-from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
+from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
+                    CellIteratorData, LoginData, ObjectChangeData,
+                    ObjectCreateData, ObjectCreatedData, ObjectDeleteData,
+                    StateChangeData)
+from .enums import (AttributeEnum, CallBackEnum, CameraEnum, EventEnum,
+                    RightsEnum)
 
 SDK_FILE = './aw64.dll'
 SDK = CDLL(SDK_FILE)
@@ -220,22 +222,15 @@ def aw_botmenu_send(data: BotMenuData) -> None:
 
 def aw_callback(callback: CallBackEnum) -> c_void_p:
     """
-    Retrieves the handler of a callback.
+    Returns the address of a callback function.
 
     Args:
-        callback (c_void_p): The callback to retrieve the handler of.
+        callback (CallBackEnum): The callback to get the address of.
 
     Returns:
-        c_void_p: The handler of the callback.
+        c_void_p: The address of the callback.
     """
-    return SDK.aw_callback(callback)
-
-    Args:
-        callback (c_void_p): [description]
-
-    Returns:
-        c_void_p: [description]
-    """    
+    return SDK.aw_callback(callback.value)
 
 def aw_callback_set(callback: CallBackEnum, handler: AW_CALLBACK) -> None:
     """
@@ -250,8 +245,29 @@ def aw_callback_set(callback: CallBackEnum, handler: AW_CALLBACK) -> None:
     if rc != 0:
         raise Exception(f'Failed to set the callback. Error code: {rc}')
 
-def aw_camera_set(session_id: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_camera_set(session_id: int, data: CameraSetData) -> None:
+    """
+    Sets the camera of the specified session.
+
+    Args:
+        session_id (int): The session ID of the avatar to set the camera of.
+        data (CameraSetData): The camera data.
+    
+    Raises:
+        Exception: If the camera could not be set.
+    """
+    from .write_data import write_data
+    for field in fields(data):
+        value = getattr(data, field.name, None)
+        attr = getattr(AttributeEnum, f'AW_CAMERA_{field.name.upper()}')
+
+        if value is not None:
+            write_data(attr, value)
+    
+    rc = SDK.aw_camera_set(session_id)
+
+    if rc != 0:
+        raise Exception(f'Failed to set the camera. Error code: {rc}')
 
 def aw_cav_change(data: CavChangeData) -> None:
     """
