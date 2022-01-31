@@ -690,8 +690,20 @@ def aw_enter(world: str) -> None:
     if rc:
         raise Exception(f"Failed to enter universe: {rc}")
 
-def aw_event(event: EventEnum) -> None:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_event(event: EventEnum) -> c_void_p:
+    """
+    Get the event handler for the specified event.
+
+    Args:
+        event (EventEnum): The event name.
+
+    Raises:
+        Exception: If the event handler could not be retrieved.
+
+    Returns:
+        POINTER(c_int): The event handler.
+    """
+    return SDK.aw_event(event.value)
 
 def aw_event_set(event: EventEnum, handler: AW_CALLBACK) -> None:
     """
