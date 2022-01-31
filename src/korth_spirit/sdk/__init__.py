@@ -24,12 +24,10 @@ from dataclasses import fields
 from os import path
 from typing import List, Optional, Union
 
-from korth_spirit.data.cav_delete_data import CavDeleteData
-
 from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
-                    CellIteratorData, LoginData, ObjectChangeData,
-                    ObjectCreateData, ObjectCreatedData, ObjectDeleteData,
-                    StateChangeData)
+                    CavDeleteData, CellIteratorData, LoginData,
+                    ObjectChangeData, ObjectCreateData, ObjectCreatedData,
+                    ObjectDeleteData, StateChangeData)
 from .enums import (AttributeEnum, CallBackEnum, CameraEnum, EventEnum,
                     RightsEnum)
 
@@ -308,9 +306,21 @@ def aw_cav_delete(data: CavDeleteData) -> None:
     if rc != 0:
         raise Exception(f'Failed to delete the CAV. Error code: {rc}')
 
+def aw_cav_request(citizen: int, session: int) -> None:
+    """
+    Queries the universe for the CAV of the specified citizen.
 
-def aw_cav_request(citizen: int, session: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+    Args:
+        citizen (int): The citizen ID to query the CAV of.
+        session (int): The session ID to query the CAV of.
+
+    Raises:
+        Exception: If the CAV could not be requested.
+    """    
+    rc = SDK.aw_cav_request(citizen, session)
+
+    if rc != 0:
+        raise Exception(f'Failed to request the CAV. Error code: {rc}')
 
 def aw_cell_next(combine: bool = False, iterator: CellIteratorData = None) -> None:
     """
