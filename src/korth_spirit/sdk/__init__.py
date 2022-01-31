@@ -777,8 +777,17 @@ def aw_has_world_right(citizen: int, right: RightsEnum) -> bool:
     """    
     return SDK.aw_has_world_right(citizen, right.value)
 
-def aw_has_world_right_all(right: AttributeEnum) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_has_world_right_all(right: AttributeEnum) -> bool:
+    """
+    Checks if everyone in the world has a specified world right.
+
+    Args:
+        right (AttributeEnum): The right.
+
+    Returns:
+        bool: True if everyone in the world has the right, False otherwise.
+    """
+    return bool(SDK.aw_has_world_right_all(right.value))
 
 def aw_hud_clear(session: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
