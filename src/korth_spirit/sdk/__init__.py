@@ -478,8 +478,23 @@ def aw_citizen_change(data: CitizenData) -> None:
     if rc != 0:
         raise Exception(f'Failed to change the citizen. Error code: {rc}')    
 
-def aw_citizen_delete(citizen: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_citizen_delete(citizen: int) -> None:
+    """
+    Deletes the specified citizen.
+
+    Args:
+        citizen (int): The citizen number to delete.
+
+    Raises:
+        Exception: If the citizen could not be deleted.
+    """
+    SDK.aw_citizen_delete.argtypes = [c_int]
+    SDK.aw_citizen_delete.restype = c_int
+
+    rc = SDK.aw_citizen_delete(citizen)
+
+    if rc != 0:
+        raise Exception(f'Failed to delete the citizen. Error code: {rc}')
 
 def aw_citizen_next() -> int:
     raise NotImplementedError('This function is not implemented yet.')
