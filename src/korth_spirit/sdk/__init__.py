@@ -496,8 +496,37 @@ def aw_citizen_delete(citizen: int) -> None:
     if rc != 0:
         raise Exception(f'Failed to delete the citizen. Error code: {rc}')
 
-def aw_citizen_next() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_citizen_next(citizen: Optional[int] = None) -> CitizenData:
+    """
+    Queries the next citizen in the citizen iterator.
+
+    Args:
+        citizen (Optional[int], optional): The citizen number to start the query. Defaults to None.
+
+    Raises:
+        Exception: If the citizen could not be queried.
+
+    Returns:
+        CitizenData: The citizen data.
+    """    
+    from .get_data import get_data
+
+    if citizen:
+        aw_int_set(AttributeEnum.AW_CITIZEN_NUMBER, citizen)
+
+    rc = SDK.aw_citizen_next()
+
+    if rc != 0:
+        raise Exception(f'Failed to get the next citizen. Error code: {rc}')
+    
+    data = CitizenData()
+
+    for field in fields(data):
+        attr = getattr(AttributeEnum, f'AW_CITIZEN_{field.name.upper()}')
+        value = get_data(attr)
+        setattr(data, field.name, value)
+
+    return data
 
 def aw_citizen_previous() -> int:
     raise NotImplementedError('This function is not implemented yet.')
