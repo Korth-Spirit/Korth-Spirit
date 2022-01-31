@@ -24,6 +24,8 @@ from dataclasses import fields
 from os import path
 from typing import List, Optional, Union
 
+from korth_spirit.data.cav_delete_data import CavDeleteData
+
 from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
                     CellIteratorData, LoginData, ObjectChangeData,
                     ObjectCreateData, ObjectCreatedData, ObjectDeleteData,
@@ -288,8 +290,24 @@ def aw_cav_change(data: CavChangeData) -> None:
     if rc != 0:
         raise Exception(f'Failed to change the CAV. Error code: {rc}')
     
-def aw_cav_delete() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_cav_delete(data: CavDeleteData) -> None:
+    """
+    Deletes the CAV of the specified citizen.
+
+    Args:
+        data (CavDeleteData): The CAV delete data.
+
+    Raises:
+        Exception: If the CAV could not be deleted.
+    """
+    aw_int_set(AttributeEnum.AW_CAV_CITIZEN, data.citizen)
+    aw_int_set(AttributeEnum.AW_CAV_SESSION, data.session)
+
+    rc = SDK.aw_cav_delete()
+
+    if rc != 0:
+        raise Exception(f'Failed to delete the CAV. Error code: {rc}')
+
 
 def aw_cav_request(citizen: int, session: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
