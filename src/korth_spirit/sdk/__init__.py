@@ -371,8 +371,28 @@ def aw_check_right(citizen: int, right: str) -> bool:
 
     return bool(SDK.aw_check_right(citizen, right))
 
-def aw_check_right_all(right: str) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_check_right_all(right: str) -> bool:
+    """
+    Checks if all citizens have the specified right.
+
+    Args:
+        right (str): A rights list.
+            0    ... tourists
+            any# ... citizen number
+            -    ... exclusion sign
+            #~#  ... citizen range
+            *    ... everyone
+            , blank  ... delimiters
+
+    Returns:
+        bool: True if all citizens have the right, False otherwise.
+    """
+    SDK.aw_check_right_all.argtypes = [c_char_p]
+    SDK.aw_check_right_all.restype = c_int
+
+    rc = SDK.aw_check_right_all(right)
+
+    return bool(rc)
 
 def aw_citizen_add() -> int:
     raise NotImplementedError('This function is not implemented yet.')
