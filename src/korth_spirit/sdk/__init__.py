@@ -438,8 +438,23 @@ def aw_citizen_attributes_by_name(name: str) -> None:
     if rc != 0:
         raise Exception(f'Failed to get the attributes of the citizen. Error code: {rc}')
 
-def aw_citizen_attributes_by_number(citizen: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_citizen_attributes_by_number(citizen: int) -> None:
+    """
+    Gets citizen attributes by number and returns via callback.
+
+    Args:
+        citizen (int): The citizen number to get the attributes of.
+
+    Raises
+        Exception: If the attributes could not be requested.
+    """
+    SDK.aw_citizen_attributes_by_number.argtypes = [c_int]
+    SDK.aw_citizen_attributes_by_number.restype = c_int
+
+    rc = SDK.aw_citizen_attributes_by_number(citizen)
+
+    if rc != 0:
+        raise Exception(f'Failed to get the attributes of the citizen. Error code: {rc}')
 
 def aw_citizen_change() -> int:
     raise NotImplementedError('This function is not implemented yet.')
