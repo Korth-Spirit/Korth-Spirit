@@ -22,7 +22,7 @@ from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char, c_char_p, c_int,
                     c_uint, c_ulong, c_void_p)
 from dataclasses import fields
 from os import path
-from typing import List, Optional, Union
+from typing import List, Optional, Tuple, Union
 
 from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
                     CavDeleteData, CellIteratorData, CitizenData,
@@ -1118,12 +1118,6 @@ def aw_query(x_sector: int, z_sector: int, sequence3_x_3: List[List[int]]) -> No
     if rc:
         raise Exception(f"Failed to query: {rc}")
 
-def aw_query_5x5(x_sector: int, z_sector: int, sequence5_x_5: list) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
-
-def aw_random() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
-
 def aw_say(message: str) -> None:
     """
     Sends a message to the universe.
@@ -1151,8 +1145,29 @@ def aw_sector_from_cell(cell: int) -> int:
     
     return SDK.aw_sector_from_cell(cell)
 
-def aw_server_admin(domain: str, port: int, password: str, instance: c_void_p) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_server_admin(domain: str, port: int, password: str, instance: c_void_p) -> Tuple[int, int]:
+    """
+    Connects to a world server.
+
+    Args:
+        domain (str): The domain.
+        port (int): The port.
+        password (str): The password.
+        instance (c_void_p): The instance.
+
+    Raises:
+        Exception: If the connection failed.
+
+    Returns:
+        Tuple[int, int]: Server build, build number.
+    """
+    SDK.aw_server_admin.argtypes = [c_char_p, c_int, c_char_p, c_void_p]
+    SDK.aw_server_admin.restype = c_int
+
+    rc = SDK.aw_server_admin(domain.encode('utf-8'), port, password.encode('utf-8'), instance)
+
+    if rc:
+        raise Exception(f"Failed to connect: {rc}")
 
 def aw_server_world_add() -> int:
     raise NotImplementedError('This function is not implemented yet.')
