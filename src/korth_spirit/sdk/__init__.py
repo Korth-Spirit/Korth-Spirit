@@ -880,11 +880,17 @@ def aw_init(build: int) -> None:
     if rc:
         raise Exception(f"Failed to initialize SDK: {rc}")
 
-def aw_init_bind(build: int, long: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_instance() -> c_void_p:
+    """
+    Gets the current instance.
 
-def aw_instance() -> None:
-    raise NotImplementedError('This function is not implemented yet.')
+    Raises:
+        Exception: If the instance could not be retrieved.
+    
+    Returns:
+        c_void_p: The instance.
+    """
+    return SDK.aw_instance()
 
 def aw_instance_callback_set(c: AW_CALLBACK, callback: c_void_p, rc: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
