@@ -24,13 +24,11 @@ from dataclasses import fields
 from os import path
 from typing import List, Optional, Union
 
-from korth_spirit.data.citizen_data import CitizenData
-
 from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
-                    CavDeleteData, CellIteratorData, ConsoleMessageData,
-                    HudClickData, LoginData, ObjectChangeData,
-                    ObjectCreateData, ObjectCreatedData, ObjectDeleteData,
-                    StateChangeData)
+                    CavDeleteData, CellIteratorData, CitizenData,
+                    ConsoleMessageData, HudClickData, HudData, LoginData,
+                    ObjectChangeData, ObjectCreateData, ObjectCreatedData,
+                    ObjectDeleteData, StateChangeData)
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
 SDK_FILE = './aw64.dll'
@@ -825,8 +823,28 @@ def aw_hud_click(data: HudClickData) -> None:
     if rc:
         raise Exception(f"Failed to simulate HUD click: {rc}")
 
-def aw_hud_create() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_hud_create(data: HudData) -> None:
+    """
+    Creates a HUD element.
+
+    Args:
+        data (HudData): The HUD data.
+
+    Raises:
+        Exception: If the HUD element could not be created.
+    """
+    from .write_data import write_data
+
+    for field in fields(data):
+        write_data(
+            AttributeEnum(f"AW_HUD_ELEMENT_{field.upper()}"),
+            getattr(data, field.name)
+        )
+
+    rc = SDK.aw_hud_create()
+
+    if rc:
+        raise Exception(f"Failed to create HUD element: {rc}")
 
 def aw_hud_destroy(session: int, id: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
