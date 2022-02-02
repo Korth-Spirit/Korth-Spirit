@@ -28,8 +28,9 @@ from korth_spirit.data.citizen_data import CitizenData
 
 from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
                     CavDeleteData, CellIteratorData, ConsoleMessageData,
-                    LoginData, ObjectChangeData, ObjectCreateData,
-                    ObjectCreatedData, ObjectDeleteData, StateChangeData)
+                    HudClickData, LoginData, ObjectChangeData,
+                    ObjectCreateData, ObjectCreatedData, ObjectDeleteData,
+                    StateChangeData)
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
 SDK_FILE = './aw64.dll'
@@ -804,8 +805,25 @@ def aw_hud_clear(session: int) -> None:
     if rc:
         raise Exception(f"Failed to clear HUD: {rc}")
 
-def aw_hud_click() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_hud_click(data: HudClickData) -> None:
+    """
+    Simulates a HUD click.
+
+    Args:
+        data (HudClickData): The HUD click data.
+
+    Raises:
+        Exception: If the HUD click could not be simulated.
+    """
+    aw_int_set(AttributeEnum.AW_HUD_ELEMENT_ID, data.id)
+    aw_int_set(AttributeEnum.AW_HUD_CLICK_X, data.x)
+    aw_int_set(AttributeEnum.AW_HUD_CLICK_Y, data.y)
+    aw_int_set(AttributeEnum.AW_HUD_ELEMENT_CLICK_Z, data.z)
+
+    rc = SDK.aw_hud_click()
+
+    if rc:
+        raise Exception(f"Failed to simulate HUD click: {rc}")
 
 def aw_hud_create() -> int:
     raise NotImplementedError('This function is not implemented yet.')

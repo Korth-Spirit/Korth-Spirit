@@ -28,6 +28,7 @@ from .cell_iterator_data import CellIteratorData
 from .cell_object_data import CellObjectData
 from .citizen_data import CitizenData
 from .console_message_data import ConsoleMessageData
+from .hud_click_data import HudClickData
 from .login_data import LoginData
 from .object_change_data import ObjectChangeData
 from .object_create_data import ObjectCreateData
@@ -47,6 +48,7 @@ __all__ = [
     "CellObjectData",
     "CitizenData",
     "ConsoleMessageData",
+    "HudClickData",
     "LoginData",
     "ObjectChangeData",
     "ObjectCreateData",
