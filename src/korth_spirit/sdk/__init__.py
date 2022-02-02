@@ -846,8 +846,18 @@ def aw_hud_create(data: HudData) -> None:
     if rc:
         raise Exception(f"Failed to create HUD element: {rc}")
 
-def aw_hud_destroy(session: int, id: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_hud_destroy(session: int, id: int) -> None:
+    """
+    Destroys a HUD element.
+
+    Args:
+        session (int): The session number. 0 for all sessions.
+        id (int): The HUD element ID.
+    """
+    rc = SDK.aw_hud_destroy(session, id)
+
+    if rc:
+        raise Exception(f"Failed to destroy HUD element: {rc}")
 
 def aw_init(build: int) -> None:
     """
