@@ -789,8 +789,20 @@ def aw_has_world_right_all(right: AttributeEnum) -> bool:
     """
     return bool(SDK.aw_has_world_right_all(right.value))
 
-def aw_hud_clear(session: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_hud_clear(session: int) -> None:
+    """
+    Clears the HUD for the given session. Will clear HUD for all sessions if session is 0.
+
+    Args:
+        session (int): The session number.
+
+    Raises:
+        Exception: If the HUD could not be cleared.
+    """    
+    rc = SDK.aw_hud_clear(session)
+
+    if rc:
+        raise Exception(f"Failed to clear HUD: {rc}")
 
 def aw_hud_click() -> int:
     raise NotImplementedError('This function is not implemented yet.')
