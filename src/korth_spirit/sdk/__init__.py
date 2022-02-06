@@ -1238,8 +1238,32 @@ def aw_server_world_change(data: ServerData) -> ServerReturnData:
     return ret
 
 
-def aw_server_world_delete(id: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_server_world_delete(id: int) -> ServerReturnData:
+    """
+    Delete a world.
+
+    Args:
+        id (int): The world ID.
+
+    Returns:
+        ServerReturnData: The deleted world data.
+    """
+    from .get_data import get_data
+
+    rc = SDK.aw_server_world_delete(id)
+
+    if rc:
+        raise Exception(f"Failed to delete world: {rc}")
+
+    ret = ServerReturnData()
+    for field in fields(ret):
+        attr = getattr(AttributeEnum, f'AW_SERVER_{field.name.upper()}')
+        data = get_data(attr)
+
+        if data:
+            setattr(ret, field.name, data)
+
+    return ret
 
 def aw_server_world_instance_add(id: int, instance_id: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
