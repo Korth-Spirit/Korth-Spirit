@@ -22,9 +22,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class ServerCreateData:
-    enabled: bool
+class ServerReturnData:
+    id: int
+    instance: int
     name: str
-    password: str
-    registry: str
-    caretakers: str

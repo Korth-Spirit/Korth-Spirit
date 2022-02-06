@@ -29,7 +29,7 @@ from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
                     CavDeleteData, CellIteratorData, CitizenData,
                     ConsoleMessageData, HudClickData, HudData, LoginData,
                     ObjectChangeData, ObjectCreateData, ObjectCreatedData,
-                    ObjectDeleteData, ServerCreateData, ServerCreatedData,
+                    ObjectDeleteData, ServerData, ServerReturnData,
                     StateChangeData)
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
@@ -1171,7 +1171,7 @@ def aw_server_admin(domain: str, port: int, password: str, instance: c_void_p) -
     if rc:
         raise Exception(f"Failed to connect: {rc}")
 
-def aw_server_world_add(data: ServerCreateData) -> ServerCreatedData:
+def aw_server_world_add(data: ServerData) -> ServerReturnData:
     """
     Add a world to the universe.
 
@@ -1179,7 +1179,7 @@ def aw_server_world_add(data: ServerCreateData) -> ServerCreatedData:
         data (ServerCreateData): The world data.
 
     Returns:
-        ServerCreatedData: The created world data.
+        ServerReturnData: The created world data.
     """
     from .get_data import get_data
     from .write_data import write_data
@@ -1194,7 +1194,7 @@ def aw_server_world_add(data: ServerCreateData) -> ServerCreatedData:
     if rc:
         raise Exception(f"Failed to create world: {rc}")
 
-    ret = ServerCreatedData()
+    ret = ServerReturnData()
     for field in fields(ret):
         attr = getattr(AttributeEnum, f'AW_SERVER_{field.name.upper()}')
         data = get_data(attr)
@@ -1204,8 +1204,39 @@ def aw_server_world_add(data: ServerCreateData) -> ServerCreatedData:
 
     return ret
 
-def aw_server_world_change(id: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_server_world_change(data: ServerData) -> ServerReturnData:
+    """
+    Change a world.
+
+    Args:
+        data (ServerChangeData): The world data.
+
+    Returns:
+        ServerReturnData: The changed world data.
+    """
+    from .get_data import get_data
+    from .write_data import write_data
+
+    for field in fields(data):
+        value = getattr(data, field.name, None)
+        attr = getattr(AttributeEnum, f'AW_SERVER_{field.name.upper()}')
+        write_data(attr, value)
+
+    rc = SDK.aw_server_world_change()
+
+    if rc:
+        raise Exception(f"Failed to create world: {rc}")
+
+    ret = ServerReturnData()
+    for field in fields(ret):
+        attr = getattr(AttributeEnum, f'AW_SERVER_{field.name.upper()}')
+        data = get_data(attr)
+
+        if data:
+            setattr(ret, field.name, data)
+
+    return ret
+
 
 def aw_server_world_delete(id: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
