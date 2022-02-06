@@ -1237,7 +1237,6 @@ def aw_server_world_change(data: ServerData) -> ServerReturnData:
 
     return ret
 
-
 def aw_server_world_delete(id: int) -> ServerReturnData:
     """
     Delete a world.
