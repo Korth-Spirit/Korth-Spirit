@@ -35,6 +35,8 @@ from .object_change_data import ObjectChangeData
 from .object_create_data import ObjectCreateData
 from .object_created_data import ObjectCreatedData
 from .object_delete_data import ObjectDeleteData
+from .server_create_data import ServerCreateData
+from .server_created_data import ServerCreatedData
 from .state_change_data import StateChangeData
 from .terrain_node_data import TerrainNodeData
 
@@ -56,6 +58,8 @@ __all__ = [
     "ObjectCreateData",
     "ObjectCreatedData",
     "ObjectDeleteData",
+    "ServerCreateData",
+    "ServerCreatedData",
     "StateChangeData",
     "TerrainNodeData",
 ]

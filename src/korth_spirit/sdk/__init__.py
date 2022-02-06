@@ -23,12 +23,14 @@ from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char, c_char_p, c_int,
 from dataclasses import fields
 from os import path
 from typing import List, Optional, Tuple, Union
+from xmlrpc.client import Server
 
 from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
                     CavDeleteData, CellIteratorData, CitizenData,
                     ConsoleMessageData, HudClickData, HudData, LoginData,
                     ObjectChangeData, ObjectCreateData, ObjectCreatedData,
-                    ObjectDeleteData, StateChangeData)
+                    ObjectDeleteData, ServerCreateData, ServerCreatedData,
+                    StateChangeData)
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
 SDK_FILE = './aw64.dll'
@@ -1169,8 +1171,38 @@ def aw_server_admin(domain: str, port: int, password: str, instance: c_void_p) -
     if rc:
         raise Exception(f"Failed to connect: {rc}")
 
-def aw_server_world_add() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_server_world_add(data: ServerCreateData) -> ServerCreatedData:
+    """
+    Add a world to the universe.
+
+    Args:
+        data (ServerCreateData): The world data.
+
+    Returns:
+        ServerCreatedData: The created world data.
+    """
+    from .get_data import get_data
+    from .write_data import write_data
+
+    for field in fields(data):
+        value = getattr(data, field.name, None)
+        attr = getattr(AttributeEnum, f'AW_SERVER_{field.name.upper()}')
+        write_data(attr, value)
+
+    rc = SDK.aw_server_world_add()
+
+    if rc:
+        raise Exception(f"Failed to create world: {rc}")
+
+    ret = ServerCreatedData()
+    for field in fields(ret):
+        attr = getattr(AttributeEnum, f'AW_SERVER_{field.name.upper()}')
+        data = get_data(attr)
+
+        if data:
+            setattr(ret, field.name, data)
+
+    return ret
 
 def aw_server_world_change(id: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
