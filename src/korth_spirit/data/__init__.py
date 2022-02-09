@@ -31,6 +31,7 @@ from .console_message_data import ConsoleMessageData
 from .hud_click_data import HudClickData
 from .hud_data import HudData
 from .license_create_data import LicenseCreateData
+from .license_data import LicenseData
 from .login_data import LoginData
 from .object_change_data import ObjectChangeData
 from .object_create_data import ObjectCreateData
@@ -55,6 +56,7 @@ __all__ = [
     "HudClickData",
     "HudData",
     "LicenseCreateData",
+    "LicenseData",
     "LoginData",
     "ObjectChangeData",
     "ObjectCreateData",
