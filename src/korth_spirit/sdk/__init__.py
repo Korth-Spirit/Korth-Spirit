@@ -1478,7 +1478,13 @@ def aw_terrain_set(cell_x: int, cell_z: int, count: int, texture: int, *heights:
     raise NotImplementedError('This function is not implemented yet.')
 
 def aw_tick() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+    """
+    Number of ticks since the number SDK was initialized.
+
+    Returns:
+        int: The number of ticks.
+    """
+    return SDK.aw_tick()
 
 def aw_toolbar_click() -> int:
     raise NotImplementedError('This function is not implemented yet.')
