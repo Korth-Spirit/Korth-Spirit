@@ -27,10 +27,10 @@ from xmlrpc.client import Server
 
 from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
                     CavDeleteData, CellIteratorData, CitizenData,
-                    ConsoleMessageData, HudClickData, HudData, LicenseData,
-                    LoginData, ObjectChangeData, ObjectCreateData,
-                    ObjectCreatedData, ObjectDeleteData, ServerData,
-                    ServerReturnData, StateChangeData)
+                    ConsoleMessageData, HudClickData, HudData,
+                    LicenseCreateData, LoginData, ObjectChangeData,
+                    ObjectCreateData, ObjectCreatedData, ObjectDeleteData,
+                    ServerData, ServerReturnData, StateChangeData)
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
 SDK_FILE = './aw64.dll'
@@ -959,7 +959,7 @@ def aw_int(attribute: AttributeEnum) -> int:
 def aw_laser_beam() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_license_add(data: LicenseData) -> None:
+def aw_license_add(data: LicenseCreateData) -> None:
     """
     Adds a world license.
 
