@@ -27,10 +27,10 @@ from xmlrpc.client import Server
 
 from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
                     CavDeleteData, CellIteratorData, CitizenData,
-                    ConsoleMessageData, HudClickData, HudData, LoginData,
-                    ObjectChangeData, ObjectCreateData, ObjectCreatedData,
-                    ObjectDeleteData, ServerData, ServerReturnData,
-                    StateChangeData)
+                    ConsoleMessageData, HudClickData, HudData, LicenseData,
+                    LoginData, ObjectChangeData, ObjectCreateData,
+                    ObjectCreatedData, ObjectDeleteData, ServerData,
+                    ServerReturnData, StateChangeData)
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
 SDK_FILE = './aw64.dll'
@@ -959,8 +959,28 @@ def aw_int(attribute: AttributeEnum) -> int:
 def aw_laser_beam() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_license_add() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_license_add(data: LicenseData) -> None:
+    """
+    Adds a world license.
+
+    Args:
+        data (LicenseData): The license data.
+
+    Raises:
+        Exception: If the license could not be added.
+    """    
+    from .write_data import write_data
+
+    for field in fields(data):
+        write_data(
+            AttributeEnum(f"AW_LICENSE_{field.upper()}"),
+            getattr(data, field.name)
+        )
+
+    rc = SDK.aw_license_add()
+
+    if rc:
+        raise Exception(f"Failed to add license: {rc}")
 
 def aw_license_attributes(name: str) -> int:
     raise NotImplementedError('This function is not implemented yet.')
