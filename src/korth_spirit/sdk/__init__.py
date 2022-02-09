@@ -1013,7 +1013,6 @@ def aw_license_attributes(name: str) -> LicenseData:
 
     return data
 
-
 def aw_license_change() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
@@ -1509,7 +1508,19 @@ def aw_unzip() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
 def aw_url_click(url: str) -> None:
-    raise NotImplementedError('This function is not implemented yet.')
+    """
+    Simulates a url click.
+
+    Args:
+        url (str): The url to click.
+
+    Raises:
+        Exception: If the url click failed.
+    """
+    rc = SDK.aw_url_click(url)
+
+    if rc:
+        raise Exception(f"Failed to click url: {rc}")
 
 def aw_url_send(session_id: int, url: str, target: str)-> None:
     raise NotImplementedError('This function is not implemented yet.')
