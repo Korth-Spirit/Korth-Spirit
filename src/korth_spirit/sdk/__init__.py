@@ -894,21 +894,37 @@ def aw_instance() -> c_void_p:
     """
     return SDK.aw_instance()
 
-def aw_instance_callback_set(event: CallBackEnum, callback: c_void_p) -> None:
+def aw_instance_callback_set(callback: CallBackEnum, handler: c_void_p) -> None:
     """
     Sets an instance callback.
 
     Args:
-        event (CallBackEnum): The callback event.
-        callback (c_void_p): The callback function.
+        callback (CallBackEnum): The callback event.
+        handler (c_void_p): The callback handler.
+
+    Raises:
+        Exception: If the callback could not be set.
     """
-    rc = SDK.aw_instance_callback_set(event.value, callback)
+    rc = SDK.aw_instance_callback_set(callback.value, handler)
 
     if rc:
         raise Exception(f"Failed to set instance callback: {rc}")
 
-def aw_instance_event_set(event: EventEnum, handler: c_void_p) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_instance_event_set(event: EventEnum, handler: c_void_p) -> None:
+    """
+    Sets an instance event.
+
+    Args:
+        event (EventEnum): The event.
+        handler (c_void_p): The event handler.
+
+    Raises:
+        Exception: If the event could not be set.
+    """    
+    rc = SDK.aw_instance_event_set(event.value, handler)
+
+    if rc:
+        raise Exception(f"Failed to set instance event: {rc}")
 
 def aw_instance_set(instance: c_void_p) -> None:
     """
