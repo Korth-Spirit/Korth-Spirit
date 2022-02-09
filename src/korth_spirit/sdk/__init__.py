@@ -1522,8 +1522,27 @@ def aw_url_click(url: str) -> None:
     if rc:
         raise Exception(f"Failed to click url: {rc}")
 
-def aw_url_send(session_id: int, url: str, target: str)-> None:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_url_send(session_id: int, url: str, target: str, post: bool = False, target_3d: bool = False)-> None:
+    """
+    Sends a url to the specific session with a target frame.
+
+    Args:
+        session_id (int): The session id.
+        url (str): The url to send.
+        target (str): The target frame.
+        post (bool): True if the url is a post, False otherwise.
+        target_3d (bool): True if the target is a 3D frame, False otherwise.
+
+    Raises:
+        Exception: If the url send failed.
+    """
+    aw_bool_set(AttributeEnum.AW_URL_POST, post)
+    aw_bool_set(AttributeEnum.AW_URL_TARGET_3D, target_3d)
+    
+    rc = SDK.aw_url_send(session_id, url, target)
+
+    if rc:
+        raise Exception(f"Failed to send url: {rc}")
 
 def aw_user_data() -> None:
     raise NotImplementedError('This function is not implemented yet.')
