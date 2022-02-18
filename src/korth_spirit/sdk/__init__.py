@@ -1180,8 +1180,21 @@ def aw_mover_rider_change(id: int, session: int, dist: int, angle: int, y_delta:
     if rc:
         raise Exception(f"Failed to change mover rider: {rc}")
 
-def aw_mover_rider_delete(id: int, session: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_mover_rider_delete(id: int, session: int) -> None:
+    """
+    Deletes a mover rider. Triggers the mover rider delete event.
+
+    Args:
+        id (int): The mover ID.
+        session (int): The session ID.
+
+    Raises:
+        Exception: If the mover rider could not be deleted.
+    """
+    rc = SDK.aw_mover_rider_delete(id, session)
+
+    if rc:
+        raise Exception(f"Failed to delete mover rider: {rc}")
 
 def aw_mover_set_position(id: int, x: int, y: int, z: int, yaw: int, pitch: int, roll: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
