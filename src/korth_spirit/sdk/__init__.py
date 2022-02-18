@@ -1234,8 +1234,22 @@ def aw_mover_set_state(id: int, state: int, model_num: int) -> None:
     if rc:
         raise Exception(f"Failed to set mover state: {rc}")
 
-def aw_noise(session_id: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_noise(session_id: int, sound_file: str) -> None:
+    """
+    Plays a noise. Triggers the noise event.
+
+    Args:
+        session_id (int): The session ID or 0 for all sessions.
+        sound_file (str): Absolute url or relative path to the sound file.
+
+    Raises:
+        Exception: If the noise could not be played.
+    """    
+    aw_string_set(AttributeEnum.AW_SOUND_NAME, sound_file)
+    rc = SDK.aw_noise(session_id)
+
+    if rc:
+        raise Exception(f"Failed to play noise: {rc}")
 
 def aw_object_add(data: ObjectCreateData) -> ObjectCreatedData:
     """
