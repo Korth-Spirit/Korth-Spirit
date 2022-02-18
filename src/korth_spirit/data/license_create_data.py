@@ -27,7 +27,7 @@ class LicenseCreateData:
     """
     World license data.
     """
-    allow_tourist: bool
+    allow_tourists: bool
     comment: Optional[str]
     email: str
     expiration_time: int

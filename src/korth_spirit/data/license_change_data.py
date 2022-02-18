@@ -23,7 +23,7 @@ from typing import Optional
 
 
 @dataclass
-class LicenseData:
+class LicenseChangeData:
     """
     World license data.
     """
@@ -33,8 +33,6 @@ class LicenseData:
     email: str
     expiration_time: int
     hidden: bool
-    last_address: int
-    last_start: int
     name: str
     password: str
     plugins: bool

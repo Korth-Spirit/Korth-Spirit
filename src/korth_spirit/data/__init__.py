@@ -30,6 +30,7 @@ from .citizen_data import CitizenData
 from .console_message_data import ConsoleMessageData
 from .hud_click_data import HudClickData
 from .hud_data import HudData
+from .license_change_data import LicenseChangeData
 from .license_create_data import LicenseCreateData
 from .license_data import LicenseData
 from .login_data import LoginData
@@ -55,6 +56,7 @@ __all__ = [
     "ConsoleMessageData",
     "HudClickData",
     "HudData",
+    "LicenseChangeData",
     "LicenseCreateData",
     "LicenseData",
     "LoginData",
