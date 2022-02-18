@@ -1196,8 +1196,26 @@ def aw_mover_rider_delete(id: int, session: int) -> None:
     if rc:
         raise Exception(f"Failed to delete mover rider: {rc}")
 
-def aw_mover_set_position(id: int, x: int, y: int, z: int, yaw: int, pitch: int, roll: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_mover_set_position(id: int, x: int, y: int, z: int, yaw: int, pitch: int, roll: int) -> None:
+    """
+    Sets the position of a mover. Triggers the mover set position event.
+
+    Args:
+        id (int): The mover ID.
+        x (int): X coordinate.
+        y (int): Y coordinate.
+        z (int): Z coordinate.
+        yaw (int): Yaw.
+        pitch (int): Pitch.
+        roll (int): Roll.
+
+    Raises:
+        Exception: If the mover position could not be set.
+    """
+    rc = SDK.aw_mover_set_position(id, x, y, z, yaw, pitch, roll)
+
+    if rc:
+        raise Exception(f"Failed to set mover position: {rc}")
 
 def aw_mover_set_state(id: int, state: int, model_num: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
