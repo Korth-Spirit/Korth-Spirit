@@ -27,9 +27,9 @@ from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
                     CavDeleteData, CellIteratorData, CitizenData,
                     ConsoleMessageData, HudClickData, HudData,
                     LicenseChangeData, LicenseCreateData, LicenseData,
-                    LoginData, ObjectChangeData, ObjectCreateData,
-                    ObjectCreatedData, ObjectDeleteData, ServerData,
-                    ServerReturnData, StateChangeData)
+                    LoginData, ObjectBumpData, ObjectChangeData,
+                    ObjectCreateData, ObjectCreatedData, ObjectDeleteData,
+                    ServerData, ServerReturnData, StateChangeData)
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
 SDK_FILE = './aw64.dll'
@@ -1287,8 +1287,33 @@ def aw_object_add(data: ObjectCreateData) -> ObjectCreatedData:
 
     return ret
 
-def aw_object_bump() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_object_bump(data: ObjectBumpData) -> Tuple[int, int]:
+    """
+    Simulates a bump on an object.
+
+    Args:
+        data (ObjectBumpData): The object data.
+
+    Raises:
+        Exception: If the object could not be bumped.
+
+    Returns:
+        Tuple[int, int]: Object sync, and session ID.
+    """    
+    from .get_data import get_data
+    from .write_data import write_data
+
+    for field in fields(data):
+        value = getattr(data, field.name, None)
+        attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
+        write_data(attr, value)
+    
+    rc = SDK.aw_object_bump()
+
+    if rc:
+        raise Exception(f"Failed to bump object: {rc}")
+
+    return get_data(AttributeEnum.AW_OBJECT_SYNC), get_data(AttributeEnum.AW_OBJECT_SESSION_TO)
 
 def aw_object_change(data: ObjectChangeData) -> None:
     """

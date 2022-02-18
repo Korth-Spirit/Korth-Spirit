@@ -34,6 +34,7 @@ from .license_change_data import LicenseChangeData
 from .license_create_data import LicenseCreateData
 from .license_data import LicenseData
 from .login_data import LoginData
+from .object_bump_data import ObjectBumpData
 from .object_change_data import ObjectChangeData
 from .object_create_data import ObjectCreateData
 from .object_created_data import ObjectCreatedData
@@ -60,6 +61,7 @@ __all__ = [
     "LicenseCreateData",
     "LicenseData",
     "LoginData",
+    "ObjectBumpData",
     "ObjectChangeData",
     "ObjectCreateData",
     "ObjectCreatedData",
