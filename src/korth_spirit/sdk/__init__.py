@@ -1036,8 +1036,17 @@ def aw_license_change(data: LicenseChangeData) -> None:
     if rc:
         raise Exception(f"Failed to change license: {rc}")
 
-def aw_license_delete(name: str) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_license_delete(name: str) -> None:
+    """
+    Deletes a world license.
+
+    Args:
+        name (str): The license name.
+    """
+    rc = SDK.aw_license_delete(name)
+
+    if rc:
+        raise Exception(f"Failed to delete license: {rc}")
 
 def aw_license_next() -> int:
     raise NotImplementedError('This function is not implemented yet.')
