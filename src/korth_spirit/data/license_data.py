@@ -27,17 +27,17 @@ class LicenseData:
     """
     World license data.
     """
-    allow_tourists: bool
+    allow_tourists: Optional[bool]
     comment: Optional[str]
-    creation_time: int
-    email: str
-    expiration_time: int
-    hidden: bool
-    last_address: int
-    last_start: int
-    name: str
-    password: str
-    plugins: bool
-    range: int
-    users: int
-    voip: bool
+    creation_time: Optional[int]
+    email: Optional[str]
+    expiration_time: Optional[int]
+    hidden: Optional[bool]
+    last_address: Optional[int]
+    last_start: Optional[int]
+    name: Optional[str]
+    password: Optional[str]
+    plugins: Optional[bool]
+    range: Optional[int]
+    users: Optional[int]
+    voip: Optional[bool]

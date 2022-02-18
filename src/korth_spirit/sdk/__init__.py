@@ -1048,8 +1048,32 @@ def aw_license_delete(name: str) -> None:
     if rc:
         raise Exception(f"Failed to delete license: {rc}")
 
-def aw_license_next() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_license_next() -> LicenseData:
+    """
+    Gets the next world license.
+
+    Raises:
+        Exception: If the license could not be retrieved.
+
+    Returns:
+        LicenseData: [description]
+    """
+    from .get_data import get_data
+
+    rc = SDK.aw_license_next()
+
+    if rc:
+        raise Exception(f"Failed to get next license: {rc}")
+
+    data = LicenseData()
+    for field in fields(data):
+        setattr(
+            data,
+            field.name,
+            get_data(AttributeEnum(f"AW_LICENSE_{field.upper()}"))
+        )
+    
+    return data
 
 def aw_license_previous() -> int:
     raise NotImplementedError('This function is not implemented yet.')
