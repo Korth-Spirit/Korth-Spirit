@@ -21,9 +21,7 @@
 from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char, c_char_p, c_int,
                     c_uint, c_ulong, c_void_p)
 from dataclasses import fields
-from os import path
 from typing import List, Optional, Tuple, Union
-from xmlrpc.client import Server
 
 from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
                     CavDeleteData, CellIteratorData, CitizenData,
@@ -1125,8 +1123,20 @@ def aw_login(instance: c_void_p, data: LoginData) -> None:
     if rc:
         raise Exception(f"Failed to login: {rc}")
 
-def aw_mover_links(id: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_mover_links(id: int) -> None:
+    """
+    Gets the mover links. Triggers the mover links event.
+
+    Args:
+        id (int): The mover ID.
+
+    Raises:
+        Exception: If the mover links could not be retrieved.
+    """    
+    rc = SDK.aw_mover_links(id)
+
+    if rc:
+        raise Exception(f"Failed to get mover links: {rc}")
 
 def aw_mover_rider_add(id: int, session: int, dist: int, angle: int, y_delta: int, yaw_delta: int, pitch_delta: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
