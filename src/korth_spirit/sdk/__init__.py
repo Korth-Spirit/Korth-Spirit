@@ -1217,8 +1217,22 @@ def aw_mover_set_position(id: int, x: int, y: int, z: int, yaw: int, pitch: int,
     if rc:
         raise Exception(f"Failed to set mover position: {rc}")
 
-def aw_mover_set_state(id: int, state: int, model_num: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_mover_set_state(id: int, state: int, model_num: int) -> None:
+    """
+    Sets the state of a mover. Triggers the mover set state event.
+
+    Args:
+        id (int): The mover ID.
+        state (int): The state.
+        model_num (int): The model number.
+    
+    Raises:
+        Exception: If the mover state could not be set.
+    """
+    rc = SDK.aw_mover_set_state(id, state, model_num)
+
+    if rc:
+        raise Exception(f"Failed to set mover state: {rc}")
 
 def aw_noise(session_id: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
