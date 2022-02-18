@@ -1159,8 +1159,26 @@ def aw_mover_rider_add(id: int, session: int, dist: int, angle: int, y_delta: in
     if rc:
         raise Exception(f"Failed to add mover rider: {rc}")
 
-def aw_mover_rider_change(id: int, session: int, dist: int, angle: int, y_delta: int, yaw_delta: int, pitch_delta: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_mover_rider_change(id: int, session: int, dist: int, angle: int, y_delta: int, yaw_delta: int, pitch_delta: int) -> None:
+    """
+    Changes a mover rider. Triggers the mover rider change event.
+
+    Args:
+        id (int): The mover ID.
+        session (int): The session ID.
+        dist (int): Distance in the XZ plane from the origo of the mover object to the rider.
+        angle (int): Angle in the XZ plane between the Z axis of the mover object and the rider.
+        y_delta (int): Distance along the Y axis from the origo of the mover to the Y coordinate of the rider.
+        yaw_delta (int): Yaw of the rider, relative to the yaw of the mover object.
+        pitch_delta (int): Pitch of the rider, relative to the pitch of the mover object.
+
+    Raises:
+        Exception: If the mover rider could not be changed.
+    """
+    rc = SDK.aw_mover_rider_change(id, session, dist, angle, y_delta, yaw_delta, pitch_delta)
+
+    if rc:
+        raise Exception(f"Failed to change mover rider: {rc}")
 
 def aw_mover_rider_delete(id: int, session: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
