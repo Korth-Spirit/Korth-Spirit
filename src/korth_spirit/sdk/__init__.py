@@ -1056,7 +1056,7 @@ def aw_license_next() -> LicenseData:
         Exception: If the license could not be retrieved.
 
     Returns:
-        LicenseData: [description]
+        LicenseData: The license data.
     """
     from .get_data import get_data
 
@@ -1075,8 +1075,32 @@ def aw_license_next() -> LicenseData:
     
     return data
 
-def aw_license_previous() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_license_previous() -> LicenseData:
+    """
+    Gets the previous world license.
+
+    Raises:
+        Exception: If the license could not be retrieved.
+
+    Returns:
+        LicenseData: The license data.
+    """
+    from .get_data import get_data
+
+    rc = SDK.aw_license_previous()
+
+    if rc:
+        raise Exception(f"Failed to get previous license: {rc}")
+
+    data = LicenseData()
+    for field in fields(data):
+        setattr(
+            data,
+            field.name,
+            get_data(AttributeEnum(f"AW_LICENSE_{field.upper()}"))
+        )
+
+    return data
 
 def aw_login(instance: c_void_p, data: LoginData) -> None:
     """
