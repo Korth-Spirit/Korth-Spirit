@@ -23,13 +23,7 @@ from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char, c_char_p, c_int,
 from dataclasses import fields
 from typing import List, Optional, Tuple, Union
 
-from ..data import (AddressData, BotMenuData, CameraSetData, CavChangeData,
-                    CavDeleteData, CellIteratorData, CitizenData,
-                    ConsoleMessageData, HudClickData, HudData,
-                    LicenseChangeData, LicenseCreateData, LicenseData,
-                    LoginData, ObjectBumpData, ObjectChangeData,
-                    ObjectCreateData, ObjectCreatedData, ObjectDeleteData,
-                    ServerData, ServerReturnData, StateChangeData)
+from .. import data
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
 
 SDK_FILE = './aw64.dll'
@@ -69,7 +63,7 @@ def aw_string_set(attribute: AttributeEnum, value: str) -> None:
     if rc:
         raise Exception(f"Failed to set initialization attribute: {rc}")
 
-def aw_address(session_id: int) -> AddressData:
+def aw_address(session_id: int) -> data.AddressData:
     """
     Returns the IP address of the provided session.
 
@@ -77,14 +71,14 @@ def aw_address(session_id: int) -> AddressData:
         session_id (int): The session ID to get the IP address of.
 
     Returns:
-        AddressData: The IP address of the session.
+        data.AddressData: The IP address of the session.
     """
     rc = SDK.aw_address(session_id)
 
     if rc != 0:
         raise Exception(f'Failed to get the IP address of the session. Error code: {rc}')
 
-    return AddressData(
+    return data.AddressData(
         aw_int(AttributeEnum.AW_AVATAR_SESSION.value),
         aw_int(AttributeEnum.AW_AVATAR_ADDRESS.value)
     )
@@ -202,7 +196,7 @@ def aw_botgram_send(text: str, citizen: int) -> None:
     if rc != 0:
         raise Exception(f'Failed to send the botgram. Error code: {rc}')
 
-def aw_botmenu_send(data: BotMenuData) -> None:
+def aw_botmenu_send(bot_menu: data.BotMenuData) -> None:
     """
     Builds and sends a botmenu to the defined session.
 
@@ -210,11 +204,11 @@ def aw_botmenu_send(data: BotMenuData) -> None:
         Exception: If the botmenu could not be sent.
 
     Args:
-        data (BotMenuData): The botmenu data.
+        bot_menu (data.BotMenuData): The botmenu data.
     """
-    aw_int_set(AttributeEnum.AW_BOTMENU_TO_SESSION, data.to_session)
-    aw_string_set(AttributeEnum.AW_BOTMENU_QUESTION, data.question)
-    aw_string_set(AttributeEnum.AW_BOTMENU_ANSWER, data.answer)
+    aw_int_set(AttributeEnum.AW_BOTMENU_TO_SESSION, bot_menu.to_session)
+    aw_string_set(AttributeEnum.AW_BOTMENU_QUESTION, bot_menu.question)
+    aw_string_set(AttributeEnum.AW_BOTMENU_ANSWER, bot_menu.answer)
 
     rc = SDK.aw_botmenu_send()
     
@@ -246,20 +240,20 @@ def aw_callback_set(callback: CallBackEnum, handler: AW_CALLBACK) -> None:
     if rc != 0:
         raise Exception(f'Failed to set the callback. Error code: {rc}')
 
-def aw_camera_set(session_id: int, data: CameraSetData) -> None:
+def aw_camera_set(session_id: int, camera_set: data.CameraSetData) -> None:
     """
     Sets the camera of the specified session.
 
     Args:
         session_id (int): The session ID of the avatar to set the camera of.
-        data (CameraSetData): The camera data.
+        camera_set (data.CameraSetData): The camera data.
     
     Raises:
         Exception: If the camera could not be set.
     """
     from .write_data import write_data
-    for field in fields(data):
-        value = getattr(data, field.name, None)
+    for field in fields(camera_set):
+        value = getattr(camera_set, field.name, None)
         attr = getattr(AttributeEnum, f'AW_CAMERA_{field.name.upper()}')
 
         if value is not None:
@@ -270,37 +264,37 @@ def aw_camera_set(session_id: int, data: CameraSetData) -> None:
     if rc != 0:
         raise Exception(f'Failed to set the camera. Error code: {rc}')
 
-def aw_cav_change(data: CavChangeData) -> None:
+def aw_cav_change(cav_change: data.CavChangeData) -> None:
     """
     Changes the CAV of the specified citizen.
 
     Args:
-        data (CavChangeData): The CAV change data.
+        cav_change (data.CavChangeData): The CAV change data.
 
     Raises:
         Exception: If the CAV could not be changed.
     """
-    aw_int_set(AttributeEnum.AW_CAV_CITIZEN, data.citizen)
-    aw_int_set(AttributeEnum.AW_CAV_SESSION, data.session)
-    aw_data_set(AttributeEnum.AW_CAV_DEFINITION, data.definition)
+    aw_int_set(AttributeEnum.AW_CAV_CITIZEN, cav_change.citizen)
+    aw_int_set(AttributeEnum.AW_CAV_SESSION, cav_change.session)
+    aw_data_set(AttributeEnum.AW_CAV_DEFINITION, cav_change.definition)
 
     rc = SDK.aw_cav_change()
 
     if rc != 0:
         raise Exception(f'Failed to change the CAV. Error code: {rc}')
     
-def aw_cav_delete(data: CavDeleteData) -> None:
+def aw_cav_delete(cav_delete: data.CavDeleteData) -> None:
     """
     Deletes the CAV of the specified citizen.
 
     Args:
-        data (CavDeleteData): The CAV delete data.
+        cav_delete (data.CavDeleteData): The CAV delete data.
 
     Raises:
         Exception: If the CAV could not be deleted.
     """
-    aw_int_set(AttributeEnum.AW_CAV_CITIZEN, data.citizen)
-    aw_int_set(AttributeEnum.AW_CAV_SESSION, data.session)
+    aw_int_set(AttributeEnum.AW_CAV_CITIZEN, cav_delete.citizen)
+    aw_int_set(AttributeEnum.AW_CAV_SESSION, cav_delete.session)
 
     rc = SDK.aw_cav_delete()
 
@@ -323,7 +317,7 @@ def aw_cav_request(citizen: int, session: int) -> None:
     if rc != 0:
         raise Exception(f'Failed to request the CAV. Error code: {rc}')
 
-def aw_cell_next(combine: bool = False, iterator: CellIteratorData = None) -> None:
+def aw_cell_next(combine: bool = False, iterator: data.CellIteratorData = None) -> None:
     """
     Queries the next cell in the cell iterator.
     If combine is set to true this call will batch multiple cells.
@@ -331,7 +325,7 @@ def aw_cell_next(combine: bool = False, iterator: CellIteratorData = None) -> No
 
     Args:
         combine (bool, optional): Whether to combine multiple cells. Defaults to False.
-        iterator (CellIteratorData, optional):  The cell iterator. Defaults to None.
+        iterator (data.CellIteratorData, optional):  The cell iterator. Defaults to None.
 
     Raises:
         Exception: If the cell could not be queried.
@@ -395,20 +389,20 @@ def aw_check_right_all(right: str) -> bool:
 
     return bool(rc)
 
-def aw_citizen_add(data: CitizenData) -> None:
+def aw_citizen_add(citizen: data.CitizenData) -> None:
     """
     Adds a citizen to the universe.
 
     Args:
-        data (CitizenAddData): The citizen data.
+        citizen (CitizenAddData): The citizen data.
 
     Raises:
         Exception: If the citizen could not be added.
     """
     from .write_data import write_data
 
-    for field in fields(data):
-        value = getattr(data, field.name, None)
+    for field in fields(citizen):
+        value = getattr(citizen, field.name, None)
         attr = getattr(AttributeEnum, f'AW_CITIZEN_{field.name.upper()}')
 
         if value is not None:
@@ -455,20 +449,20 @@ def aw_citizen_attributes_by_number(citizen: int) -> None:
     if rc != 0:
         raise Exception(f'Failed to get the attributes of the citizen. Error code: {rc}')
 
-def aw_citizen_change(data: CitizenData) -> None:
+def aw_citizen_change(citizen: data.CitizenData) -> None:
     """
     Changes the data of the specified citizen.
 
     Args:
-        data (CitizenData): The citizen data.
+        citizen (data.CitizenData): The citizen data.
 
     Raises:
         Exception: If the citizen could not be changed.
     """
     from .write_data import write_data
 
-    for field in fields(data):
-        value = getattr(data, field.name, None)
+    for field in fields(citizen):
+        value = getattr(citizen, field.name, None)
         attr = getattr(AttributeEnum, f'AW_CITIZEN_{field.name.upper()}')
         write_data(attr, value)
     
@@ -495,7 +489,7 @@ def aw_citizen_delete(citizen: int) -> None:
     if rc != 0:
         raise Exception(f'Failed to delete the citizen. Error code: {rc}')
 
-def aw_citizen_next(citizen: Optional[int] = None) -> CitizenData:
+def aw_citizen_next(citizen: Optional[int] = None) -> data.CitizenData:
     """
     Queries the next citizen in the citizen iterator.
 
@@ -518,16 +512,16 @@ def aw_citizen_next(citizen: Optional[int] = None) -> CitizenData:
     if rc != 0:
         raise Exception(f'Failed to get the next citizen. Error code: {rc}')
     
-    data = CitizenData()
+    citizen = data.CitizenData()
 
-    for field in fields(data):
+    for field in fields(citizen):
         attr = getattr(AttributeEnum, f'AW_CITIZEN_{field.name.upper()}')
         value = get_data(attr)
-        setattr(data, field.name, value)
+        setattr(citizen, field.name, value)
 
-    return data
+    return citizen
 
-def aw_citizen_previous(citizen: Optional[int] = None) -> CitizenData:
+def aw_citizen_previous(citizen: Optional[int] = None) -> data.CitizenData:
     """
     Queries the previous citizen in the citizen iterator.
 
@@ -550,30 +544,30 @@ def aw_citizen_previous(citizen: Optional[int] = None) -> CitizenData:
     if rc != 0:
         raise Exception(f'Failed to get the previous citizen. Error code: {rc}')
     
-    data = CitizenData()
+    citizen = data.CitizenData()
 
-    for field in fields(data):
+    for field in fields(citizen):
         attr = getattr(AttributeEnum, f'AW_CITIZEN_{field.name.upper()}')
         value = get_data(attr)
-        setattr(data, field.name, value)
+        setattr(citizen, field.name, value)
 
-    return data
+    return citizen
 
-def aw_console_message(session_id: int, data: ConsoleMessageData) -> None:
+def aw_console_message(session_id: int, console_message: data.ConsoleMessageData) -> None:
     """
     Sends a console message to the specified session.
 
     Args:
         session_id (int): The session ID to send the message to.
-        data (ConsoleMessageData): The message data.
+        console_message (data.ConsoleMessageData): The message data.
 
     Raises:
         Exception: If the message could not be sent.
     """
     from .write_data import write_data
 
-    for field in fields(data):
-        value = getattr(data, field.name, None)
+    for field in fields(console_message):
+        value = getattr(console_message, field.name, None)
         attr = getattr(AttributeEnum, f'AW_CONSOLE_{field.name.upper()}')
         write_data(attr, value)
     
@@ -804,42 +798,42 @@ def aw_hud_clear(session: int) -> None:
     if rc:
         raise Exception(f"Failed to clear HUD: {rc}")
 
-def aw_hud_click(data: HudClickData) -> None:
+def aw_hud_click(hud_click: data.HudClickData) -> None:
     """
     Simulates a HUD click.
 
     Args:
-        data (HudClickData): The HUD click data.
+        hud_click (data.HudClickData): The HUD click data.
 
     Raises:
         Exception: If the HUD click could not be simulated.
     """
-    aw_int_set(AttributeEnum.AW_HUD_ELEMENT_ID, data.id)
-    aw_int_set(AttributeEnum.AW_HUD_CLICK_X, data.x)
-    aw_int_set(AttributeEnum.AW_HUD_CLICK_Y, data.y)
-    aw_int_set(AttributeEnum.AW_HUD_ELEMENT_CLICK_Z, data.z)
+    aw_int_set(AttributeEnum.AW_HUD_ELEMENT_ID, hud_click.id)
+    aw_int_set(AttributeEnum.AW_HUD_CLICK_X, hud_click.x)
+    aw_int_set(AttributeEnum.AW_HUD_CLICK_Y, hud_click.y)
+    aw_int_set(AttributeEnum.AW_HUD_ELEMENT_CLICK_Z, hud_click.z)
 
     rc = SDK.aw_hud_click()
 
     if rc:
         raise Exception(f"Failed to simulate HUD click: {rc}")
 
-def aw_hud_create(data: HudData) -> None:
+def aw_hud_create(hud: data.HudData) -> None:
     """
     Creates a HUD element.
 
     Args:
-        data (HudData): The HUD data.
+        hud (data.HudData): The HUD data.
 
     Raises:
         Exception: If the HUD element could not be created.
     """
     from .write_data import write_data
 
-    for field in fields(data):
+    for field in fields(hud):
         write_data(
             AttributeEnum(f"AW_HUD_ELEMENT_{field.upper()}"),
-            getattr(data, field.name)
+            getattr(hud, field.name)
         )
 
     rc = SDK.aw_hud_create()
@@ -958,22 +952,22 @@ def aw_int(attribute: AttributeEnum) -> int:
 def aw_laser_beam() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_license_add(data: LicenseCreateData) -> None:
+def aw_license_add(license_create: data.LicenseCreateData) -> None:
     """
     Adds a world license.
 
     Args:
-        data (LicenseData): The license data.
+        license_create (data.LicenseData): The license data.
 
     Raises:
         Exception: If the license could not be added.
     """    
     from .write_data import write_data
 
-    for field in fields(data):
+    for field in fields(license_create):
         write_data(
             AttributeEnum(f"AW_LICENSE_{field.upper()}"),
-            getattr(data, field.name)
+            getattr(license_create, field.name)
         )
 
     rc = SDK.aw_license_add()
@@ -981,7 +975,7 @@ def aw_license_add(data: LicenseCreateData) -> None:
     if rc:
         raise Exception(f"Failed to add license: {rc}")
 
-def aw_license_attributes(name: str) -> LicenseData:
+def aw_license_attributes(name: str) -> data.LicenseData:
     """
     Gets the world license attributes.
 
@@ -1001,32 +995,32 @@ def aw_license_attributes(name: str) -> LicenseData:
     if rc:
         raise Exception(f"Failed to get license attributes: {rc}")
 
-    data = LicenseData()
-    for field in fields(data):
+    license_data = data.LicenseData()
+    for field in fields(license_data):
         setattr(
-            data,
+            license_data,
             field.name,
             get_data(AttributeEnum(f"AW_LICENSE_{field.upper()}"))
         )
 
-    return data
+    return license_data
 
-def aw_license_change(data: LicenseChangeData) -> None:
+def aw_license_change(license_change: data.LicenseChangeData) -> None:
     """
     Changes a world license.
 
     Args:
-        data (LicenseChangeData): The license data.
+        data (data.LicenseChangeData): The license data.
 
     Raises:
         Exception: If the license could not be changed.
     """    
     from .write_data import write_data
 
-    for field in fields(data):
+    for field in fields(license_change):
         write_data(
             AttributeEnum(f"AW_LICENSE_{field.upper()}"),
-            getattr(data, field.name)
+            getattr(license_change, field.name)
         )
     
     rc = SDK.aw_license_change()
@@ -1046,7 +1040,7 @@ def aw_license_delete(name: str) -> None:
     if rc:
         raise Exception(f"Failed to delete license: {rc}")
 
-def aw_license_next() -> LicenseData:
+def aw_license_next() -> data.LicenseData:
     """
     Gets the next world license.
 
@@ -1063,17 +1057,17 @@ def aw_license_next() -> LicenseData:
     if rc:
         raise Exception(f"Failed to get next license: {rc}")
 
-    data = LicenseData()
-    for field in fields(data):
+    license_data = data.LicenseData()
+    for field in fields(license_data):
         setattr(
-            data,
+            license_data,
             field.name,
             get_data(AttributeEnum(f"AW_LICENSE_{field.upper()}"))
         )
     
-    return data
+    return license_data
 
-def aw_license_previous() -> LicenseData:
+def aw_license_previous() -> data.LicenseData:
     """
     Gets the previous world license.
 
@@ -1090,33 +1084,33 @@ def aw_license_previous() -> LicenseData:
     if rc:
         raise Exception(f"Failed to get previous license: {rc}")
 
-    data = LicenseData()
-    for field in fields(data):
+    license_data = data.LicenseData()
+    for field in fields(license_data):
         setattr(
-            data,
+            license_data,
             field.name,
             get_data(AttributeEnum(f"AW_LICENSE_{field.upper()}"))
         )
 
-    return data
+    return license_data
 
-def aw_login(instance: c_void_p, data: LoginData) -> None:
+def aw_login(instance: c_void_p, login: data.LoginData) -> None:
     """
     Logs into the universe.
 
     Args:
         instance (c_void_p): The bot instance.
-        data (LoginData): The login data.
+        login (data.LoginData): The login data.
 
     Raises:
         Exception: If the login failed.
     """
     aw_instance_set(instance)
 
-    aw_int_set(AttributeEnum.AW_LOGIN_OWNER, data.citizen)
-    aw_string_set(AttributeEnum.AW_LOGIN_PRIVILEGE_PASSWORD, data.password)
-    aw_string_set(AttributeEnum.AW_LOGIN_APPLICATION, data.app_name)
-    aw_string_set(AttributeEnum.AW_LOGIN_NAME, data.bot_name)
+    aw_int_set(AttributeEnum.AW_LOGIN_OWNER, login.citizen)
+    aw_string_set(AttributeEnum.AW_LOGIN_PRIVILEGE_PASSWORD, login.password)
+    aw_string_set(AttributeEnum.AW_LOGIN_APPLICATION, login.app_name)
+    aw_string_set(AttributeEnum.AW_LOGIN_NAME, login.bot_name)
     
     rc = SDK.aw_login()
 
@@ -1251,12 +1245,12 @@ def aw_noise(session_id: int, sound_file: str) -> None:
     if rc:
         raise Exception(f"Failed to play noise: {rc}")
 
-def aw_object_add(data: ObjectCreateData) -> ObjectCreatedData:
+def aw_object_add(object_create: data.ObjectCreateData) -> data.ObjectCreatedData:
     """
     Creates an object.
 
     Args:
-        data (ObjectCreateData): The object data.
+        object_create (data.ObjectCreateData): The object data.
 
     Returns:
         ObjectCreatedData: The created object data.
@@ -1264,8 +1258,8 @@ def aw_object_add(data: ObjectCreateData) -> ObjectCreatedData:
     from .get_data import get_data
     from .write_data import write_data
 
-    for field in fields(data):
-        value = getattr(data, field.name, None)
+    for field in fields(object_create):
+        value = getattr(object_create, field.name, None)
         attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
         write_data(attr, value)
 
@@ -1274,25 +1268,25 @@ def aw_object_add(data: ObjectCreateData) -> ObjectCreatedData:
     if rc:
         raise Exception(f"Failed to create object: {rc}")
 
-    ret = ObjectCreatedData()
+    ret = object_create.ObjectCreatedData()
     for field in fields(ret):
         prepend = 'AW_OBJECT_'
         if 'CELL' in field.name.upper():
             prepend = 'AW_'
         attr = getattr(AttributeEnum, f'{prepend}{field.name.upper()}')
-        data = get_data(attr)
+        object_create = get_data(attr)
 
-        if data:
-            setattr(ret, field.name, data)
+        if object_create:
+            setattr(ret, field.name, object_create)
 
     return ret
 
-def aw_object_bump(data: ObjectBumpData) -> Tuple[int, int]:
+def aw_object_bump(object_bump: data.ObjectBumpData) -> Tuple[int, int]:
     """
     Simulates a bump on an object.
 
     Args:
-        data (ObjectBumpData): The object data.
+        object_bump (data.ObjectBumpData): The object data.
 
     Raises:
         Exception: If the object could not be bumped.
@@ -1303,8 +1297,8 @@ def aw_object_bump(data: ObjectBumpData) -> Tuple[int, int]:
     from .get_data import get_data
     from .write_data import write_data
 
-    for field in fields(data):
-        value = getattr(data, field.name, None)
+    for field in fields(object_bump):
+        value = getattr(object_bump, field.name, None)
         attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
         write_data(attr, value)
     
@@ -1315,12 +1309,12 @@ def aw_object_bump(data: ObjectBumpData) -> Tuple[int, int]:
 
     return get_data(AttributeEnum.AW_OBJECT_SYNC), get_data(AttributeEnum.AW_OBJECT_SESSION_TO)
 
-def aw_object_change(data: ObjectChangeData) -> None:
+def aw_object_change(object_change: data.ObjectChangeData) -> None:
     """
     Changes an object.
 
     Args:
-        data (ObjectChangeData): The object data.
+        object_change (data.ObjectChangeData): The object data.
 
     Raises:
         Exception: If the object could not be changed.
@@ -1328,8 +1322,8 @@ def aw_object_change(data: ObjectChangeData) -> None:
     """
     from .write_data import write_data
 
-    for field in fields(data):
-        value = getattr(data, field.name, None)
+    for field in fields(object_change):
+        value = getattr(object_change, field.name, None)
         attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
         write_data(attr, value)
 
@@ -1341,20 +1335,20 @@ def aw_object_change(data: ObjectChangeData) -> None:
 def aw_object_click() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_object_delete(data: ObjectDeleteData) -> None:
+def aw_object_delete(object_delete: data.ObjectDeleteData) -> None:
     """
     Deletes an object.
 
     Args:
-        data (ObjectDeleteData): The object data.
+        object_delete (data.ObjectDeleteData): The object data.
 
     Raises:
         Exception: If the object could not be deleted.
     """
     from .write_data import write_data
 
-    for field in fields(data):
-        value = getattr(data, field.name, None)
+    for field in fields(object_delete):
+        value = getattr(object_delete, field.name, None)
         attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
         if value:
             write_data(attr, value)
@@ -1452,12 +1446,12 @@ def aw_server_admin(domain: str, port: int, password: str, instance: c_void_p) -
     if rc:
         raise Exception(f"Failed to connect: {rc}")
 
-def aw_server_world_add(data: ServerData) -> ServerReturnData:
+def aw_server_world_add(server: data.ServerData) -> data.ServerReturnData:
     """
     Add a world to the universe.
 
     Args:
-        data (ServerCreateData): The world data.
+        server (ServerCreateData): The world data.
 
     Returns:
         ServerReturnData: The created world data.
@@ -1465,8 +1459,8 @@ def aw_server_world_add(data: ServerData) -> ServerReturnData:
     from .get_data import get_data
     from .write_data import write_data
 
-    for field in fields(data):
-        value = getattr(data, field.name, None)
+    for field in fields(server):
+        value = getattr(server, field.name, None)
         attr = getattr(AttributeEnum, f'AW_SERVER_{field.name.upper()}')
         write_data(attr, value)
 
@@ -1475,22 +1469,22 @@ def aw_server_world_add(data: ServerData) -> ServerReturnData:
     if rc:
         raise Exception(f"Failed to create world: {rc}")
 
-    ret = ServerReturnData()
+    ret = data.ServerReturnData()
     for field in fields(ret):
         attr = getattr(AttributeEnum, f'AW_SERVER_{field.name.upper()}')
-        data = get_data(attr)
+        attr_data = get_data(attr)
 
-        if data:
-            setattr(ret, field.name, data)
+        if attr_data:
+            setattr(ret, field.name, attr_data)
 
     return ret
 
-def aw_server_world_change(data: ServerData) -> ServerReturnData:
+def aw_server_world_change(server: data.ServerData) -> data.ServerReturnData:
     """
     Change a world.
 
     Args:
-        data (ServerChangeData): The world data.
+        server (ServerChangeData): The world data.
 
     Returns:
         ServerReturnData: The changed world data.
@@ -1498,8 +1492,8 @@ def aw_server_world_change(data: ServerData) -> ServerReturnData:
     from .get_data import get_data
     from .write_data import write_data
 
-    for field in fields(data):
-        value = getattr(data, field.name, None)
+    for field in fields(server):
+        value = getattr(server, field.name, None)
         attr = getattr(AttributeEnum, f'AW_SERVER_{field.name.upper()}')
         write_data(attr, value)
 
@@ -1508,17 +1502,17 @@ def aw_server_world_change(data: ServerData) -> ServerReturnData:
     if rc:
         raise Exception(f"Failed to create world: {rc}")
 
-    ret = ServerReturnData()
+    ret = data.ServerReturnData()
     for field in fields(ret):
         attr = getattr(AttributeEnum, f'AW_SERVER_{field.name.upper()}')
-        data = get_data(attr)
+        attr_data = get_data(attr)
 
-        if data:
-            setattr(ret, field.name, data)
+        if attr_data:
+            setattr(ret, field.name, attr_data)
 
     return ret
 
-def aw_server_world_delete(id: int) -> ServerReturnData:
+def aw_server_world_delete(id: int) -> data.ServerReturnData:
     """
     Delete a world.
 
@@ -1535,13 +1529,13 @@ def aw_server_world_delete(id: int) -> ServerReturnData:
     if rc:
         raise Exception(f"Failed to delete world: {rc}")
 
-    ret = ServerReturnData()
+    ret = data.ServerReturnData()
     for field in fields(ret):
         attr = getattr(AttributeEnum, f'AW_SERVER_{field.name.upper()}')
-        data = get_data(attr)
+        attr_data = get_data(attr)
 
-        if data:
-            setattr(ret, field.name, data)
+        if attr_data:
+            setattr(ret, field.name, attr_data)
 
     return ret
 
@@ -1569,21 +1563,21 @@ def aw_server_world_stop(id: int) -> int:
 def aw_session() -> int:
     raise NotImplementedError('This function is not implemented yet.')
 
-def aw_state_change(instance: c_void_p, data: StateChangeData) -> None:
+def aw_state_change(instance: c_void_p, state_change: data.StateChangeData) -> None:
     """
     Informs the world server of your avatar's current state.
 
     Args:
         instance (c_void_p): The bot instance.
-        data (StateChangeData): The state change data.
+        state_change (data.StateChangeData): The state change data.
 
     Raises:
         Exception: If the state change failed.
     """
     aw_instance_set(instance)
     
-    for field in fields(data):
-        value = getattr(data, field.name, None)
+    for field in fields(state_change):
+        value = getattr(state_change, field.name, None)
         attr = getattr(AttributeEnum, f'AW_MY_{field.name.upper()}')
         if value:
             aw_int_set(attr, value)
