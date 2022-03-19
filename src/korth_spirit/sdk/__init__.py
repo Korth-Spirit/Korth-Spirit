@@ -949,8 +949,25 @@ def aw_int(attribute: AttributeEnum) -> int:
     """
     return int(SDK.aw_int(attribute.value))
 
-def aw_laser_beam() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_laser_beam(laser_beam: data.LaserBeamData) -> None:
+    """
+    Creates a laser beam.
+
+    Args:
+        laser_beam (data.LaserBeamData): The laser beam data.
+    """
+    from .write_data import write_data
+
+    for field in fields(laser_beam):
+        write_data(
+            AttributeEnum(f"AW_LASER_BEAM_{field.upper()}"),
+            getattr(laser_beam, field.name)
+        )
+
+    rc = SDK.aw_laser_beam()
+
+    if rc:
+        raise Exception(f"Failed to create laser beam: {rc}")
 
 def aw_license_add(license_create: data.LicenseCreateData) -> None:
     """

@@ -30,6 +30,7 @@ from .citizen_data import CitizenData
 from .console_message_data import ConsoleMessageData
 from .hud_click_data import HudClickData
 from .hud_data import HudData
+from .laser_beam_data import LaserBeamData
 from .license_change_data import LicenseChangeData
 from .license_create_data import LicenseCreateData
 from .license_data import LicenseData
@@ -57,6 +58,7 @@ __all__ = [
     "ConsoleMessageData",
     "HudClickData",
     "HudData",
+    "LaserBeamData",
     "LicenseChangeData",
     "LicenseCreateData",
     "LicenseData",
