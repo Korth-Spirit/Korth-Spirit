@@ -1408,8 +1408,48 @@ def aw_object_delete(object_delete: data.ObjectDeleteData) -> None:
     if rc:
         raise Exception(f"Failed to delete object: {rc}")
 
-def aw_object_load() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_object_load(object_load: data.ObjectLoadData) -> data.ObjectLoadedData:
+    """
+    Loads an object. Requires eminient domain due to the fact that it overrides owner and timestamp.
+
+    Args:
+        object_load (data.ObjectLoadData): The object data.
+
+    Raises:
+        Exception: If the object could not be loaded.
+
+    Returns:
+        data.ObjectLoadedData: The loaded object data.
+    """
+    from .get_data import get_data
+    from .write_data import write_data
+
+    for field in fields(object_load):
+        value = getattr(object_load, field.name, None)
+        if 'cell' not in field.name.lower():
+            attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
+            write_data(attr, value)
+        else:
+            attr = getattr(AttributeEnum, f'AW_{field.name.upper()}')
+            write_data(attr, value)
+
+    rc = SDK.aw_object_load()
+    
+    if rc:
+        raise Exception(f"Failed to load object: {rc}")
+
+    ret = data.ObjectLoadedData()
+    for field in fields(ret):
+        prepend = 'AW_OBJECT_'
+        if 'CELL' in field.name.upper():
+            prepend = 'AW_'
+        attr = getattr(AttributeEnum, f'{prepend}{field.name.upper()}')
+        object_load = get_data(attr)
+
+        if object_load:
+            setattr(ret, field.name, object_load)
+
+    return ret
 
 def aw_object_query() -> int:
     raise NotImplementedError('This function is not implemented yet.')

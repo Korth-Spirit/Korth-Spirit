@@ -42,6 +42,8 @@ from .object_clicked_data import ObjectClickedData
 from .object_create_data import ObjectCreateData
 from .object_created_data import ObjectCreatedData
 from .object_delete_data import ObjectDeleteData
+from .object_load_data import ObjectLoadData
+from .object_loaded_data import ObjectLoadedData
 from .server_data import ServerData
 from .server_return_data import ServerReturnData
 from .state_change_data import StateChangeData
@@ -72,6 +74,8 @@ __all__ = [
     "ObjectCreateData",
     "ObjectCreatedData",
     "ObjectDeleteData",
+    "ObjectLoadData",
+    "ObjectLoadedData",
     "ServerData",
     "ServerReturnData",
     "StateChangeData",
