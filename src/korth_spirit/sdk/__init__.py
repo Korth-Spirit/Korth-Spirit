@@ -1349,8 +1349,41 @@ def aw_object_change(object_change: data.ObjectChangeData) -> None:
     if rc:
         raise Exception(f"Failed to change object: {rc}")
 
-def aw_object_click() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_object_click(object_click: data.ObjectClickData) -> data.ObjectClickedData:
+    """
+    Simulates a click on an object.
+
+    Args:
+        object_click (data.ObjectClickData): The object data.
+
+    Returns:
+        data.ObjectClickedData: The clicked object data.
+    """    
+    from .get_data import get_data
+    from .write_data import write_data
+
+    for field in fields(object_click):
+        value = getattr(object_click, field.name, None)
+        attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
+        write_data(attr, value)
+
+    rc = SDK.aw_object_click()
+
+    if rc:
+        raise Exception(f"Failed to click object: {rc}")
+
+    ret = data.ObjectClickedData()
+    for field in fields(ret):
+        prepend = 'AW_OBJECT_'
+        if 'CELL' in field.name.upper():
+            prepend = 'AW_'
+        attr = getattr(AttributeEnum, f'{prepend}{field.name.upper()}')
+        object_click = get_data(attr)
+
+        if object_click:
+            setattr(ret, field.name, object_click)
+
+    return ret
 
 def aw_object_delete(object_delete: data.ObjectDeleteData) -> None:
     """
