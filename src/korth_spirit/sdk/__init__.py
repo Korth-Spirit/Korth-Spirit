@@ -1451,8 +1451,41 @@ def aw_object_load(object_load: data.ObjectLoadData) -> data.ObjectLoadedData:
 
     return ret
 
-def aw_object_query() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_object_query(object_query: Union[data.ObjectQueryData, int]) -> data.ObjectQueriedData:
+    """
+    Queries an object.
+
+    Args:
+        object_query (Union[data.ObjectQueryData, int]): The object data or object ID.
+
+    Returns:
+        data.ObjectQueriedData: The queried object data.
+    """    
+    from .get_data import get_data
+    from .write_data import write_data
+
+    if isinstance(object_query, int):
+        write_data(AttributeEnum.AW_OBJECT_ID, object_query)
+    else:
+        for field in fields(object_query):
+            value = getattr(object_query, field.name, None)
+            attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
+            write_data(attr, value)
+    
+    rc = SDK.aw_object_query()
+
+    if rc:
+        raise Exception(f"Failed to query object: {rc}")
+
+    ret = data.ObjectQueriedData()
+    for field in fields(ret):
+        attr = getattr(AttributeEnum, f'AW_OBJECT_{field.name.upper()}')
+        object_query = get_data(attr)
+
+        if object_query:
+            setattr(ret, field.name, object_query)
+
+    return ret
 
 def aw_object_select() -> int:
     raise NotImplementedError('This function is not implemented yet.')

@@ -44,6 +44,8 @@ from .object_created_data import ObjectCreatedData
 from .object_delete_data import ObjectDeleteData
 from .object_load_data import ObjectLoadData
 from .object_loaded_data import ObjectLoadedData
+from .object_queried_data import ObjectQueriedData
+from .object_query_data import ObjectQueryData
 from .server_data import ServerData
 from .server_return_data import ServerReturnData
 from .state_change_data import StateChangeData
@@ -76,6 +78,8 @@ __all__ = [
     "ObjectDeleteData",
     "ObjectLoadData",
     "ObjectLoadedData",
+    "ObjectQueriedData",
+    "ObjectQueryData",
     "ServerData",
     "ServerReturnData",
     "StateChangeData",
