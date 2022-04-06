@@ -18,6 +18,7 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+import socket
 from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char, c_char_p, c_int,
                     c_uint, c_ulong, c_void_p)
 from dataclasses import fields
@@ -587,19 +588,15 @@ def aw_create(
         domain (str): The universe domain. Defaults to "auth.activeworlds.com".
         port (int): The universe port. Defaults to 6670.
 
-    Raises:
-        Exception: If the bot instance could not be created.
-
     Returns:
         c_void_p: The bot instance.
     """
-    instance = c_void_p()
-    rc = SDK.aw_create(domain.encode('utf-8'), port, byref(instance))
-    
-    if rc:
-        raise Exception(f"Failed to create bot instance: {rc}")
-
-    return instance
+    return aw_create_resolved(
+        address=socket.inet_aton(
+            socket.gethostbyname(domain),
+        ),
+        port=port
+    )
 
 def aw_create_resolved(address: c_ulong, port: int) -> c_void_p:
     """
