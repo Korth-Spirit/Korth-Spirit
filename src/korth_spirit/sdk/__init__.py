@@ -601,6 +601,28 @@ def aw_create(
 
     return instance
 
+def aw_create_resolved(address: c_ulong, port: int) -> c_void_p:
+    """
+    Creates a bot instance for the specified address and port.
+
+    Args:
+        address (unsigned long): The address of the universe stored in network byte order.
+        port (int): The universe port.
+
+    Raises:
+        Exception: If the bot instance could not be created.
+
+    Returns:
+        c_void_p: The bot instance.
+    """
+    instance = c_void_p()
+    rc = SDK.aw_create_resolved(address, port, instance)
+
+    if rc:
+        raise Exception(f"Failed to create bot instance: {rc}")
+
+    return instance
+
 def aw_data(attribute: AttributeEnum, ret_type = c_char) -> Union[bytes, list[bytes]]:
     """
     Gets a data attribute.
