@@ -598,12 +598,12 @@ def aw_create(
         port=port
     )
 
-def aw_create_resolved(address: c_ulong, port: int) -> c_void_p:
+def aw_create_resolved(address: bytes, port: int) -> c_void_p:
     """
     Creates a bot instance for the specified address and port.
 
     Args:
-        address (unsigned long): The address of the universe stored in network byte order.
+        address (bytes): The address of the universe stored in network byte order.
         port (int): The universe port.
 
     Raises:
@@ -613,6 +613,7 @@ def aw_create_resolved(address: c_ulong, port: int) -> c_void_p:
         c_void_p: The bot instance.
     """
     instance = c_void_p()
+    address = c_ulong(int.from_bytes(address, byteorder='big'))
     SDK.aw_create_resolved.argtypes = [c_ulong, c_int]
     rc = SDK.aw_create_resolved(address, port, instance)
 
