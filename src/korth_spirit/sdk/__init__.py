@@ -593,7 +593,7 @@ def aw_create(
     """
     return aw_create_resolved(
         address=socket.inet_aton(
-            socket.gethostbyname(domain),
+            socket.gethostbyname(domain), # Little Endian
         ),
         port=port
     )
@@ -613,8 +613,8 @@ def aw_create_resolved(address: bytes, port: int) -> c_void_p:
         c_void_p: The bot instance.
     """
     instance = c_void_p()
-    address = c_ulong(int.from_bytes(address, byteorder='big'))
-    SDK.aw_create_resolved.argtypes = [c_ulong, c_int]
+    address = c_ulong(int.from_bytes(address, byteorder='little')) # Little Endian, not network byte order
+    SDK.aw_create_resolved.argtypes = [c_ulong, c_int, POINTER(c_void_p)]
     rc = SDK.aw_create_resolved(address, port, instance)
 
     if rc:
