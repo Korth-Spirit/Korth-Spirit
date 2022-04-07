@@ -613,6 +613,7 @@ def aw_create_resolved(address: c_ulong, port: int) -> c_void_p:
         c_void_p: The bot instance.
     """
     instance = c_void_p()
+    SDK.aw_create_resolved.argtypes = [c_ulong, c_int]
     rc = SDK.aw_create_resolved(address, port, instance)
 
     if rc:
