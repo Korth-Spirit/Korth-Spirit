@@ -16,9 +16,7 @@ You will also need to inlcude the SDK with name 'aw64.dll' in the same directory
 
 # Usage
 
-Please know this package is in alpha and a work in progress. The API is subject to change. The spirit of korth is not yet ready for use. You may attempt to use it, but you should not expect it to work. If you have any questions, please contact the author.
-
-Before using this project, you must agree to the Active Worlds Software Development Kit (SDK) license agreement. This can be found at [http://www.activeworlds.com/sdk/download.htm](http://www.activeworlds.com/sdk/download.htm). The Spirit of Korth is not affiliated with Active Worlds Inc. This project is not affiliated with Active Worlds Inc.
+Please know this package is in alpha and a work in progress. The API is subject to change. The spirit of korth is not yet ready for use. You may attempt to use it, but you should not expect it to work.
 
 
 Greeter Bot example using the Korth Spirit wrapper for the Active Worlds SDK.
