@@ -19,19 +19,26 @@ You will also need to inlcude the SDK with name 'aw64.dll' in the same directory
 Please know this package is in alpha and a work in progress. The API is subject to change. The spirit of korth is not yet ready for use. You may attempt to use it, but you should not expect it to work.
 
 
-Greeter Bot example using the Korth Spirit wrapper for the Active Worlds SDK.
+[Greeter Bot example](https://github.com/Korth-Spirit/Greeter-Bot/blob/9b5c3332206d1ba78bca4bafb7ea6915d0492a97/greeter/__main__.py) using the Korth Spirit wrapper for the Active Worlds SDK.
 ```python
-bot.login(
-    citizen_number=int(input("Citizen Number: ")),
-    password=input("Password: ")
-).enter_world(
-    world_name=input("World: ")
-).move_to(
-    x=0, y=0, z=0
-).bus.subscribe(
-    EventEnum.AW_EVENT_AVATAR_ADD,
-    lambda e: bot.say(f"Salutations {e.avatar_name}!")
-)
+from korth_spirit import ConfigurableInstance, EventEnum
+from korth_spirit.configuration import (AggregateConfiguration,
+                                        InputConfiguration, JsonConfiguration)
+
+with ConfigurableInstance(
+    AggregateConfiguration(
+        configurations={
+            JsonConfiguration: ('configuration.json',),
+            InputConfiguration: (),
+        }
+    )
+) as bot:
+    bot.bus.subscribe(
+        EventEnum.AW_EVENT_AVATAR_ADD,
+        lambda e: bot.say(f"Salutations {e.avatar_name}!")
+    )
+        
+    bot.main_loop()
 ```
 
 # License
