@@ -40,4 +40,4 @@ This project, the Spirit of Korth, is licensed under the MIT license. All other 
 
 # Contribution
 
-This project is open source. Feel free to contribute to the project by making a pull request, creating an issue ticket, or sending an email to [Johnny Irvin](mailto:irvinjohnathan@gmail.com). The spirit of Korth is not affiliated with Active Worlds Inc. This project is not affiliated with Active Worlds Inc. Johnathan Irvin is not affiliated with Active Worlds Inc.
+This project is open source. Feel free to contribute to the project by making a pull request, creating an issue ticket, or sending an email to [Johnny Irvin](mailto:irvinjohnathan@gmail.com). This project, the Spirit of Korth is not affiliated with Active Worlds Inc. Johnathan Irvin is not affiliated with Active Worlds Inc.
