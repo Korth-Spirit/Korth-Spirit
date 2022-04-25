@@ -38,9 +38,7 @@ bot.login(
 
 # License
 
-This project, the Spirit of Korth, is licensed under the MIT license. All other code is owned by the author. The Spirit of Korth is not affiliated with Active Worlds Inc. This project is not affiliated with Active Worlds Inc. The license for Active Worlds Software Development Kit (SDK) is available at [http://www.activeworlds.com/sdk/download.htm](http://www.activeworlds.com/sdk/download.htm). A copy of the license is included in the Spirit of Korth as AW_SDK_LICENSE. The AW_SDK_LICENSE file is not governed by the license of the Spirit of Korth. The AW_SDK_LICENSE file is not gaurenteed to be up to date and is provided as a convenience.
-
-NOTICE: aw64.dll and AW_SDK_LICENSE are owned by Active Worlds Inc. and are not governed by the license of the Spirit of Korth. They are provided under the Active Worlds Software Development Kit (SDK) license. The Spirit of Korth is not affiliated with Active Worlds Inc. This project is not affiliated with Active Worlds Inc.
+This project, the Spirit of Korth, is licensed under the MIT license. All other code is owned by the author. The Spirit of Korth is not affiliated with Active Worlds Inc. This project is not affiliated with Active Worlds Inc. The license for Active Worlds Software Development Kit (SDK) is available at [http://www.activeworlds.com/sdk/download.htm](http://www.activeworlds.com/sdk/download.htm).
 
 # Contribution
 
