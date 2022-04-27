@@ -1753,8 +1753,8 @@ def aw_string(attribute: AttributeEnum) -> str:
 def aw_string_from_unicode(*args: typing.Any) -> typing.Any:
     return SDK.aw_string_from_unicode(*args)
 
-def aw_string_set_MBCS_codepage(codepage: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_string_set_MBCS_codepage(*args: typing.Any) -> typing.Any:
+    return SDK.aw_string_set_MBCS_codepage(*args)
 
 def aw_string_to_unicode(the_string: str) -> None:
     raise NotImplementedError('This function is not implemented yet.')
