@@ -1689,8 +1689,8 @@ def aw_server_world_delete(id: int) -> data.ServerReturnData:
 def aw_server_world_instance_add(*args: typing.Any) -> typing.Any:
     return SDK.aw_server_world_instance_add(*args)
 
-def aw_server_world_instance_delete(id: int, instance_id: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_server_world_instance_delete(*args: typing.Any) -> typing.Any:
+    return SDK.aw_server_world_instance_delete(*args)
 
 def aw_server_world_instance_set(id: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
