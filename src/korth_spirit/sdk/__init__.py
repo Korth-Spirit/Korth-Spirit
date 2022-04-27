@@ -1901,8 +1901,8 @@ def aw_url_send(session_id: int, url: str, target: str, post: bool = False, targ
 def aw_user_data(*args: typing.Any) -> typing.Any:
     return SDK.aw_user_data(*args)
 
-def aw_user_data_set(data: bytes) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_user_data_set(*args: typing.Any) -> typing.Any:
+    return SDK.aw_user_data_set(*args)
 
 def aw_user_list() -> int:
     raise NotImplementedError('This function is not implemented yet.')
