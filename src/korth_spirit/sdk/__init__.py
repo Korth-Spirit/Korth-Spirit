@@ -1898,8 +1898,8 @@ def aw_url_send(session_id: int, url: str, target: str, post: bool = False, targ
     if rc:
         raise Exception(f"Failed to send url: {rc}")
 
-def aw_user_data() -> None:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_user_data(*args: typing.Any) -> typing.Any:
+    return SDK.aw_user_data(*args)
 
 def aw_user_data_set(data: bytes) -> int:
     raise NotImplementedError('This function is not implemented yet.')
