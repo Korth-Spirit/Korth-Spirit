@@ -1904,8 +1904,8 @@ def aw_user_data(*args: typing.Any) -> typing.Any:
 def aw_user_data_set(*args: typing.Any) -> typing.Any:
     return SDK.aw_user_data_set(*args)
 
-def aw_user_list() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_user_list(*args: typing.Any) -> typing.Any:
+    return SDK.aw_user_list(*args)
 
 def aw_wait(milliseconds: int = -1) -> None:
     """
