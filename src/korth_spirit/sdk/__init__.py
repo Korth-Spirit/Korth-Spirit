@@ -671,12 +671,16 @@ def aw_data_set(attribute: AttributeEnum, value: bytes, ret_type = c_char) -> No
 
 def aw_delete_all_objects() -> None:
     """
-    Deletes all objects in a world.
-    """
+    Deletes all objects.
+
+    Raises:
+        Exception: If the objects could not be deleted.
+    """    
     SDK.aw_delete_all_objects.restype = c_int
     SDK.aw_delete_all_objects.argtypes = []
 
-    SDK.aw_delete_all_objects()   
+    if rc := SDK.aw_delete_all_objects():
+        raise Exception(f"Failed to delete all objects: {rc}")
 
 def aw_destroy(instance: c_void_p) -> None:
     """
