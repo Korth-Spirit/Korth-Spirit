@@ -1849,8 +1849,8 @@ def aw_universe_ejection_add(*args: typing.Any) -> typing.Any:
 def aw_universe_ejection_delete(*args: typing.Any) -> typing.Any:
     return SDK.aw_universe_ejection_delete(*args)
 
-def aw_universe_ejection_lookup() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_universe_ejection_lookup(*args: typing.Any) -> typing.Any:
+    return SDK.aw_universe_ejection_lookup(*args)
 
 def aw_universe_ejection_next() -> int:
     raise NotImplementedError('This function is not implemented yet.')
