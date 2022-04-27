@@ -2012,8 +2012,8 @@ def aw_world_ejection_previous(*args: typing.Any) -> typing.Any:
 def aw_world_instance_get(*args: typing.Any) -> typing.Any:
     return SDK.aw_world_instance_get(*args)
 
-def aw_world_instance_set(citizen: int, id: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_world_instance_set(*args: typing.Any) -> typing.Any:
+    return SDK.aw_world_instance_set(*args)
 
 def aw_world_list() -> int:
     raise NotImplementedError('This function is not implemented yet.')
