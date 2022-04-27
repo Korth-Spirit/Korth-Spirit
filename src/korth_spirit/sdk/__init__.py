@@ -1979,8 +1979,8 @@ def aw_world_attributes_change(*args: typing.Any) -> typing.Any:
 def aw_world_attributes_reset(*args: typing.Any) -> typing.Any:
     return SDK.aw_world_attributes_reset(*args)
 
-def aw_world_attributes_send(session_id: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_world_attributes_send(*args: typing.Any) -> typing.Any:
+    return SDK.aw_world_attributes_send(*args)
 
 def aw_world_cav_change() -> int:
     raise NotImplementedError('This function is not implemented yet.')
