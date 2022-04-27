@@ -2003,8 +2003,8 @@ def aw_world_ejection_delete(*args: typing.Any) -> typing.Any:
 def aw_world_ejection_lookup(*args: typing.Any) -> typing.Any:
     return SDK.aw_world_ejection_lookup(*args)
 
-def aw_world_ejection_next() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_world_ejection_next(*args: typing.Any) -> typing.Any:
+    return SDK.aw_world_ejection_next(*args)
 
 def aw_world_ejection_previous() -> int:
     raise NotImplementedError('This function is not implemented yet.')
