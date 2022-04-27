@@ -1973,8 +1973,8 @@ def aw_world_attribute_set(attribute: int, value: str) -> None:
     if rc:
         raise Exception(f"Failed to set world attribute: {rc}")
 
-def aw_world_attributes_change() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_world_attributes_change(*args: typing.Any) -> typing.Any:
+    return SDK.aw_world_attributes_change(*args)
 
 def aw_world_attributes_reset() -> int:
     raise NotImplementedError('This function is not implemented yet.')
