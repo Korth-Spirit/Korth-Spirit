@@ -1771,8 +1771,8 @@ def aw_term() -> None:
 def aw_terrain_delete_all(*args: typing.Any) -> typing.Any:
     return SDK.aw_terrain_delete_all(*args)
 
-def aw_terrain_load_node() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_terrain_load_node(*args: typing.Any) -> typing.Any:
+    return SDK.aw_terrain_load_node(*args)
 
 def aw_terrain_next() -> bool:
     """
