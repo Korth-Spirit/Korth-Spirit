@@ -2021,5 +2021,5 @@ def aw_world_list(*args: typing.Any) -> typing.Any:
 def aw_world_reload_registry(*args: typing.Any) -> typing.Any:
     return SDK.aw_world_reload_registry(*args)
 
-def aw_zip() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_zip(*args: typing.Any) -> typing.Any:
+    return SDK.aw_zip(*args)
