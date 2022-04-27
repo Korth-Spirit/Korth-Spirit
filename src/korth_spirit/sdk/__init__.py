@@ -1985,8 +1985,8 @@ def aw_world_attributes_send(*args: typing.Any) -> typing.Any:
 def aw_world_cav_change(*args: typing.Any) -> typing.Any:
     return SDK.aw_world_cav_change(*args)
 
-def aw_world_cav_delete() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_world_cav_delete(*args: typing.Any) -> typing.Any:
+    return SDK.aw_world_cav_delete(*args)
 
 def aw_world_cav_request(citizen: int, session: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
