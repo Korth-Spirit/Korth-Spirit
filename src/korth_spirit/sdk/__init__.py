@@ -19,10 +19,11 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import socket
+import typing
 from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char, c_char_p, c_int,
                     c_uint, c_ulong, c_void_p)
 from dataclasses import fields
-from typing import List, Optional, Tuple, Union
+from typing import List, Tuple, Union
 
 from .. import data
 from .enums import AttributeEnum, CallBackEnum, EventEnum, RightsEnum
@@ -98,9 +99,9 @@ def aw_avatar_click(session_id: int) -> None:
         raise Exception(f'Failed to click the avatar. Error code: {rc}')
 
 def aw_avatar_location(
-    citizen: Optional[int] = None,
-    session: Optional[int] = None,
-    name: Optional[str] = None
+    citizen: typing.Optional[int] = None,
+    session: typing.Optional[int] = None,
+    name: typing.Optional[str] = None
 ) -> None:
     """
     Queries the location of an avatar.
@@ -108,9 +109,9 @@ def aw_avatar_location(
     Only one of these parameters can be specified.
 
     Args:
-        citizen (Optional[int], optional): The citizen ID. Defaults to None.
-        session (Optional[int], optional): The session ID. Defaults to None.
-        name (Optional[str], optional): The name of the avatar. Defaults to None.
+        citizen (typing.Optional[int], optional): The citizen ID. Defaults to None.
+        session (typing.Optional[int], optional): The session ID. Defaults to None.
+        name (typing.Optional[str], optional): The name of the avatar. Defaults to None.
 
     Raises:
         Exception: If the location could not be queried.
@@ -490,12 +491,12 @@ def aw_citizen_delete(citizen: int) -> None:
     if rc != 0:
         raise Exception(f'Failed to delete the citizen. Error code: {rc}')
 
-def aw_citizen_next(citizen: Optional[int] = None) -> data.CitizenData:
+def aw_citizen_next(citizen: typing.Optional[int] = None) -> data.CitizenData:
     """
     Queries the next citizen in the citizen iterator.
 
     Args:
-        citizen (Optional[int], optional): The citizen number to start the query. Defaults to None.
+        citizen (typing.Optional[int], optional): The citizen number to start the query. Defaults to None.
 
     Raises:
         Exception: If the citizen could not be queried.
@@ -522,12 +523,12 @@ def aw_citizen_next(citizen: Optional[int] = None) -> data.CitizenData:
 
     return citizen
 
-def aw_citizen_previous(citizen: Optional[int] = None) -> data.CitizenData:
+def aw_citizen_previous(citizen: typing.Optional[int] = None) -> data.CitizenData:
     """
     Queries the previous citizen in the citizen iterator.
 
     Args:
-        citizen (Optional[int], optional): The citizen number to start the query. Defaults to None.
+        citizen (typing.Optional[int], optional): The citizen number to start the query. Defaults to None.
 
     Raises:
         Exception: If the citizen could not be queried.
@@ -1192,7 +1193,7 @@ def aw_mover_rider_add(id: int, session: int, dist: int, angle: int, y_delta: in
 
     if rc:
         raise Exception(f"Failed to add mover rider: {rc}")
-
+    rc = SDK.aw_destroy(instance)
 def aw_mover_rider_change(id: int, session: int, dist: int, angle: int, y_delta: int, yaw_delta: int, pitch_delta: int) -> None:
     """
     Changes a mover rider. Triggers the mover rider change event.
@@ -1407,7 +1408,7 @@ def aw_object_click(object_click: data.ObjectClickData) -> data.ObjectClickedDat
             setattr(ret, field.name, object_click)
 
     return ret
-
+Optional
 def aw_object_delete(object_delete: data.ObjectDeleteData) -> None:
     """
     Deletes an object.
@@ -1510,8 +1511,8 @@ def aw_object_query(object_query: Union[data.ObjectQueryData, int]) -> data.Obje
 
     return ret
 
-def aw_object_select() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_object_select(*args: typing.Any) -> typing.Any:
+    return SDK.aw_object_select(*args)
 
 def aw_query(x_sector: int, z_sector: int, sequence3_x_3: List[List[int]]) -> None:
     """
