@@ -1840,8 +1840,8 @@ def aw_toolbar_click(*args: typing.Any) -> typing.Any:
 def aw_traffic_count(*args: typing.Any) -> typing.Any:
     return SDK.aw_traffic_count(*args)
 
-def aw_universe_attributes_change() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_universe_attributes_change(*args: typing.Any) -> typing.Any:
+    return SDK.aw_universe_attributes_change(*args)
 
 def aw_universe_ejection_add() -> int:
     raise NotImplementedError('This function is not implemented yet.')
