@@ -1756,8 +1756,8 @@ def aw_string_from_unicode(*args: typing.Any) -> typing.Any:
 def aw_string_set_MBCS_codepage(*args: typing.Any) -> typing.Any:
     return SDK.aw_string_set_MBCS_codepage(*args)
 
-def aw_string_to_unicode(the_string: str) -> None:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_string_to_unicode(*args: typing.Any) -> typing.Any:
+    return SDK.aw_string_to_unicode(*args)
 
 def aw_teleport(session_id: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
