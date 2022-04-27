@@ -1750,8 +1750,8 @@ def aw_string(attribute: AttributeEnum) -> str:
     SDK.aw_string.restype = c_char_p
     return SDK.aw_string(attribute.value).decode('utf-8')
 
-def aw_string_from_unicode(the_string: str) -> str:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_string_from_unicode(*args: typing.Any) -> typing.Any:
+    return SDK.aw_string_from_unicode(*args)
 
 def aw_string_set_MBCS_codepage(codepage: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
