@@ -1822,8 +1822,8 @@ def aw_terrain_query(page_x: int, page_z: int, sequence: int) -> bool:
 
     return aw_bool(AttributeEnum.AW_TERRAIN_COMPLETE)
 
-def aw_terrain_set(cell_x: int, cell_z: int, count: int, texture: int, *heights: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_terrain_set(*args: typing.Any) -> typing.Any:
+    return SDK.aw_terrain_set(*args)
 
 def aw_tick() -> int:
     """
