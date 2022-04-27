@@ -1993,9 +1993,9 @@ def aw_world_cav_request(*args: typing.Any) -> typing.Any:
 
 def aw_world_eject(*args: typing.Any) -> typing.Any:
     return SDK.aw_world_eject(*args)
-    
-def aw_world_ejection_add() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+
+def aw_world_ejection_add(*args: typing.Any) -> typing.Any:
+    return SDK.aw_world_ejection_add(*args)
 
 def aw_world_ejection_delete() -> int:
     raise NotImplementedError('This function is not implemented yet.')
