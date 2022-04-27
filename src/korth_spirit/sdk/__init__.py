@@ -1858,8 +1858,8 @@ def aw_universe_ejection_next(*args: typing.Any) -> typing.Any:
 def aw_universe_ejection_previous(*args: typing.Any) -> typing.Any:
     return SDK.aw_universe_ejection_previous(*args)
 
-def aw_unzip() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_unzip(*args: typing.Any) -> typing.Any:
+    return SDK.aw_unzip(*args)
 
 def aw_url_click(url: str) -> None:
     """
