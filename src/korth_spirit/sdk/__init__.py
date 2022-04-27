@@ -1704,8 +1704,8 @@ def aw_server_world_set(*args: typing.Any) -> typing.Any:
 def aw_server_world_start(*args: typing.Any) -> typing.Any:
     return SDK.aw_server_world_start(*args)
 
-def aw_server_world_stop(id: int) -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_server_world_stop(*args: typing.Any) -> typing.Any:
+    return SDK.aw_server_world_stop(*args)
 
 def aw_session() -> int:
     raise NotImplementedError('This function is not implemented yet.')
