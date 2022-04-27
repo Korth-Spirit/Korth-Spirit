@@ -1834,8 +1834,8 @@ def aw_tick() -> int:
     """
     return SDK.aw_tick()
 
-def aw_toolbar_click() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_toolbar_click(*args: typing.Any) -> typing.Any:
+    return SDK.aw_toolbar_click(*args)
 
 def aw_traffic_count(traffic_in: int, traffic_out: int) -> int:
     raise NotImplementedError('This function is not implemented yet.')
