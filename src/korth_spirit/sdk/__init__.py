@@ -689,9 +689,7 @@ def aw_destroy(instance: c_void_p) -> None:
     Args:
         instance (c_void_p): The bot instance.
     """
-    rc = SDK.aw_destroy(instance)
-
-    if rc:
+    if rc := SDK.aw_destroy(instance):
         raise Exception(f"Failed to destroy bot instance: {rc}")
 
 def aw_enter(world: str) -> None:
