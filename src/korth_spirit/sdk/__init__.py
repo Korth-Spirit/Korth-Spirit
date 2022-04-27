@@ -1707,8 +1707,8 @@ def aw_server_world_start(*args: typing.Any) -> typing.Any:
 def aw_server_world_stop(*args: typing.Any) -> typing.Any:
     return SDK.aw_server_world_stop(*args)
 
-def aw_session() -> int:
-    raise NotImplementedError('This function is not implemented yet.')
+def aw_session(*args: typing.Any) -> typing.Any:
+    return SDK.aw_session(*args)
 
 def aw_state_change(instance: c_void_p, state_change: data.StateChangeData) -> None:
     """
