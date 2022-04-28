@@ -42,7 +42,7 @@ class CellObjectData:
     model: str
     description: str
     action: str
-    data: bytes
+    # data: bytes
 
     def set(self, name: str, value: Any) -> "CellObjectData":
         """

@@ -58,7 +58,7 @@ class ObjectQuery:
                 model = event.object_model,
                 description = event.object_description,
                 action = event.object_action,
-                data = event.object_data,
+                # data = event.object_data,
             )
         )
 
