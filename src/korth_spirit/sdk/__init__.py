@@ -1408,7 +1408,7 @@ def aw_object_click(object_click: data.ObjectClickData) -> data.ObjectClickedDat
             setattr(ret, field.name, object_click)
 
     return ret
-Optional
+
 def aw_object_delete(object_delete: data.ObjectDeleteData) -> None:
     """
     Deletes an object.
