@@ -67,6 +67,8 @@ class EventBus:
             self._hook_aw_event(event)
         self._subscribers[event].append(subscriber)
 
+        return self
+
     def unsubscribe(self, event: EventType, subscriber: callable) -> "EventBus":
         """
         Unsubscribe from an event.
