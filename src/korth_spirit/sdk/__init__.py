@@ -1309,7 +1309,7 @@ def aw_object_add(object_create: data.ObjectCreateData) -> data.ObjectCreatedDat
     if rc:
         raise Exception(f"Failed to create object: {rc}")
 
-    ret = object_create.ObjectCreatedData()
+    ret = data.ObjectCreatedData()
     for field in fields(ret):
         prepend = 'AW_OBJECT_'
         if 'CELL' in field.name.upper():
