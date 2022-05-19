@@ -529,7 +529,7 @@ ATTRIBUTE_TYPES = {
 	AttributeEnum.AW_AVATAR_ZONE: None,
 	AttributeEnum.AW_UNIVERSE_PER_CITIZEN_CAV: None,
 	AttributeEnum.AW_XFER_OWNER: None,
-	AttributeEnum.AW_WORLD_ENABLE_WIREFRAME: None,
+	AttributeEnum.AW_WORLD_ENABLE_WIREFRAME: bool,
 	AttributeEnum.AW_SHOPITEM_ID: None,
 	AttributeEnum.AW_SHOPITEM_CREATION: None,
 	AttributeEnum.AW_SHOPITEM_EXPIRATION: None,
