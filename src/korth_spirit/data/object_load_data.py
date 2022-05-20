@@ -24,7 +24,7 @@ from dataclasses import dataclass
 @dataclass
 class ObjectLoadData:
     owner: int = None
-    timestamp: int = None
+    build_timestamp: int = None
     type: int = None
     x: int = None
     y: int = None
