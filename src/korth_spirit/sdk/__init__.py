@@ -1768,8 +1768,17 @@ def aw_term() -> None:
     """    
     SDK.aw_term()
 
-def aw_terrain_delete_all(*args: typing.Any) -> typing.Any:
-    return SDK.aw_terrain_delete_all(*args)
+def aw_terrain_delete_all() -> None:
+    """
+    Resets all terrain data.
+
+    Raises:
+        Exception: If the terrain data could not be reset.
+    """
+    rc = SDK.aw_terrain_delete_all()
+
+    if rc:
+        raise Exception(f"Failed to delete all terrain: {rc}")
 
 def aw_terrain_load_node(*args: typing.Any) -> typing.Any:
     return SDK.aw_terrain_load_node(*args)
