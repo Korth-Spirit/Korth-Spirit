@@ -20,8 +20,11 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from dataclasses import dataclass
 
+
 @dataclass
 class TerrainNodeData:
+    page_x: int
+    page_z: int
     node_x: int
     node_z: int
     node_size: int

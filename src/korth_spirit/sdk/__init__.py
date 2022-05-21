@@ -1780,8 +1780,35 @@ def aw_terrain_delete_all() -> None:
     if rc:
         raise Exception(f"Failed to delete all terrain: {rc}")
 
-def aw_terrain_load_node(*args: typing.Any) -> typing.Any:
-    return SDK.aw_terrain_load_node(*args)
+def aw_terrain_load_node(node: data.TerrainNodeData) -> None:
+    """
+    Loads a terrain node.
+
+    Args:
+        node (TerrainNodeData): The terrain node data.
+
+    Raises:
+        Exception: If the terrain node could not be loaded.
+    """
+    from .write_data import write_data
+
+    aw_int_set(
+        AttributeEnum.AW_TERRAIN_VERSION_NEEDED,
+        2
+    )
+
+    for field in fields(node):
+        value = getattr(node, field.name, None)
+        attr = getattr(AttributeEnum, f'AW_TERRAIN_{field.name.upper()}')
+        if value:
+            write_data(attr, value)
+
+    write_data(AttributeEnum.AW_TERRAIN_NODE_HEIGHT_COUNT, len(node.height))
+    write_data(AttributeEnum.AW_TERRAIN_NODE_TEXTURE_COUNT, len(node.texture))
+    rc = SDK.aw_terrain_load_node()
+
+    if rc:
+        raise Exception(f"Failed to load terrain node: {rc}")
 
 def aw_terrain_next() -> bool:
     """
