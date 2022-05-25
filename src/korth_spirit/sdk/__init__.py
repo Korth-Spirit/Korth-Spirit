@@ -20,8 +20,8 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import socket
 import typing
-from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char, c_char_p, c_int,
-                    c_uint, c_ulong, c_void_p)
+from ctypes import (CDLL, CFUNCTYPE, POINTER, byref, c_char, c_char_p, c_float,
+                    c_int, c_uint, c_ulong, c_void_p)
 from dataclasses import fields
 from typing import List, Tuple, Union
 
@@ -664,6 +664,8 @@ def aw_data_set(attribute: AttributeEnum, value: bytes, ret_type = c_char) -> No
     SDK.aw_data_set.argtypes = [c_int, POINTER(ret_type), c_uint]
 
     length = len(value) if value else 0
+    if type(value) is list:
+        value = (ret_type * length)(*value)
 
     rc = SDK.aw_data_set(attribute.value, value, length)
 
@@ -777,6 +779,9 @@ def aw_float_set(attribute: AttributeEnum, value: float) -> None:
     Raises:
         Exception: If the attribute could not be set.
     """
+    SDK.aw_flaot_set.restype = c_int
+    SDK.aw_float_set.argtypes = [c_int, c_float]
+
     rc = SDK.aw_float_set(attribute.value, value)
 
     if rc:
@@ -1799,12 +1804,14 @@ def aw_terrain_load_node(node: data.TerrainNodeData) -> None:
 
     for field in fields(node):
         value = getattr(node, field.name, None)
+        if field.name.lower() == 'heights' or field.name.lower() == 'textures':
+            field.name = f'node_{field.name}'
         attr = getattr(AttributeEnum, f'AW_TERRAIN_{field.name.upper()}')
         if value:
             write_data(attr, value)
 
-    write_data(AttributeEnum.AW_TERRAIN_NODE_HEIGHT_COUNT, len(node.height))
-    write_data(AttributeEnum.AW_TERRAIN_NODE_TEXTURE_COUNT, len(node.texture))
+    write_data(AttributeEnum.AW_TERRAIN_NODE_HEIGHT_COUNT, len(node.heights))
+    write_data(AttributeEnum.AW_TERRAIN_NODE_TEXTURE_COUNT, len(node.textures))
     rc = SDK.aw_terrain_load_node()
 
     if rc:
