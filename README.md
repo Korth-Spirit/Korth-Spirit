@@ -1,3 +1,5 @@
+> **Warning** This project is no longer maintained.
+
 # The Spirit of Korth
 
 The Spirit of Korth is a python wrapper for the Active Worlds Software Development Kit (SDK). Active Worlds is a trade mark of Active Worlds Inc. The SDK is a set of tools for developing games, bot, and extensions for the Active Worlds platform. The SDK and its license are available at [http://www.activeworlds.com/sdk/download.htm](http://www.activeworlds.com/sdk/download.htm). This project is not affiliated with Active Worlds Inc.
